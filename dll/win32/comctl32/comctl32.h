@@ -1,24 +1,8 @@
-/******************************************************************************
- *
- * Common definitions (resource ids and global variables)
- *
- * Copyright 1999 Thuy Nguyen
- * Copyright 1999 Eric Kohl
- * Copyright 2002 Dimitrie O. Paun
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+/*
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Main header file
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki
  */
 
 #ifndef __WINE_COMCTL32_H
@@ -36,12 +20,10 @@
 #include "commctrl.h"
 #include "windowsx.h"
 
-#ifdef __REACTOS__
 // This is really ComCtl32 v5.82, the last one not supporting SxS
 #undef  COMCTL32_VERSION // Undefines what the PSDK gave to us
 #define COMCTL32_VERSION        5
 #define COMCTL32_VERSION_MINOR 82
-#endif
 
 extern HMODULE COMCTL32_hModule DECLSPEC_HIDDEN;
 extern HBRUSH  COMCTL32_hPattern55AABrush DECLSPEC_HIDDEN;
@@ -88,13 +70,11 @@ extern HBRUSH  COMCTL32_hPattern55AABrush DECLSPEC_HIDDEN;
 
 #define IDT_CHECK        401
 
-
 /* Cursors */
 #define IDC_MOVEBUTTON                  102
 #define IDC_COPY                        104
 #define IDC_DIVIDER                     106
 #define IDC_DIVIDEROPEN                 107
-
 
 /* DragList resources */
 #define IDI_DRAGARROW                   501
@@ -135,7 +115,7 @@ enum combobox_state_flags
     CBF_HOT          = 0x0800,
     CBF_NOEDITNOTIFY = 0x1000,
     CBF_NOLBSELECT   = 0x2000, /* do not change current selection */
-    CBF_BEENFOCUSED  = 0x4000, /* has it ever had focus           */
+    CBF_BEENFOCUSED  = 0x4000, /* has it ever had focus */
     CBF_EUI          = 0x8000,
 };
 
@@ -153,8 +133,8 @@ typedef struct
    RECT           droppedRect;
    INT            droppedIndex;
    INT            fixedOwnerDrawHeight;
-   INT            droppedWidth;   /* last two are not used unless set */
-   INT            editHeight;     /* explicitly */
+   INT            droppedWidth; /* last two are not used unless set explicitly */
+   INT            editHeight;
    INT            visibleItems;
 } HEADCOMBO, *LPHEADCOMBO;
 
@@ -162,23 +142,23 @@ extern BOOL COMBO_FlipListbox(HEADCOMBO *lphc, BOOL ok, BOOL bRedrawButton) DECL
 
 typedef struct
 {
-    COLORREF clrBtnHighlight;       /* COLOR_BTNHIGHLIGHT                  */
-    COLORREF clrBtnShadow;          /* COLOR_BTNSHADOW                     */
-    COLORREF clrBtnText;            /* COLOR_BTNTEXT                       */
-    COLORREF clrBtnFace;            /* COLOR_BTNFACE                       */
-    COLORREF clrHighlight;          /* COLOR_HIGHLIGHT                     */
-    COLORREF clrHighlightText;      /* COLOR_HIGHLIGHTTEXT                 */
-    COLORREF clrHotTrackingColor;   /* COLOR_HOTLIGHT                      */
-    COLORREF clr3dHilight;          /* COLOR_3DHILIGHT                     */
-    COLORREF clr3dShadow;           /* COLOR_3DSHADOW                      */
-    COLORREF clr3dDkShadow;         /* COLOR_3DDKSHADOW                    */
-    COLORREF clr3dFace;             /* COLOR_3DFACE                        */
-    COLORREF clrWindow;             /* COLOR_WINDOW                        */
-    COLORREF clrWindowText;         /* COLOR_WINDOWTEXT                    */
-    COLORREF clrGrayText;           /* COLOR_GREYTEXT                      */
-    COLORREF clrActiveCaption;      /* COLOR_ACTIVECAPTION                 */
-    COLORREF clrInfoBk;             /* COLOR_INFOBK                        */
-    COLORREF clrInfoText;           /* COLOR_INFOTEXT                      */
+    COLORREF clrBtnHighlight;       /* COLOR_BTNHIGHLIGHT */
+    COLORREF clrBtnShadow;          /* COLOR_BTNSHADOW */
+    COLORREF clrBtnText;            /* COLOR_BTNTEXT */
+    COLORREF clrBtnFace;            /* COLOR_BTNFACE */
+    COLORREF clrHighlight;          /* COLOR_HIGHLIGHT */
+    COLORREF clrHighlightText;      /* COLOR_HIGHLIGHTTEXT */
+    COLORREF clrHotTrackingColor;   /* COLOR_HOTLIGHT */
+    COLORREF clr3dHilight;          /* COLOR_3DHILIGHT */
+    COLORREF clr3dShadow;           /* COLOR_3DSHADOW */
+    COLORREF clr3dDkShadow;         /* COLOR_3DDKSHADOW */
+    COLORREF clr3dFace;             /* COLOR_3DFACE */
+    COLORREF clrWindow;             /* COLOR_WINDOW */
+    COLORREF clrWindowText;         /* COLOR_WINDOWTEXT */
+    COLORREF clrGrayText;           /* COLOR_GREYTEXT */
+    COLORREF clrActiveCaption;      /* COLOR_ACTIVECAPTION */
+    COLORREF clrInfoBk;             /* COLOR_INFOBK */
+    COLORREF clrInfoText;           /* COLOR_INFOTEXT */
 } COMCTL32_SysColor;
 
 extern COMCTL32_SysColor  comctl32_color DECLSPEC_HIDDEN;
@@ -278,7 +258,6 @@ extern void TREEVIEW_Register(void) DECLSPEC_HIDDEN;
 extern void TREEVIEW_Unregister(void) DECLSPEC_HIDDEN;
 extern void UPDOWN_Register(void) DECLSPEC_HIDDEN;
 extern void UPDOWN_Unregister(void) DECLSPEC_HIDDEN;
-#ifdef __REACTOS__
 extern void BUTTON_Unregister(void) DECLSPEC_HIDDEN;
 extern void COMBO_Unregister(void) DECLSPEC_HIDDEN;
 extern void COMBOLBOX_Unregister(void) DECLSPEC_HIDDEN;
@@ -287,18 +266,12 @@ extern void LISTBOX_Unregister(void) DECLSPEC_HIDDEN;
 extern void STATIC_Unregister(void) DECLSPEC_HIDDEN;
 extern void TOOLBARv6_Register(void) DECLSPEC_HIDDEN;
 extern void TOOLBARv6_Unregister(void) DECLSPEC_HIDDEN;
-#endif /* __REACTOS__ */
 
 int MONTHCAL_MonthLength(int month, int year) DECLSPEC_HIDDEN;
 int MONTHCAL_CalculateDayOfWeek(SYSTEMTIME *date, BOOL inplace) DECLSPEC_HIDDEN;
 LONG MONTHCAL_CompareSystemTime(const SYSTEMTIME *first, const SYSTEMTIME *second) DECLSPEC_HIDDEN;
-#ifdef __REACTOS__
 extern void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6) DECLSPEC_HIDDEN;
-#else
-extern void THEMING_Initialize(void) DECLSPEC_HIDDEN;
-#endif
 extern void THEMING_Uninitialize(void) DECLSPEC_HIDDEN;
 extern LRESULT THEMING_CallOriginalClass(HWND, UINT, WPARAM, LPARAM) DECLSPEC_HIDDEN;
 extern void THEMING_SetSubclassData(HWND, ULONG_PTR) DECLSPEC_HIDDEN;
-
 #endif  /* __WINE_COMCTL32_H */

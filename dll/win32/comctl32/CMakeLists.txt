@@ -61,7 +61,7 @@ list(APPEND PCH_SKIP_SOURCE
 add_library(comctl32 MODULE
     ${SOURCE}
     ${PCH_SKIP_SOURCE}
-    rsrc.rc
+    comctl32.rc
     ${CMAKE_CURRENT_BINARY_DIR}/comctl32.def)
 
 if(MSVC)

@@ -2,12 +2,10 @@
  * PROJECT:     ReactOS common controls
  * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
  * PURPOSE:     Main resource file
- * COPYRIGHT:   Copyright 1999 Bertho Stultiens
- *              Copyright 1999 Eric Kohl
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki
  */
 
 #include "comctl32.h"
-
 
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
@@ -20,58 +18,26 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 #include "wine/wine_common_ver.rc"
 
-/* @makedep: idt_check.bmp */
-IDT_CHECK BITMAP idt_check.bmp
+/* BITMAPS */
+IDT_CHECK BITMAP "res/idt_check.bmp"
+IDB_STD_SMALL BITMAP "res/idb_std_small.bmp"
+IDB_STD_LARGE BITMAP "res/idb_std_large.bmp"
+IDB_VIEW_SMALL BITMAP "res/idb_view_small.bmp"
+IDB_VIEW_LARGE BITMAP "res/idb_view_large.bmp"
+IDB_HIST_SMALL BITMAP "res/idb_hist_small.bmp"
+IDB_HIST_LARGE BITMAP "res/idb_hist_large.bmp"
 
-/* @makedep: idb_std_small.bmp */
-IDB_STD_SMALL BITMAP idb_std_small.bmp
+/* CURSORS */
+IDC_COPY CURSOR "res/idc_copy.cur"
+IDC_DIVIDER CURSOR "res/idc_divider.cur"
+IDC_DIVIDEROPEN CURSOR "res/idc_divideropen.cur"
+IDC_MOVEBUTTON CURSOR "res/idc_movebutton.cur"
 
-/* @makedep: idb_std_large.bmp */
-IDB_STD_LARGE BITMAP idb_std_large.bmp
-
-/* @makedep: idb_view_small.bmp */
-IDB_VIEW_SMALL BITMAP idb_view_small.bmp
-
-/* @makedep: idb_view_large.bmp */
-IDB_VIEW_LARGE BITMAP idb_view_large.bmp
-
-/* @makedep: idb_hist_small.bmp */
-IDB_HIST_SMALL BITMAP idb_hist_small.bmp
-
-/* @makedep: idb_hist_large.bmp */
-IDB_HIST_LARGE BITMAP idb_hist_large.bmp
-
-/* @makedep: idc_copy.cur */
-IDC_COPY CURSOR idc_copy.cur
-
-/* @makedep: idc_divider.cur */
-IDC_DIVIDER CURSOR idc_divider.cur
-
-/* @makedep: idc_divideropen.cur */
-IDC_DIVIDEROPEN CURSOR idc_divideropen.cur
-
-/* @makedep: idc_movebutton.cur */
-IDC_MOVEBUTTON CURSOR idc_movebutton.cur
-
-/* @makedep: idi_dragarrow.ico */
-IDI_DRAGARROW ICON idi_dragarrow.ico
-
-/* @makedep: idi_tt_info_sm.ico */
-IDI_TT_INFO_SM ICON idi_tt_info_sm.ico
-
-/* @makedep: idi_tt_warn_sm.ico */
-IDI_TT_WARN_SM ICON idi_tt_warn_sm.ico
-
-/* @makedep: idi_tt_error_sm.ico */
-IDI_TT_ERROR_SM ICON idi_tt_error_sm.ico
-
-/*
- * Everything specific to any language goes
- * in one of the specific files.
- * Note that you can and may override resources
- * which also have a neutral version. This is to
- * get localized bitmaps for example.
- */
+/* ICONS */
+IDI_DRAGARROW ICON "res/idi_dragarrow.ico"
+IDI_TT_INFO_SM ICON "res/idi_tt_info_sm.ico"
+IDI_TT_WARN_SM ICON "res/idi_tt_warn_sm.ico"
+IDI_TT_ERROR_SM ICON "res/idi_tt_error_sm.ico"
 
 /* UTF-8 */
 #pragma code_page(65001)
