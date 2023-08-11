@@ -1232,11 +1232,11 @@ BOOL WINAPI SetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
     * from there. */
 
    /* See if we have been called for this window */
-   stack = GetPropW(hWnd, COMCTL32_wSubclass);
+   stack = (LPSUBCLASS_INFO)GetPropW(hWnd, COMCTL32_wSubclass);
    if (!stack)
    {
       /* allocate stack */
-      stack = Alloc(sizeof(SUBCLASS_INFO));
+      stack = (LPSUBCLASS_INFO)Alloc(sizeof(SUBCLASS_INFO));
       if (!stack)
       {
          ERR("Failed to allocate our Subclassing stack\n");
@@ -1314,7 +1314,7 @@ BOOL WINAPI GetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
    TRACE ("(%p, %p, %lx, %p)\n", hWnd, pfnSubclass, uID, pdwRef);
 
    /* See if we have been called for this window */
-   stack = GetPropW (hWnd, COMCTL32_wSubclass);
+   stack = (SUBCLASS_INFO*)GetPropW(hWnd, COMCTL32_wSubclass);
    if (!stack)
       return FALSE;
 
@@ -1358,7 +1358,7 @@ BOOL WINAPI RemoveWindowSubclass(HWND hWnd, SUBCLASSPROC pfnSubclass, UINT_PTR u
    TRACE ("(%p, %p, %lx)\n", hWnd, pfnSubclass, uID);
 
    /* Find the Subclass to remove */
-   stack = GetPropW (hWnd, COMCTL32_wSubclass);
+   stack = (LPSUBCLASS_INFO)GetPropW(hWnd, COMCTL32_wSubclass);
    if (!stack)
       return FALSE;
 
@@ -1412,7 +1412,7 @@ static LRESULT WINAPI COMCTL32_SubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam
 
    TRACE ("(%p, 0x%08x, 0x%08lx, 0x%08lx)\n", hWnd, uMsg, wParam, lParam);
 
-   stack = GetPropW (hWnd, COMCTL32_wSubclass);
+   stack = (LPSUBCLASS_INFO)GetPropW(hWnd, COMCTL32_wSubclass);
    if (!stack) {
       ERR ("Our sub classing stack got erased for %p!! Nothing we can do\n", hWnd);
       return 0;
@@ -1463,7 +1463,7 @@ LRESULT WINAPI DefSubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
     TRACE ("(%p, 0x%08x, 0x%08lx, 0x%08lx)\n", hWnd, uMsg, wParam, lParam);
 
     /* retrieve our little stack from the Properties */
-    stack = GetPropW (hWnd, COMCTL32_wSubclass);
+    stack = (LPSUBCLASS_INFO)GetPropW(hWnd, COMCTL32_wSubclass);
     if (!stack)
     {
         ERR ("Our sub classing stack got erased for %p!! Nothing we can do\n", hWnd);
@@ -1612,7 +1612,7 @@ void COMCTL32_DrawInsertMark(HDC hDC, const RECT *lpRect, COLORREF clrInsertMark
         {lCentre + 3, l2 - 1},
         {lCentre + 1, l2 - 3},
     };
-    hOldPen = SelectObject(hDC, hPen);
+    hOldPen = (HPEN)SelectObject(hDC, hPen);
     PolyPolyline(hDC, aptInsertMark, adwPolyPoints, ARRAY_SIZE(adwPolyPoints));
     SelectObject(hDC, hOldPen);
     DeleteObject(hPen);
@@ -1654,11 +1654,11 @@ void COMCTL32_EnsureBitmapSize(HBITMAP *pBitmap, int cxMinWidth, int cyMinHeight
 
     hdcNew = CreateCompatibleDC(NULL);
     hNewBitmap = CreateBitmap(cxNew, cyNew, bmp.bmPlanes, bmp.bmBitsPixel, NULL);
-    hNewDCBitmap = SelectObject(hdcNew, hNewBitmap);
-    hNewDCBrush = SelectObject(hdcNew, CreateSolidBrush(crBackground));
+    hNewDCBitmap =(HBITMAP)SelectObject(hdcNew, hNewBitmap);
+    hNewDCBrush =(HBRUSH)SelectObject(hdcNew, CreateSolidBrush(crBackground));
 
     hdcOld = CreateCompatibleDC(NULL);
-    hOldDCBitmap = SelectObject(hdcOld, *pBitmap);
+    hOldDCBitmap = (HBITMAP)SelectObject(hdcOld, *pBitmap);
 
     BitBlt(hdcNew, 0, 0, bmp.bmWidth, bmp.bmHeight, hdcOld, 0, 0, SRCCOPY);
     if (bmp.bmWidth < cxMinWidth)
@@ -1684,7 +1684,7 @@ void COMCTL32_GetFontMetrics(HFONT hFont, TEXTMETRICW *ptm)
     HDC hdc = GetDC(NULL);
     HFONT hOldFont;
 
-    hOldFont = SelectObject(hdc, hFont);
+    hOldFont = (HFONT)SelectObject(hdc, hFont);
     GetTextMetricsW(hdc, ptm);
     SelectObject(hdc, hOldFont);
     ReleaseDC(NULL, hdc);
@@ -1932,8 +1932,8 @@ HRESULT WINAPI LoadIconWithScaleDown(HINSTANCE hinst, const WCHAR *name, int cx,
     if (!name)
         return E_INVALIDARG;
 
-    *icon = LoadImageW(hinst, name, IMAGE_ICON, cx, cy,
-                       (hinst || IS_INTRESOURCE(name)) ? 0 : LR_LOADFROMFILE);
+    *icon = (HICON)LoadImageW(hinst, name, IMAGE_ICON, cx, cy,
+                             (hinst || IS_INTRESOURCE(name)) ? 0 : LR_LOADFROMFILE);
     if (!*icon)
         return HRESULT_FROM_WIN32(GetLastError());
 
