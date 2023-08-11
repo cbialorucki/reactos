@@ -21,7 +21,7 @@ list(APPEND SOURCE
     combo.c
     comboex.c
     comctl32undoc.c
-    commctrl.c
+    comctl32.cpp
     datetime.c
     dpa.c
     draglist.c
