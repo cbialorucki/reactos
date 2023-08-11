@@ -2,7 +2,7 @@
  * PROJECT:     ReactOS common controls
  * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
  * PURPOSE:     Main header file
- * COPYRIGHT:   Copyright 2023 Carl Bialorucki
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 
 #ifndef __WINE_COMCTL32_H
@@ -19,6 +19,10 @@
 #include "winnls.h"
 #include "commctrl.h"
 #include "windowsx.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // This is really ComCtl32 v5.82, the last one not supporting SxS
 #undef  COMCTL32_VERSION // Undefines what the PSDK gave to us
@@ -274,4 +278,7 @@ extern void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6) DECLSPEC_HIDDEN
 extern void THEMING_Uninitialize(void) DECLSPEC_HIDDEN;
 extern LRESULT THEMING_CallOriginalClass(HWND, UINT, WPARAM, LPARAM) DECLSPEC_HIDDEN;
 extern void THEMING_SetSubclassData(HWND, ULONG_PTR) DECLSPEC_HIDDEN;
+#ifdef __cplusplus
+}
+#endif
 #endif  /* __WINE_COMCTL32_H */

@@ -1,30 +1,10 @@
 /*
- * Listview control
- *
- * Copyright 1998, 1999 Eric Kohl
- * Copyright 1999 Luc Tourangeau
- * Copyright 2000 Jason Mawdsley
- * Copyright 2001 CodeWeavers Inc.
- * Copyright 2002 Dimitrie O. Paun
- * Copyright 2009-2015 Nikolay Sivov
- * Copyright 2009 Owen Rudge for CodeWeavers
- * Copyright 2012-2013 Daniel Jelinski
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- * TODO:
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Listview control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/* TODO:
  *
  * Default Message Processing
  *   -- WM_CREATE: create the icon and small icon image lists at this point only if
@@ -48,7 +28,7 @@
  *   -- LISTVIEW_StyleChanged doesn't handle some changes too well
  *
  * Speedups
- *   -- LISTVIEW_GetNextItem needs to be rewritten. It is currently
+ *   VERY IMPORTANT: -- LISTVIEW_GetNextItem needs to be rewritten. It is currently
  *      linear in the number of items in the list, and this is
  *      unacceptable for large lists.
  *   -- if list is sorted by item text LISTVIEW_InsertItemT could use
@@ -82,7 +62,7 @@
  *   -- LVS_EX_TWOCLICKACTIVATE
  *   -- LVS_EX_UNDERLINECOLD
  *   -- LVS_EX_UNDERLINEHOT
- *   
+ *
  * Notifications:
  *   -- LVN_BEGINSCROLL, LVN_ENDSCROLL
  *   -- LVN_GETINFOTIP

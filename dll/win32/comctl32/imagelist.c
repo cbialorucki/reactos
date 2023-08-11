@@ -1,28 +1,10 @@
 /*
- *  ImageList implementation
- *
- *  Copyright 1998 Eric Kohl
- *  Copyright 2000 Jason Mawdsley
- *  Copyright 2001, 2004 Michael Stefaniuc
- *  Copyright 2001 Charles Loep for CodeWeavers
- *  Copyright 2002 Dimitrie O. Paun
- *  Copyright 2009 Owen Rudge for CodeWeavers
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- *  TODO:
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     ImageList control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/*  TODO:
  *    - Add support for ILD_PRESERVEALPHA, ILD_SCALE, ILD_DPISCALE
  *    - Add support for ILS_GLOW, ILS_SHADOW
  *    - Thread-safe locking

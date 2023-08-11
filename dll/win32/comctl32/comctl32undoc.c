@@ -1,30 +1,15 @@
 /*
- * Undocumented functions from COMCTL32.DLL
- *
- * Copyright 1998 Eric Kohl
- *           1998 Juergen Schmied <j.schmied@metronet.de>
- *           2000 Eric Kohl for CodeWeavers
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Undocumented common controls
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/*
  * NOTES
  *     All of these functions are UNDOCUMENTED!! And I mean UNDOCUMENTED!!!!
  *     Do NOT rely on names or contents of undocumented structures and types!!!
  *     These functions are used by EXPLORER.EXE, IEXPLORE.EXE and
  *     COMCTL32.DLL (internally).
- *
  */
 #include "config.h"
 #include "wine/port.h"

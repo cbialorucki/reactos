@@ -1,33 +1,10 @@
 /*
- * Rebar control
- *
- * Copyright 1998, 1999 Eric Kohl
- * Copyright 2007, 2008 Mikolaj Zalewski
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- * NOTES
- *
- * This code was audited for completeness against the documented features
- * of Comctl32.dll version 6.0 on Oct. 19, 2004, by Robert Shearman.
- * 
- * Unless otherwise noted, we believe this code to be complete, as per
- * the specification mentioned above.
- * If you discover missing features or bugs please note them below.
- *
- * TODO
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Rebar control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/* TODO
  *   Styles:
  *   - RBS_DBLCLKTOGGLE
  *   - RBS_FIXEDORDER

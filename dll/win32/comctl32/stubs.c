@@ -1,3 +1,9 @@
+/*
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Common control stubs
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
 #include <windef.h>
 #include <reactos/debug.h>
 

@@ -1,25 +1,8 @@
 /*
- * String manipulation functions
- *
- * Copyright 1998 Eric Kohl
- *           1998 Juergen Schmied <j.schmied@metronet.de>
- *           2000 Eric Kohl for CodeWeavers
- * Copyright 2002 Jon Griffiths
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     String functions
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 
 #include "config.h"
@@ -49,10 +32,10 @@ WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
  *
  * NOTES
  *  Both this function and its Unicode counterpart are very inefficient. To
- *  fix this, CompareString must be completely implemented and optimised
+ *  fix this, CompareString must be completely implemented and optimized
  *  first. Then the core character test can be taken out of that function and
  *  placed here, so that it need never be called at all. Until then, do not
- *  attempt to optimise this code unless you are willing to test that it
+ *  attempt to optimize this code unless you are willing to test that it
  *  still performs correctly.
  */
 static BOOL COMCTL32_ChrCmpHelperA(WORD ch1, WORD ch2, DWORD dwFlags)

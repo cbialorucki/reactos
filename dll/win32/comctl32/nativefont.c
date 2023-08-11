@@ -1,23 +1,10 @@
 /*
- * Native Font control
- *
- * Copyright 1998, 1999 Eric Kohl
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- * NOTES
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Native font control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/* NOTES
  *   This is just a dummy control. An author is needed! Any volunteers?
  *   I will only improve this control once in a while.
  *     Eric <ekohl@abo.rhein-zeitung.de>
@@ -41,13 +28,12 @@ WINE_DEFAULT_DEBUG_CHANNEL(nativefont);
 
 typedef struct
 {
-    HWND     hwndSelf;        /* my own handle */
+    HWND hwndSelf;        /* my own handle */
 } NATIVEFONT_INFO;
 
 #define NATIVEFONT_GetInfoPtr(hwnd) ((NATIVEFONT_INFO *)GetWindowLongPtrW (hwnd, 0))
 
-static LRESULT
-NATIVEFONT_Create (HWND hwnd)
+static LRESULT NATIVEFONT_Create (HWND hwnd)
 {
     NATIVEFONT_INFO *infoPtr;
 
@@ -61,8 +47,7 @@ NATIVEFONT_Create (HWND hwnd)
     return 0;
 }
 
-static LRESULT
-NATIVEFONT_Destroy (NATIVEFONT_INFO *infoPtr)
+static LRESULT NATIVEFONT_Destroy (NATIVEFONT_INFO *infoPtr)
 {
     /* free control info data */
     SetWindowLongPtrW( infoPtr->hwndSelf, 0, 0 );
@@ -71,8 +56,7 @@ NATIVEFONT_Destroy (NATIVEFONT_INFO *infoPtr)
     return 0;
 }
 
-static LRESULT WINAPI
-NATIVEFONT_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+static LRESULT WINAPI NATIVEFONT_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     NATIVEFONT_INFO *infoPtr = NATIVEFONT_GetInfoPtr(hwnd);
 
@@ -109,8 +93,7 @@ NATIVEFONT_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 
-VOID
-NATIVEFONT_Register (void)
+VOID NATIVEFONT_Register (void)
 {
     WNDCLASSW wndClass;
 
@@ -127,8 +110,7 @@ NATIVEFONT_Register (void)
 }
 
 
-VOID
-NATIVEFONT_Unregister (void)
+VOID NATIVEFONT_Unregister (void)
 {
     UnregisterClassW (WC_NATIVEFONTCTLW, NULL);
 }

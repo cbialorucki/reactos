@@ -1,33 +1,10 @@
 /*
- * Tool tip control
- *
- * Copyright 1998, 1999 Eric Kohl
- * Copyright 2004 Robert Shearman
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- * NOTES
- *
- * This code was audited for completeness against the documented features
- * of Comctl32.dll version 6.0 on Sep. 08, 2004, by Robert Shearman.
- * 
- * Unless otherwise noted, we believe this code to be complete, as per
- * the specification mentioned above.
- * If you discover missing features or bugs please note them below.
- * 
- * TODO:
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Tooltip control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/* TODO:
  *   - Custom draw support.
  *   - Animation.
  *   - Links.
@@ -58,7 +35,6 @@
  * position every time it expires.  This is the role of timer
  * ID_TIMERLEAVE.
  *
- *
  * On entering a tool (detected in a relayed WM_MOUSEMOVE) we start
  * ID_TIMERSHOW, if this times out and we're still in the tool we show
  * the tip.  On showing a tip we start both ID_TIMERPOP and
@@ -78,7 +54,6 @@
  * this again will let us keep track of when the cursor leaves the
  * tool.
  *
- *
  * infoPtr->nTool is the tool the mouse was on on the last relayed MM
  * or timer expiry or -1 if the mouse was not on a tool.
  *
@@ -86,7 +61,6 @@
  * displaying text for or -1 if the tip is not shown.  Actually this
  * will only ever be infoPtr-nTool or -1, so it could be changed to a
  * BOOL.
- *
  */
 
 

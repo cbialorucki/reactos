@@ -1,32 +1,10 @@
 /*
- * Pager control
- *
- * Copyright 1998, 1999 Eric Kohl
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
- * NOTES
- *
- * This code was audited for completeness against the documented features
- * of Comctl32.dll version 6.0 on Sep. 18, 2004, by Robert Shearman.
- * 
- * Unless otherwise noted, we believe this code to be complete, as per
- * the specification mentioned above.
- * If you discover missing features or bugs please note them below.
- *
- * TODO:
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     Native font control
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
+ */
+/* TODO:
  *    Implement repetitive button press.
  *    Adjust arrow size relative to size of button.
  *    Allow border size changes.
@@ -43,11 +21,11 @@
  *
  * IMPLEMENTATION NOTES:
  *    This control uses WM_NCPAINT instead of WM_PAINT to paint itself
- *    as we need to scroll a child window. In order to do this we move 
+ *    as we need to scroll a child window. In order to do this we move
  *    the child window in the control's client area, using the clipping
- *    region that is automatically set around the client area. As the 
- *    entire client area now consists of the child window, we must 
- *    allocate space (WM_NCCALCSIZE) for the buttons and draw them as 
+ *    region that is automatically set around the client area. As the
+ *    entire client area now consists of the child window, we must
+ *    allocate space (WM_NCCALCSIZE) for the buttons and draw them as
  *    a non-client area (WM_NCPAINT).
  *       Robert Shearman <rob@codeweavers.com>
  */

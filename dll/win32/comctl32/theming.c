@@ -1,22 +1,8 @@
 /*
- * Theming - Initialization
- *
- * Copyright (c) 2005 by Frank Richter
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
- *
+ * PROJECT:     ReactOS common controls
+ * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
+ * PURPOSE:     "Theming - Initialization" (figure out how to name this professionally)
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 
 #include <stdarg.h>
@@ -109,9 +95,9 @@ void THEMING_Initialize (void)
 #endif
 {
     unsigned int i;
-    static const WCHAR subclassPropName[] = 
+    static const WCHAR subclassPropName[] =
         { 'C','C','3','2','T','h','e','m','i','n','g','S','u','b','C','l',0 };
-    static const WCHAR refDataPropName[] = 
+    static const WCHAR refDataPropName[] =
         { 'C','C','3','2','T','h','e','m','i','n','g','D','a','t','a',0 };
 #ifdef __REACTOS__ /* r73803 */
     ULONG_PTR ulCookie;
@@ -150,10 +136,10 @@ void THEMING_Initialize (void)
         class.style |= CS_GLOBALCLASS;
         class.hInstance = COMCTL32_hModule;
 #endif
-        
+
         if (!class.lpfnWndProc)
         {
-            ERR("Missing proc for class %s\n", 
+            ERR("Missing proc for class %s\n",
                 debugstr_w (subclasses[i].className));
             continue;
         }
@@ -172,7 +158,7 @@ void THEMING_Initialize (void)
         }
         else
         {
-            TRACE("Re-registered class %s\n", 
+            TRACE("Re-registered class %s\n",
                 debugstr_w (subclasses[i].className));
         }
 

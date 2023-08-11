@@ -2,7 +2,7 @@
  * PROJECT:     ReactOS common controls
  * LICENSE:     LGPL-2.1-or-later (https://spdx.org/licenses/LGPL-2.1-or-later)
  * PURPOSE:     Main DLL entry point
- * COPYRIGHT:   Copyright 2023 Carl Bialorucki
+ * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 
 #include <stdarg.h>
@@ -21,6 +21,10 @@
 #include "shlwapi.h"
 #include "comctl32.h"
 #include "wine/debug.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 WINE_DEFAULT_DEBUG_CHANNEL(comctl32);
 
@@ -512,10 +516,9 @@ MenuHelp (UINT uMsg, WPARAM wParam, LPARAM lParam, HMENU hMainMenu, HINSTANCE hI
  *     Each subsequent pair consists of a menu id and control id.
  */
 
-BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPUINT lpInfo)
+BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPINT lpInfo)
 {
-    LPUINT lpMenuId;
-    //LPINT lpMenuId;
+    LPINT lpMenuId;
 
     //TRACE("%p, %lx, %p\n", hwnd, uFlags, lpInfo);
 
@@ -527,7 +530,7 @@ BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPUINT lpInfo)
 
     /* search for control */
     lpMenuId = &lpInfo[2];
-    while (*lpMenuId != uFlags)
+    while ((UINT_PTR)*lpMenuId != uFlags)
 	    lpMenuId += 2;
 
     if (GetMenuState((HMENU)(DWORD_PTR)lpInfo[1], uFlags, MF_BYCOMMAND) & MFS_CHECKED)
@@ -1967,3 +1970,6 @@ HRESULT WINAPI LoadIconMetric(HINSTANCE hinst, const WCHAR *name, int size, HICO
 
     return LoadIconWithScaleDown(hinst, name, cx, cy, icon);
 }
+#ifdef __cplusplus
+}
+#endif
