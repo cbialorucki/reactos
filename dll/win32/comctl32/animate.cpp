@@ -26,10 +26,10 @@ WINE_DEFAULT_DEBUG_CHANNEL(animate);
 
 static struct {
     HMODULE	hModule;
-    HIC         (WINAPI *fnICOpen)(DWORD, DWORD, UINT);
-    LRESULT     (WINAPI *fnICClose)(HIC);
-    LRESULT     (WINAPI *fnICSendMessage)(HIC, UINT, DWORD_PTR, DWORD_PTR);
-    DWORD       (WINAPIV *fnICDecompress)(HIC,DWORD,LPBITMAPINFOHEADER,LPVOID,LPBITMAPINFOHEADER,LPVOID);
+    HIC (WINAPI *fnICOpen)(DWORD, DWORD, UINT);
+    LRESULT (WINAPI *fnICClose)(HIC);
+    LRESULT (WINAPI *fnICSendMessage)(HIC, UINT, DWORD_PTR, DWORD_PTR);
+    DWORD (WINAPIV *fnICDecompress)(HIC,DWORD,LPBITMAPINFOHEADER,LPVOID,LPBITMAPINFOHEADER,LPVOID);
 } fnIC;
 
 typedef struct
@@ -78,7 +78,7 @@ static void ANIMATE_Notify(const ANIMATE_INFO *infoPtr, UINT notif)
 
 static BOOL ANIMATE_LoadResW(ANIMATE_INFO *infoPtr, HINSTANCE hInst, LPCWSTR lpName)
 {
-    static const WCHAR aviW[] = { 'A', 'V', 'I', 0 };
+    static const WCHAR aviW[] = L"AVI";
     HRSRC 	hrsrc;
     MMIOINFO	mminfo;
     LPVOID	lpAvi;
@@ -97,18 +97,17 @@ static BOOL ANIMATE_LoadResW(ANIMATE_INFO *infoPtr, HINSTANCE hInst, LPCWSTR lpN
 
     memset(&mminfo, 0, sizeof(mminfo));
     mminfo.fccIOProc = FOURCC_MEM;
-    mminfo.pchBuffer = lpAvi;
+    mminfo.pchBuffer = (HPSTR)lpAvi;
     mminfo.cchBuffer = SizeofResource(hInst, hrsrc);
     infoPtr->hMMio = mmioOpenW(NULL, &mminfo, MMIO_READ);
-    if (!infoPtr->hMMio) 
+    if (!infoPtr->hMMio)
     {
-	FreeResource(infoPtr->hRes);
-	return FALSE;
+        FreeResource(infoPtr->hRes);
+        return FALSE;
     }
 
     return TRUE;
 }
-
 
 static BOOL ANIMATE_LoadFileW(ANIMATE_INFO *infoPtr, LPWSTR lpName)
 {
@@ -117,7 +116,6 @@ static BOOL ANIMATE_LoadFileW(ANIMATE_INFO *infoPtr, LPWSTR lpName)
     if(!infoPtr->hMMio) return FALSE;
     return TRUE;
 }
-
 
 static BOOL ANIMATE_DoStop(ANIMATE_INFO *infoPtr)
 {
@@ -210,7 +208,7 @@ static void ANIMATE_TransparentBlt(ANIMATE_INFO const *infoPtr, HDC hdcDest, HDC
     /* create a transparency mask */
     hdcMask = CreateCompatibleDC(hdcDest);
     hbmMask = CreateBitmap(infoPtr->inbih->biWidth, infoPtr->inbih->biHeight, 1,1,NULL);
-    hbmOld = SelectObject(hdcMask, hbmMask);
+    hbmOld = (HBITMAP)SelectObject(hdcMask, hbmMask);
 
     SetBkColor(hdcSource,infoPtr->transparentColor);
     BitBlt(hdcMask,0,0,infoPtr->inbih->biWidth, infoPtr->inbih->biHeight,hdcSource,0,0,SRCCOPY);
@@ -254,7 +252,8 @@ static BOOL ANIMATE_PaintFrame(ANIMATE_INFO* infoPtr, HDC hDC)
 
         nWidth = infoPtr->outbih->biWidth;
         nHeight = infoPtr->outbih->biHeight;
-    } 
+    }
+
     else
     {
         pBitmapData = infoPtr->indata;
@@ -270,7 +269,7 @@ static BOOL ANIMATE_PaintFrame(ANIMATE_INFO* infoPtr, HDC hDC)
     }
 
     hdcMem = CreateCompatibleDC(hDC);
-    hbmOld = SelectObject(hdcMem, infoPtr->hbmPrevFrame);
+    hbmOld = (HBITMAP)SelectObject(hdcMem, infoPtr->hbmPrevFrame);
 
     SetDIBits(hdcMem, infoPtr->hbmPrevFrame, 0, nHeight, pBitmapData, pBitmapInfo, DIB_RGB_COLORS);
 
@@ -288,13 +287,13 @@ static BOOL ANIMATE_PaintFrame(ANIMATE_INFO* infoPtr, HDC hDC)
     {
         HDC hdcFinal = CreateCompatibleDC(hDC);
         HBITMAP hbmFinal = CreateCompatibleBitmap(hDC,nWidth, nHeight);
-        HBITMAP hbmOld2 = SelectObject(hdcFinal, hbmFinal);
+        HBITMAP hbmOld2 = (HBITMAP)SelectObject(hdcFinal, hbmFinal);
         RECT rect;
 
         SetRect(&rect, 0, 0, nWidth, nHeight);
 
         if(!infoPtr->hbrushBG)
-            infoPtr->hbrushBG = GetCurrentObject(hDC, OBJ_BRUSH);
+            infoPtr->hbrushBG = (HBRUSH)GetCurrentObject(hDC, OBJ_BRUSH);
 
         FillRect(hdcFinal, &rect, infoPtr->hbrushBG);
         ANIMATE_TransparentBlt(infoPtr, hdcFinal, hdcMem);
@@ -326,24 +325,23 @@ static BOOL ANIMATE_DrawFrame(ANIMATE_INFO *infoPtr, HDC hDC)
     TRACE("Drawing frame %d (loop %d)\n", infoPtr->currFrame, infoPtr->nLoop);
 
     mmioSeek(infoPtr->hMMio, infoPtr->lpIndex[infoPtr->currFrame], SEEK_SET);
-    mmioRead(infoPtr->hMMio, infoPtr->indata, infoPtr->ash.dwSuggestedBufferSize);
+    mmioRead(infoPtr->hMMio, (HPSTR)infoPtr->indata, infoPtr->ash.dwSuggestedBufferSize);
 
     if (infoPtr->hic &&
 	fnIC.fnICDecompress(infoPtr->hic, 0, infoPtr->inbih, infoPtr->indata,
-		     infoPtr->outbih, infoPtr->outdata) != ICERR_OK) {
-	WARN("Decompression error\n");
-	return FALSE;
+		     infoPtr->outbih, infoPtr->outdata) != ICERR_OK)
+    {
+        WARN("Decompression error\n");
+        return FALSE;
     }
 
     ANIMATE_PaintFrame(infoPtr, hDC);
 
-    if (infoPtr->currFrame++ >= infoPtr->nToFrame) {
-	infoPtr->currFrame = infoPtr->nFromFrame;
-	if (infoPtr->nLoop != -1) {
-	    if (--infoPtr->nLoop == 0) {
-		ANIMATE_DoStop(infoPtr);
-	    }
-	}
+    if (infoPtr->currFrame++ >= infoPtr->nToFrame)
+    {
+	    infoPtr->currFrame = infoPtr->nFromFrame;
+        if (infoPtr->nLoop != -1 && --infoPtr->nLoop == 0)
+            ANIMATE_DoStop(infoPtr);
     }
 
     return TRUE;
@@ -367,7 +365,7 @@ static LRESULT ANIMATE_Timer(ANIMATE_INFO *infoPtr)
 
 static DWORD CALLBACK ANIMATE_AnimationThread(LPVOID ptr_)
 {
-    ANIMATE_INFO *infoPtr = ptr_;
+    ANIMATE_INFO *infoPtr = (ANIMATE_INFO*)ptr_;
     HANDLE event;
     DWORD timeout;
 
@@ -411,13 +409,11 @@ static LRESULT ANIMATE_Play(ANIMATE_INFO *infoPtr, UINT cRepeat, WORD wFrom, WOR
     TRACE("(repeat=%d from=%d to=%d);\n",
 	  infoPtr->nLoop, infoPtr->nFromFrame, infoPtr->nToFrame);
 
-    if (infoPtr->nFromFrame >= infoPtr->mah.dwTotalFrames &&
-        (SHORT)infoPtr->nFromFrame < 0)
+    if ((DWORD)infoPtr->nFromFrame >= infoPtr->mah.dwTotalFrames && (SHORT)infoPtr->nFromFrame < 0)
         infoPtr->nFromFrame = 0;
 
-    if (infoPtr->nFromFrame > infoPtr->nToFrame ||
-	infoPtr->nToFrame >= infoPtr->mah.dwTotalFrames)
-	return FALSE;
+    if (infoPtr->nFromFrame > infoPtr->nToFrame || (DWORD)infoPtr->nToFrame >= infoPtr->mah.dwTotalFrames)
+	    return FALSE;
 
     infoPtr->currFrame = infoPtr->nFromFrame;
 
@@ -436,20 +432,20 @@ static LRESULT ANIMATE_Play(ANIMATE_INFO *infoPtr, UINT cRepeat, WORD wFrom, WOR
         return TRUE;
     }
 
-    if (infoPtr->dwStyle & ACS_TIMER) 
+    if (infoPtr->dwStyle & ACS_TIMER)
     {
-	TRACE("Using a timer\n");
-	/* create a timer to display AVI */
-	infoPtr->uTimer = SetTimer(infoPtr->hwndSelf, 1, 
-                                   infoPtr->mah.dwMicroSecPerFrame / 1000, NULL);
-    } 
-    else 
+        TRACE("Using a timer\n");
+        /* create a timer to display AVI */
+        infoPtr->uTimer = SetTimer(infoPtr->hwndSelf, 1, infoPtr->mah.dwMicroSecPerFrame / 1000, NULL);
+    }
+    else
     {
-	TRACE("Using an animation thread\n");
+	    TRACE("Using an animation thread\n");
         infoPtr->hStopEvent = CreateEventW( NULL, TRUE, FALSE, NULL );
         infoPtr->hThread = CreateThread(0, 0, ANIMATE_AnimationThread,
                                         infoPtr, 0, &infoPtr->threadId);
-        if(!infoPtr->hThread) return FALSE;
+        if(!infoPtr->hThread)
+            return FALSE;
 
     }
 
@@ -545,15 +541,17 @@ static BOOL ANIMATE_GetAviInfo(ANIMATE_INFO *infoPtr)
     mmioAscend(infoPtr->hMMio, &mmckInfo, 0);
 
     mmckInfo.ckid = mmioFOURCC('s', 't', 'r', 'f');
-    if (mmioDescend(infoPtr->hMMio, &mmckInfo, &mmckList, MMIO_FINDCHUNK) != 0) {
-	WARN("Can't find 'strh' chunk\n");
-	return FALSE;
+    if (mmioDescend(infoPtr->hMMio, &mmckInfo, &mmckList, MMIO_FINDCHUNK) != 0)
+    {
+        WARN("Can't find 'strh' chunk\n");
+        return FALSE;
     }
 
-    infoPtr->inbih = heap_alloc_zero(mmckInfo.cksize);
-    if (!infoPtr->inbih) {
-	WARN("Can't alloc input BIH\n");
-	return FALSE;
+    infoPtr->inbih = (LPBITMAPINFOHEADER)heap_alloc_zero(mmckInfo.cksize);
+    if (!infoPtr->inbih)
+    {
+        WARN("Can't alloc input BIH\n");
+        return FALSE;
     }
 
     mmioRead(infoPtr->hMMio, (LPSTR)infoPtr->inbih, mmckInfo.cksize);
@@ -576,8 +574,7 @@ static BOOL ANIMATE_GetAviInfo(ANIMATE_INFO *infoPtr)
 
 #if 0
     /* an AVI has 0 or 1 video stream, and to be animated should not contain
-     * an audio stream, so only one strl is allowed
-     */
+     * an audio stream, so only one strl is allowed*/
     mmckList.fccType = mmioFOURCC('s', 't', 'r', 'l');
     if (mmioDescend(infoPtr->hMMio, &mmckList, &mmckHead, MMIO_FINDLIST) == 0) {
 	WARN("There should be a single 'strl' list\n");
@@ -596,36 +593,38 @@ static BOOL ANIMATE_GetAviInfo(ANIMATE_INFO *infoPtr)
     }
 
     /* FIXME: should handle the 'rec ' LIST when present */
-
-    infoPtr->lpIndex = heap_alloc_zero(infoPtr->mah.dwTotalFrames * sizeof(DWORD));
-    if (!infoPtr->lpIndex) 
-	return FALSE;
+    infoPtr->lpIndex = (LPDWORD)heap_alloc_zero(infoPtr->mah.dwTotalFrames * sizeof(DWORD));
+    if (!infoPtr->lpIndex)
+	    return FALSE;
 
     numFrame = insize = 0;
-    while (mmioDescend(infoPtr->hMMio, &mmckInfo, &mmckList, 0) == 0 &&
-	   numFrame < infoPtr->mah.dwTotalFrames) {
-	infoPtr->lpIndex[numFrame] = mmckInfo.dwDataOffset;
-	if (insize < mmckInfo.cksize)
-	    insize = mmckInfo.cksize;
-	numFrame++;
-	mmioAscend(infoPtr->hMMio, &mmckInfo, 0);
+    while (mmioDescend(infoPtr->hMMio, &mmckInfo, &mmckList, 0) == 0 && numFrame < infoPtr->mah.dwTotalFrames)
+    {
+        infoPtr->lpIndex[numFrame] = mmckInfo.dwDataOffset;
+        if (insize < mmckInfo.cksize)
+            insize = mmckInfo.cksize;
+        numFrame++;
+        mmioAscend(infoPtr->hMMio, &mmckInfo, 0);
     }
-    if (numFrame != infoPtr->mah.dwTotalFrames) {
-	WARN("Found %d frames (/%d)\n", numFrame, infoPtr->mah.dwTotalFrames);
-	return FALSE;
+
+    if (numFrame != infoPtr->mah.dwTotalFrames)
+    {
+        WARN("Found %d frames (/%d)\n", numFrame, infoPtr->mah.dwTotalFrames);
+        return FALSE;
     }
-    if (insize > infoPtr->ash.dwSuggestedBufferSize) {
-	WARN("insize=%d suggestedSize=%d\n", insize, infoPtr->ash.dwSuggestedBufferSize);
-	infoPtr->ash.dwSuggestedBufferSize = insize;
+
+    if (insize > infoPtr->ash.dwSuggestedBufferSize)
+    {
+        WARN("insize=%d suggestedSize=%d\n", insize, infoPtr->ash.dwSuggestedBufferSize);
+        infoPtr->ash.dwSuggestedBufferSize = insize;
     }
 
     infoPtr->indata = heap_alloc_zero(infoPtr->ash.dwSuggestedBufferSize);
-    if (!infoPtr->indata) 
-	return FALSE;
+    if (!infoPtr->indata)
+	    return FALSE;
 
     return TRUE;
 }
-
 
 static BOOL ANIMATE_GetAviCodec(ANIMATE_INFO *infoPtr)
 {
@@ -650,7 +649,7 @@ static BOOL ANIMATE_GetAviCodec(ANIMATE_INFO *infoPtr)
     outSize = fnIC.fnICSendMessage(infoPtr->hic, ICM_DECOMPRESS_GET_FORMAT,
 			    (DWORD_PTR)infoPtr->inbih, 0L);
 
-    infoPtr->outbih = heap_alloc_zero(outSize);
+    infoPtr->outbih = (LPBITMAPINFOHEADER)heap_alloc_zero(outSize);
     if (!infoPtr->outbih)
 	return FALSE;
 
@@ -662,7 +661,7 @@ static BOOL ANIMATE_GetAviCodec(ANIMATE_INFO *infoPtr)
     }
 
     infoPtr->outdata = heap_alloc_zero(infoPtr->outbih->biSizeImage);
-    if (!infoPtr->outdata) 
+    if (!infoPtr->outdata)
 	return FALSE;
 
     if (fnIC.fnICSendMessage(infoPtr->hic, ICM_DECOMPRESS_BEGIN,
@@ -755,15 +754,17 @@ static BOOL ANIMATE_OpenA(ANIMATE_INFO *infoPtr, HINSTANCE hInstance, LPSTR lpsz
         return ANIMATE_OpenW(infoPtr, hInstance, (LPWSTR)lpszName);
 
     len = MultiByteToWideChar(CP_ACP, 0, lpszName, -1, NULL, 0);
-    lpwszName = heap_alloc(len * sizeof(WCHAR));
-    if (!lpwszName) return FALSE;
+    lpwszName = (LPWSTR)heap_alloc(len * sizeof(WCHAR));
+
+    if (!lpwszName)
+        return FALSE;
+
     MultiByteToWideChar(CP_ACP, 0, lpszName, -1, lpwszName, len);
 
     result = ANIMATE_OpenW(infoPtr, hInstance, lpwszName);
-    heap_free (lpwszName);
+    heap_free(lpwszName);
     return result;
 }
-
 
 static BOOL ANIMATE_Stop(ANIMATE_INFO *infoPtr)
 {
@@ -775,26 +776,27 @@ static BOOL ANIMATE_Stop(ANIMATE_INFO *infoPtr)
     return TRUE;
 }
 
-
 static BOOL ANIMATE_Create(HWND hWnd, const CREATESTRUCTW *lpcs)
 {
-    static const WCHAR msvfw32W[] = { 'm', 's', 'v', 'f', 'w', '3', '2', '.', 'd', 'l', 'l', 0 };
+    static const WCHAR msvfw32W[] = L"msvfw32.dll";
     ANIMATE_INFO *infoPtr;
 
     if (!fnIC.hModule)
     {
-	fnIC.hModule = LoadLibraryW(msvfw32W);
-	if (!fnIC.hModule) return FALSE;
+	    fnIC.hModule = LoadLibraryW(msvfw32W);
+        if (!fnIC.hModule)
+            return FALSE;
 
-	fnIC.fnICOpen        = (void*)GetProcAddress(fnIC.hModule, "ICOpen");
-	fnIC.fnICClose       = (void*)GetProcAddress(fnIC.hModule, "ICClose");
-	fnIC.fnICSendMessage = (void*)GetProcAddress(fnIC.hModule, "ICSendMessage");
-	fnIC.fnICDecompress  = (void*)GetProcAddress(fnIC.hModule, "ICDecompress");
+        fnIC.fnICOpen = reinterpret_cast<HIC(WINAPI *)(DWORD, DWORD, UINT)>(GetProcAddress(fnIC.hModule, "ICOpen"));
+        fnIC.fnICClose = reinterpret_cast<LRESULT(WINAPI *)(HIC)>(GetProcAddress(fnIC.hModule, "ICClose"));
+        fnIC.fnICSendMessage = reinterpret_cast<LRESULT(WINAPI *)(HIC, UINT, DWORD_PTR, DWORD_PTR)>(GetProcAddress(fnIC.hModule, "ICSendMessage"));
+        fnIC.fnICDecompress = reinterpret_cast<DWORD(WINAPIV *)(HIC, DWORD, LPBITMAPINFOHEADER, LPVOID, LPBITMAPINFOHEADER, LPVOID)>(GetProcAddress(fnIC.hModule, "ICDecompress"));
     }
 
     /* allocate memory for info structure */
-    infoPtr = heap_alloc_zero(sizeof(*infoPtr));
-    if (!infoPtr) return FALSE;
+    infoPtr = (ANIMATE_INFO*)heap_alloc_zero(sizeof(*infoPtr));
+    if (!infoPtr)
+        return FALSE;
 
     /* store crossref hWnd <-> info structure */
     SetWindowLongPtrW(hWnd, 0, (DWORD_PTR)infoPtr);
@@ -828,7 +830,6 @@ static LRESULT ANIMATE_Destroy(ANIMATE_INFO *infoPtr)
     return 0;
 }
 
-
 static BOOL ANIMATE_EraseBackground(ANIMATE_INFO const *infoPtr, HDC hdc)
 {
     RECT rect;
@@ -837,25 +838,24 @@ static BOOL ANIMATE_EraseBackground(ANIMATE_INFO const *infoPtr, HDC hdc)
     hBrush = (HBRUSH)SendMessageW(infoPtr->hwndNotify, WM_CTLCOLORSTATIC,
                                   (WPARAM)hdc, (LPARAM)infoPtr->hwndSelf);
     GetClientRect(infoPtr->hwndSelf, &rect);
-    FillRect(hdc, &rect, hBrush ? hBrush : GetCurrentObject(hdc, OBJ_BRUSH));
+    FillRect(hdc, &rect, hBrush ? hBrush : (HBRUSH)GetCurrentObject(hdc, OBJ_BRUSH));
 
     return TRUE;
 }
-
 
 static LRESULT ANIMATE_StyleChanged(ANIMATE_INFO *infoPtr, WPARAM wStyleType, const STYLESTRUCT *lpss)
 {
     TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
           wStyleType, lpss->styleOld, lpss->styleNew);
 
-    if (wStyleType != GWL_STYLE) return 0;
-  
+    if (wStyleType != (WPARAM)GWL_STYLE)
+        return 0;
+
     infoPtr->dwStyle = lpss->styleNew;
 
     InvalidateRect(infoPtr->hwndSelf, NULL, TRUE);
     return 0;
 }
-
 
 static LRESULT WINAPI ANIMATE_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -961,7 +961,6 @@ void ANIMATE_Register(void)
 
     RegisterClassW(&wndClass);
 }
-
 
 void ANIMATE_Unregister(void)
 {

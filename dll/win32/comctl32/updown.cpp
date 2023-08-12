@@ -891,7 +891,7 @@ static LRESULT WINAPI UpDownWindowProc(HWND hwnd, UINT message, WPARAM wParam, L
 	    {
 	    CREATESTRUCTW *pcs = (CREATESTRUCTW*)lParam;
 
-            infoPtr = heap_alloc_zero(sizeof(*infoPtr));
+            infoPtr = (UPDOWN_INFO*)heap_alloc_zero(sizeof(*infoPtr));
 	    SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
 	    /* initialize the info struct */
@@ -944,7 +944,7 @@ static LRESULT WINAPI UpDownWindowProc(HWND hwnd, UINT message, WPARAM wParam, L
 	    break;
 
         case WM_STYLECHANGED:
-            if (wParam == GWL_STYLE) {
+            if (wParam == (WPARAM)GWL_STYLE) {
                 infoPtr->dwStyle = ((LPSTYLESTRUCT)lParam)->styleNew;
 	        InvalidateRect (infoPtr->Self, NULL, FALSE);
             }
@@ -988,7 +988,7 @@ static LRESULT WINAPI UpDownWindowProc(HWND hwnd, UINT message, WPARAM wParam, L
 		temp = infoPtr->AccelIndex == -1 ? 1 : infoPtr->AccelVect[infoPtr->AccelIndex].nInc;
 		UPDOWN_DoAction(infoPtr, temp, infoPtr->Flags & FLAG_ARROW);
 
-		if(infoPtr->AccelIndex != -1 && infoPtr->AccelIndex < infoPtr->AccelCount-1) {
+		if(infoPtr->AccelIndex != -1 && infoPtr->AccelIndex < (INT)(infoPtr->AccelCount - 1)) {
 		    KillTimer(hwnd, TIMER_ACCEL);
 		    infoPtr->AccelIndex++; /* move to the next accel info */
 		    temp = infoPtr->AccelVect[infoPtr->AccelIndex].nSec * 1000 + 1;
@@ -1056,7 +1056,7 @@ static LRESULT WINAPI UpDownWindowProc(HWND hwnd, UINT message, WPARAM wParam, L
 		infoPtr->AccelVect  = 0;
       	    }
 	    if(wParam==0) return TRUE;
-	    infoPtr->AccelVect = heap_alloc(wParam*sizeof(UDACCEL));
+	    infoPtr->AccelVect = (UDACCEL*)heap_alloc(wParam*sizeof(UDACCEL));
 	    if(!infoPtr->AccelVect) return FALSE;
 	    memcpy(infoPtr->AccelVect, (void*)lParam, wParam*sizeof(UDACCEL));
             infoPtr->AccelCount = wParam;
@@ -1081,7 +1081,7 @@ static LRESULT WINAPI UpDownWindowProc(HWND hwnd, UINT message, WPARAM wParam, L
 		WPARAM old_base = infoPtr->Base;
 		infoPtr->Base = wParam;
 
-		if (old_base != infoPtr->Base)
+		if ((INT)old_base != infoPtr->Base)
 		    UPDOWN_SetBuddyInt(infoPtr);
 
 		return old_base;

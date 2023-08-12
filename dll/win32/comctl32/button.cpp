@@ -65,9 +65,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(button);
 #define BUTTON_BTNPRESSED      0x40
 #define BUTTON_UNKNOWN2        0x20
 #define BUTTON_UNKNOWN3        0x10
-#ifdef __REACTOS__
-#define BUTTON_BMCLICK         0x100 // ReactOS Need to up to wine!
-#endif
+#define BUTTON_BMCLICK         0x100
 
 #define BUTTON_NOTIFY_PARENT(hWnd, code) \
     do { /* Notify parent which has created this button control */ \
@@ -89,11 +87,9 @@ typedef struct _BUTTON_INFO
         HANDLE  image;
     } u;
 
-#ifdef __REACTOS__
     DWORD ui_state;
     RECT rcTextMargin;
     BUTTON_IMAGELIST imlData;
-#endif
 } BUTTON_INFO;
 
 static UINT BUTTON_CalcLabelRect( const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc );
@@ -158,22 +154,11 @@ static const pfPaint btnPaintFunc[MAX_BTN_TYPE] =
     PB_Paint     /* BS_DEFCOMMANDLINK */
 };
 
-
-#ifdef __REACTOS__ /* r73885 */
 typedef void (*pfThemedPaint)( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
 
 static void PB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
 static void CB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
 static void GB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
-
-#else
-typedef void (*pfThemedPaint)( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused);
-
-static void PB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused);
-static void CB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused);
-static void GB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused);
-
-#endif
 
 static const pfThemedPaint btnThemedPaintFunc[MAX_BTN_TYPE] =
 {
@@ -200,24 +185,11 @@ static inline UINT get_button_type( LONG window_style )
     return (window_style & BS_TYPEMASK);
 }
 
-#ifndef __REACTOS__
-/* paint a button of any type */
-static inline void paint_button( BUTTON_INFO *infoPtr, LONG style, UINT action )
-{
-    if (btnPaintFunc[style] && IsWindowVisible(infoPtr->hwnd))
-    {
-        HDC hdc = GetDC( infoPtr->hwnd );
-        btnPaintFunc[style]( infoPtr, hdc, action );
-        ReleaseDC( infoPtr->hwnd, hdc );
-    }
-}
-#endif
-
 /* retrieve the button text; returned buffer must be freed by caller */
 static inline WCHAR *get_button_text( const BUTTON_INFO *infoPtr )
 {
     INT len = GetWindowTextLengthW( infoPtr->hwnd );
-    WCHAR *buffer = heap_alloc( (len + 1) * sizeof(WCHAR) );
+    WCHAR *buffer = (WCHAR*)heap_alloc((len + 1) * sizeof(WCHAR));
     if (buffer)
         GetWindowTextW( infoPtr->hwnd, buffer, len + 1 );
     return buffer;
@@ -292,8 +264,6 @@ static UINT BUTTON_BStoDT( DWORD style, DWORD ex_style )
     return dtStyle;
 }
 
-
-#ifdef __REACTOS__
 BOOL BUTTON_PaintWithTheme(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hParamDC, LPARAM prfFlag)
 {
     DWORD dwStyle;
@@ -322,11 +292,11 @@ BOOL BUTTON_PaintWithTheme(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hParamD
 
     if(dwStyle & WS_DISABLED)
         drawState = STATE_DISABLED;
-    else if(infoPtr->state & BST_PUSHED) 
+    else if(infoPtr->state & BST_PUSHED)
         drawState = STATE_PRESSED;
     else if ((dwStyle & BS_PUSHLIKE) && (infoPtr->state & (BST_CHECKED|BST_INDETERMINATE))) 
         drawState = STATE_PRESSED;
-    else if(infoPtr->state & BST_HOT) 
+    else if(infoPtr->state & BST_HOT)
         drawState = STATE_HOT;
     else if((infoPtr->state & BST_FOCUS) || (dwStyle & BS_DEFPUSHBUTTON))
         drawState = STATE_DEFAULTED;
@@ -410,13 +380,13 @@ BOOL BUTTON_GetIdealSize(BUTTON_INFO *infoPtr, HTHEME theme, SIZE* psize)
         {
             hFont = CreateFontIndirectW(&logfont);
             if(hFont)
-                hPrevFont = SelectObject( hdc, hFont );
+                hPrevFont = (HFONT)SelectObject(hdc, hFont);
         }
     }
     else
     {
         if (infoPtr->font)
-            hPrevFont = SelectObject( hdc, infoPtr->font );
+            hPrevFont = (HFONT)SelectObject(hdc, infoPtr->font);
     }
 
     GetTextExtentPoint32W(hdc, text, wcslen(text), &TextSize);
@@ -465,7 +435,7 @@ BOOL BUTTON_GetIdealSize(BUTTON_INFO *infoPtr, HTHEME theme, SIZE* psize)
 cleanup:
     if (hFont)
         DeleteObject(hFont);
-    if (text) 
+    if (text)
         HeapFree( GetProcessHeap(), 0, text );
     if (hdc)
         ReleaseDC(infoPtr->hwnd, hdc);
@@ -518,7 +488,7 @@ BOOL BUTTON_DrawIml(HDC hDC, const BUTTON_IMAGELIST *pimlData, RECT *prc, BOOL b
         return TRUE;
 
     count = ImageList_GetImageCount(pimlData->himl);
-    
+
     if (count == 1)
         index = 0;
     else if (index >= count)
@@ -561,7 +531,7 @@ static BOOL button_update_uistate(BUTTON_INFO *infoPtr)
 {
     LONG flags = DefWindowProcW(infoPtr->hwnd, WM_QUERYUISTATE, 0, 0);
 
-    if (infoPtr->ui_state != flags)
+    if ((LONG)infoPtr->ui_state != flags)
     {
         infoPtr->ui_state = flags;
         return TRUE;
@@ -569,7 +539,6 @@ static BOOL button_update_uistate(BUTTON_INFO *infoPtr)
 
     return FALSE;
 }
-#endif
 
 static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -609,22 +578,14 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         }
 
     case WM_ENABLE:
-#ifndef __REACTOS__
-        theme = GetWindowTheme( hWnd );
-        if (theme)
-            RedrawWindow( hWnd, NULL, NULL, RDW_FRAME | RDW_INVALIDATE | RDW_UPDATENOW );
-        else
-#endif
             paint_button( infoPtr, btn_type, ODA_DRAWENTIRE );
         break;
 
     case WM_NCCREATE:
-        infoPtr = heap_alloc_zero( sizeof(*infoPtr) );
+        infoPtr = (BUTTON_INFO*)heap_alloc_zero(sizeof(*infoPtr));
         SetWindowLongPtrW( hWnd, 0, (LONG_PTR)infoPtr );
         infoPtr->hwnd = hWnd;
-#ifdef __REACTOS__
         SetRect(&infoPtr->rcTextMargin, 1,1,1,1);
-#endif
         return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 
     case WM_NCDESTROY:
@@ -655,9 +616,7 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         theme = GetWindowTheme( hWnd );
         CloseThemeData( theme );
         OpenThemeData( hWnd, WC_BUTTONW );
-#ifdef __REACTOS__
         InvalidateRect(hWnd, NULL, TRUE);
-#endif
         break;
 
     case WM_ERASEBKGND:
@@ -686,32 +645,12 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         theme = GetWindowTheme( hWnd );
         hdc = wParam ? (HDC)wParam : BeginPaint( hWnd, &ps );
 
-#ifdef __REACTOS__
         if (theme && BUTTON_PaintWithTheme(theme, infoPtr, hdc, uMsg == WM_PRINTCLIENT ? lParam : 0))
         {
             if ( !wParam ) EndPaint( hWnd, &ps );
             return 0;
         }
-#else
-        if (theme && btnThemedPaintFunc[btn_type])
-        {
-            ButtonState drawState;
-            UINT dtflags;
 
-            if (IsWindowEnabled( hWnd ))
-            {
-                if (infoPtr->state & BST_PUSHED) drawState = STATE_PRESSED;
-                else if (infoPtr->state & BST_HOT) drawState = STATE_HOT;
-                else if (infoPtr->state & BST_FOCUS) drawState = STATE_DEFAULTED;
-                else drawState = STATE_NORMAL;
-            }
-            else
-                drawState = STATE_DISABLED;
-
-            dtflags = BUTTON_BStoDT(style, GetWindowLongW(hWnd, GWL_EXSTYLE));
-            btnThemedPaintFunc[btn_type](theme, infoPtr, hdc, drawState, dtflags, infoPtr->state & BST_FOCUS);
-        }
-#endif
         else if (btnPaintFunc[btn_type])
         {
             int nOldMode = SetBkMode( hdc, OPAQUE );
@@ -772,25 +711,16 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
                 SendMessageW( hWnd, BM_SETCHECK, !(infoPtr->state & BST_CHECKED), 0 );
                 break;
             case BS_AUTORADIOBUTTON:
-#ifdef __REACTOS__
                 BUTTON_CheckAutoRadioButton( hWnd );
-#else
-                SendMessageW( hWnd, BM_SETCHECK, TRUE, 0 );
-#endif
                 break;
             case BS_AUTO3STATE:
                 SendMessageW( hWnd, BM_SETCHECK, (infoPtr->state & BST_INDETERMINATE) ? 0 :
                     ((infoPtr->state & 3) + 1), 0 );
                 break;
             }
-#ifdef __REACTOS__
             // Fix CORE-10194, Notify parent after capture is released.
             ReleaseCapture();
             BUTTON_NOTIFY_PARENT(hWnd, BN_CLICKED);
-#else
-            BUTTON_NOTIFY_PARENT(hWnd, BN_CLICKED);
-            ReleaseCapture();
-#endif
         }
         else
         {
@@ -816,7 +746,6 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         mouse_event.cbSize = sizeof(TRACKMOUSEEVENT);
         mouse_event.dwFlags = TME_QUERY;
 
-#ifdef __REACTOS__
         if ((infoPtr->state & BST_HOT) == 0)
         {
             NMBCHOTITEM nmhotitem;
@@ -841,16 +770,6 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
             mouse_event.dwHoverTime = 1;
             TrackMouseEvent(&mouse_event);
         }
-#else
-
-        if (!TrackMouseEvent(&mouse_event) || !(mouse_event.dwFlags & (TME_HOVER | TME_LEAVE)))
-        {
-            mouse_event.dwFlags = TME_HOVER | TME_LEAVE;
-            mouse_event.hwndTrack = hWnd;
-            mouse_event.dwHoverTime = 1;
-            TrackMouseEvent(&mouse_event);
-        }
-#endif
 
         if ((wParam & MK_LBUTTON) && GetCapture() == hWnd)
         {
@@ -860,18 +779,8 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         break;
     }
 
-#ifndef __REACTOS__
-    case WM_MOUSEHOVER:
-    {
-        infoPtr->state |= BST_HOT;
-        InvalidateRect( hWnd, NULL, FALSE );
-        break;
-    }
-#endif
-
     case WM_MOUSELEAVE:
     {
-#ifdef __REACTOS__
         if (infoPtr->state & BST_HOT)
         {
             NMBCHOTITEM nmhotitem;
@@ -889,14 +798,8 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
                 InvalidateRect(hWnd, NULL, TRUE);
         }
         break;
-#else
-        infoPtr->state &= ~BST_HOT;
-        InvalidateRect( hWnd, NULL, FALSE );
-        break;
-#endif
     }
 
-#ifdef __REACTOS__
     case BCM_GETTEXTMARGIN:
     {
         RECT* prc = (RECT*)lParam;
@@ -940,7 +843,7 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
             return FALSE;
         }
 
-        if (btn_type == BS_PUSHBUTTON || 
+        if (btn_type == BS_PUSHBUTTON ||
             btn_type == BS_DEFPUSHBUTTON ||
             btn_type == BS_USERBUTTON)
         {
@@ -956,22 +859,11 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 
         return TRUE;
     }
-#endif
 
     case WM_SETTEXT:
     {
         /* Clear an old text here as Windows does */
-#ifdef __REACTOS__
-//
-// ReactOS Note :
-// wine Bug: http://bugs.winehq.org/show_bug.cgi?id=25790
-// Patch: http://source.winehq.org/patches/data/70889
-// By: Alexander LAW, Replicate Windows behavior of WM_SETTEXT handler regarding WM_CTLCOLOR*
-//
         if (style & WS_VISIBLE)
-#else
-        if (IsWindowVisible(hWnd))
-#endif
         {
             HDC hdc = GetDC(hWnd);
             HBRUSH hbrush;
@@ -1022,11 +914,9 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     case WM_SETFOCUS:
         TRACE("WM_SETFOCUS %p\n",hWnd);
         infoPtr->state |= BST_FOCUS;
-#ifdef __REACTOS__
         if (btn_type != BS_OWNERDRAW)
             InvalidateRect(hWnd, NULL, FALSE);
         else
-#endif
         paint_button( infoPtr, btn_type, ODA_FOCUS );
         if (style & BS_NOTIFY)
             BUTTON_NOTIFY_PARENT(hWnd, BN_SETFOCUS);
@@ -1035,9 +925,6 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     case WM_KILLFOCUS:
         TRACE("WM_KILLFOCUS %p\n",hWnd);
         infoPtr->state &= ~BST_FOCUS;
-#ifndef __REACTOS__
-        paint_button( infoPtr, btn_type, ODA_FOCUS );
-#endif
 
         if ((infoPtr->state & BUTTON_BTNPRESSED) && GetCapture() == hWnd)
             ReleaseCapture();
@@ -1063,17 +950,13 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         break;
 
     case BM_CLICK:
-#ifdef __REACTOS__
     /* Fix for core CORE-6024 */
     if (infoPtr->state & BUTTON_BMCLICK)
        break;
     infoPtr->state |= BUTTON_BMCLICK;
-#endif
 	SendMessageW( hWnd, WM_LBUTTONDOWN, 0, 0 );
 	SendMessageW( hWnd, WM_LBUTTONUP, 0, 0 );
-#ifdef __REACTOS__
     infoPtr->state &= ~BUTTON_BMCLICK;
-#endif
 	break;
 
     case BM_SETIMAGE:
@@ -1112,10 +995,6 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
             infoPtr->state = (infoPtr->state & ~3) | wParam;
             InvalidateRect( hWnd, NULL, FALSE );
         }
-#ifndef __REACTOS__
-        if ((btn_type == BS_AUTORADIOBUTTON) && (wParam == BST_CHECKED) && (style & WS_CHILD))
-            BUTTON_CheckAutoRadioButton( hWnd );
-#endif
         break;
 
     case BM_GETSTATE:
@@ -1140,14 +1019,13 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         }
         break;
 
-#ifdef __REACTOS__
     case WM_UPDATEUISTATE:
         DefWindowProcW(hWnd, uMsg, wParam, lParam);
 
         if (button_update_uistate(infoPtr))
             paint_button( infoPtr, btn_type, ODA_DRAWENTIRE );
         break;
-#endif
+
 
     case WM_NCHITTEST:
         if(btn_type == BS_GROUPBOX) return HTTRANSPARENT;
@@ -1170,17 +1048,15 @@ static LRESULT CALLBACK BUTTON_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
  */
 static UINT BUTTON_CalcLabelRect(const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc)
 {
-   LONG style = GetWindowLongW( infoPtr->hwnd, GWL_STYLE );
-   LONG ex_style = GetWindowLongW( infoPtr->hwnd, GWL_EXSTYLE );
-   WCHAR *text;
-   ICONINFO    iconInfo;
-   BITMAP      bm;
-   UINT        dtStyle = BUTTON_BStoDT( style, ex_style );
-   RECT        r = *rc;
-   INT         n;
-#ifdef __REACTOS__
+    LONG style = GetWindowLongW( infoPtr->hwnd, GWL_STYLE );
+    LONG ex_style = GetWindowLongW( infoPtr->hwnd, GWL_EXSTYLE );
+    WCHAR *text;
+    ICONINFO    iconInfo;
+    BITMAP      bm;
+    UINT        dtStyle = BUTTON_BStoDT( style, ex_style );
+    RECT        r = *rc;
+    INT         n;
     BOOL bHasIml = BUTTON_DrawIml(hdc, &infoPtr->imlData, &r, TRUE, 0);
-#endif
 
    /* Calculate label rectangle according to label type */
    switch (style & (BS_ICON|BS_BITMAP))
@@ -1192,22 +1068,16 @@ static UINT BUTTON_CalcLabelRect(const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc)
           if (!(text = get_button_text( infoPtr ))) goto empty_rect;
           if (!text[0])
           {
-              heap_free( text );
+              heap_free(text);
               goto empty_rect;
           }
 
-          if ((hFont = infoPtr->font)) hPrevFont = SelectObject( hdc, hFont );
-#ifdef __REACTOS__
+          if ((hFont = infoPtr->font)) hPrevFont = (HFONT)SelectObject(hdc, hFont);
           DrawTextW(hdc, text, -1, &r, ((dtStyle | DT_CALCRECT) & ~(DT_VCENTER | DT_BOTTOM)));
-#else
-          DrawTextW(hdc, text, -1, &r, dtStyle | DT_CALCRECT);
-#endif
           if (hPrevFont) SelectObject( hdc, hPrevFont );
-          heap_free( text );
-#ifdef __REACTOS__
+          heap_free(text);
           if (infoPtr->ui_state & UISF_HIDEACCEL)
               dtStyle |= DT_HIDEPREFIX;
-#endif
           break;
       }
 
@@ -1234,16 +1104,13 @@ static UINT BUTTON_CalcLabelRect(const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc)
 
       default:
       empty_rect:
-#ifdef __REACTOS__
          if (bHasIml)
              break;
-#endif
          rc->right = r.left;
          rc->bottom = r.top;
          return (UINT)-1;
    }
 
-#ifdef __REACTOS__
    if (bHasIml)
    {
      if (infoPtr->imlData.uAlign == BUTTON_IMAGELIST_ALIGN_LEFT)
@@ -1255,7 +1122,6 @@ static UINT BUTTON_CalcLabelRect(const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc)
      else if (infoPtr->imlData.uAlign == BUTTON_IMAGELIST_ALIGN_BOTTOM)
          r.bottom = infoPtr->imlData.margin.bottom;
    }
-#endif
 
    /* Position label inside bounding rectangle according to
     * alignment flags. (calculated rect is always left-top aligned).
@@ -1278,11 +1144,7 @@ static UINT BUTTON_CalcLabelRect(const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc)
    {
       case DT_TOP:     r.top++;  r.bottom++;  break;
       case DT_VCENTER: n = r.bottom - r.top;
-#ifdef __REACTOS__
                        r.top    = rc->top + ((rc->bottom - 1 - rc->top) - n) / 2;
-#else
-                       r.top    = rc->top + ((rc->bottom - rc->top) - n) / 2;
-#endif
                        r.bottom = r.top + n;  break;
       case DT_BOTTOM:  n = r.bottom - r.top;
                        r.bottom = rc->bottom - 1;
@@ -1331,10 +1193,8 @@ static void BUTTON_DrawLabel(const BUTTON_INFO *infoPtr, HDC hdc, UINT dtFlags, 
     * I don't have Win31 on hand to verify that, so I leave it as is.
     */
 
-#ifdef __REACTOS__
     RECT rcText = *rc;
     BUTTON_DrawIml(hdc, &infoPtr->imlData, &rcText, FALSE, 0);
-#endif
 
    if ((style & BS_PUSHLIKE) && (state & BST_INDETERMINATE))
    {
@@ -1350,10 +1210,8 @@ static void BUTTON_DrawLabel(const BUTTON_INFO *infoPtr, HDC hdc, UINT dtFlags, 
          if (!(text = get_button_text( infoPtr ))) return;
          lp = (LPARAM)text;
          wp = dtFlags;
-#ifdef __REACTOS__
          if (dtFlags & DT_HIDEPREFIX)
              flags |= DSS_HIDEPREFIX;
-#endif
          break;
 
       case BS_ICON:
@@ -1370,13 +1228,8 @@ static void BUTTON_DrawLabel(const BUTTON_INFO *infoPtr, HDC hdc, UINT dtFlags, 
          return;
    }
 
-#ifdef __REACTOS__
    DrawStateW(hdc, hbr, lpOutputProc, lp, wp, rcText.left, rcText.top,
               rcText.right - rcText.left, rcText.bottom - rcText.top, flags);
-#else
-   DrawStateW(hdc, hbr, lpOutputProc, lp, wp, rc->left, rc->top,
-              rc->right - rc->left, rc->bottom - rc->top, flags);
-#endif
    heap_free( text );
 }
 
@@ -1397,9 +1250,7 @@ static void PB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action )
     BOOL pushedState = (state & BST_PUSHED);
     HWND parent;
     HRGN hrgn;
-#ifdef __REACTOS__
     DWORD cdrf;
-#endif
 
     GetClientRect( infoPtr->hwnd, &rc );
 
@@ -1412,15 +1263,13 @@ static void PB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action )
     hrgn = set_control_clipping( hDC, &rc );
 
     hpen = CreatePen( PS_SOLID, 1, GetSysColor(COLOR_WINDOWFRAME));
-    hOldPen = SelectObject(hDC, hpen);
-    hOldBrush = SelectObject(hDC,GetSysColorBrush(COLOR_BTNFACE));
+    hOldPen = (HPEN)SelectObject(hDC, hpen);
+    hOldBrush = (HBRUSH)SelectObject(hDC,GetSysColorBrush(COLOR_BTNFACE));
     oldBkMode = SetBkMode(hDC, TRANSPARENT);
 
-#ifdef __REACTOS__
     cdrf = BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_PREERASE, &rc);
     if (cdrf == CDRF_SKIPDEFAULT)
         goto cleanup;
-#endif
 
     if (get_button_type(style) == BS_DEFPUSHBUTTON)
     {
@@ -1449,14 +1298,12 @@ static void PB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action )
 
     DrawFrameControl( hDC, &rc, DFC_BUTTON, uState );
 
-#ifdef __REACTOS__
     if (cdrf == CDRF_NOTIFYPOSTERASE)
         BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_POSTERASE, &rc);
 
     cdrf = BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_PREPAINT, &rc);
     if (cdrf == CDRF_SKIPDEFAULT)
         goto cleanup;
-#endif
 
     /* draw button label */
     r = rc;
@@ -1474,23 +1321,17 @@ static void PB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action )
 
     SetTextColor( hDC, oldTxtColor );
 
-#ifdef __REACTOS__
     if (cdrf == CDRF_NOTIFYPOSTPAINT)
         BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_POSTPAINT, &rc);
-#endif
 
 draw_focus:
     if (action == ODA_FOCUS || (state & BST_FOCUS))
     {
-#ifdef __REACTOS__
         if (!(infoPtr->ui_state & UISF_HIDEFOCUS))
         {
-#endif
             InflateRect( &rc, -2, -2 );
             DrawFocusRect( hDC, &rc );
-#ifdef __REACTOS__
         }
-#endif
     }
 
  cleanup:
@@ -1645,22 +1486,12 @@ static void BUTTON_CheckAutoRadioButton( HWND hwnd )
 
     parent = GetParent(hwnd);
     /* make sure that starting control is not disabled or invisible */
-#ifdef __REACTOS__
     start = sibling = hwnd;
-#else
-    start = sibling = GetNextDlgGroupItem( parent, hwnd, TRUE );
-#endif
     do
     {
         if (!sibling) break;
-#ifdef __REACTOS__
         if (SendMessageW( sibling, WM_GETDLGCODE, 0, 0 ) == (DLGC_BUTTON | DLGC_RADIOBUTTON))
             SendMessageW( sibling, BM_SETCHECK, sibling == hwnd ? BST_CHECKED : BST_UNCHECKED, 0 );
-#else
-        if ((hwnd != sibling) &&
-            ((GetWindowLongW( sibling, GWL_STYLE) & BS_TYPEMASK) == BS_AUTORADIOBUTTON))
-            SendMessageW( sibling, BM_SETCHECK, BST_UNCHECKED, 0 );
-#endif
         sibling = GetNextDlgGroupItem( parent, sibling, FALSE );
     } while (sibling != start);
 }
@@ -1797,20 +1628,15 @@ static void OB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action )
     if (hrgn) DeleteObject( hrgn );
 }
 
-#ifdef __REACTOS__ /* r73885 */
 static void PB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused, LPARAM prfFlag)
-#else
-static void PB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused)
-#endif
 {
     static const int states[] = { PBS_NORMAL, PBS_DISABLED, PBS_HOT, PBS_PRESSED, PBS_DEFAULTED };
 
     RECT bgRect, textRect;
     HFONT font = infoPtr->font;
-    HFONT hPrevFont = font ? SelectObject(hDC, font) : NULL;
+    HFONT hPrevFont = font ? (HFONT)SelectObject(hDC, font) : NULL;
     int state = states[ drawState ];
     WCHAR *text = get_button_text(infoPtr);
-#ifdef __REACTOS__
     HWND parent;
     DWORD cdrf;
 
@@ -1841,23 +1667,12 @@ static void PB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
         goto cleanup;
 
     BUTTON_DrawIml(hDC, &infoPtr->imlData, &textRect, FALSE, drawState);
-#else
-    GetClientRect(infoPtr->hwnd, &bgRect);
-    GetThemeBackgroundContentRect(theme, hDC, BP_PUSHBUTTON, state, &bgRect, &textRect);
-
-    if (IsThemeBackgroundPartiallyTransparent(theme, BP_PUSHBUTTON, state))
-        DrawThemeParentBackground(infoPtr->hwnd, hDC, NULL);
-
-    DrawThemeBackground(theme, hDC, BP_PUSHBUTTON, state, &bgRect, NULL);
-#endif
 
     if (text)
     {
         DrawThemeText(theme, hDC, BP_PUSHBUTTON, state, text, lstrlenW(text), dtFlags, 0, &textRect);
         heap_free(text);
-#ifdef __REACTOS__
         text = NULL;
-#endif
     }
 
     if (focused)
@@ -1875,20 +1690,14 @@ static void PB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
         DrawFocusRect( hDC, &focusRect );
     }
 
-#ifdef __REACTOS__
     if (cdrf == CDRF_NOTIFYPOSTPAINT)
         BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_POSTPAINT, &bgRect);
 cleanup:
     if (text) heap_free(text);
-#endif
     if (hPrevFont) SelectObject(hDC, hPrevFont);
 }
 
-#ifdef __REACTOS__ /* r73885 */
 static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused, LPARAM prfFlag)
-#else
-static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused)
-#endif
 {
     static const int cb_states[3][5] =
     {
@@ -1916,11 +1725,9 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     WCHAR *text = get_button_text(infoPtr);
     LOGFONTW lf;
     BOOL created_font = FALSE;
-#ifdef __REACTOS__
     HWND parent;
     HBRUSH hBrush;
     DWORD cdrf;
-#endif
 
     HRESULT hr = GetThemeFont(theme, hDC, part, state, TMT_FONT, &lf);
     if (SUCCEEDED(hr)) {
@@ -1929,16 +1736,12 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
             TRACE("Failed to create font\n");
         else {
             TRACE("font = %s\n", debugstr_w(lf.lfFaceName));
-            hPrevFont = SelectObject(hDC, font);
+            hPrevFont = (HFONT)SelectObject(hDC, font);
             created_font = TRUE;
         }
     } else {
-#ifdef __REACTOS__ /* r73885 */
         font = infoPtr->font;
-#else
-        font = (HFONT)SendMessageW(infoPtr->hwnd, WM_GETFONT, 0, 0);
-#endif
-        hPrevFont = SelectObject(hDC, font);
+        hPrevFont = (HFONT)SelectObject(hDC, font);
     }
 
     if (FAILED(GetThemePartSize(theme, hDC, part, state, NULL, TS_DRAW, &sz)))
@@ -1946,7 +1749,6 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
 
     GetClientRect(infoPtr->hwnd, &bgRect);
 
-#ifdef __REACTOS__
     if (prfFlag == 0)
     {
         DrawThemeParentBackground(infoPtr->hwnd, hDC, NULL);
@@ -1964,7 +1766,6 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     cdrf = BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_PREERASE, &bgRect);
     if (cdrf == CDRF_SKIPDEFAULT)
         goto cleanup;
-#endif
 
     GetThemeBackgroundContentRect(theme, hDC, part, state, &bgRect, &textRect);
 
@@ -1976,7 +1777,6 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     bgRect.right = bgRect.left + sz.cx;
     textRect.left = bgRect.right + 6;
 
-#ifdef __REACTOS__
     DrawThemeBackground(theme, hDC, part, state, &bgRect, NULL);
 
     if (cdrf == CDRF_NOTIFYPOSTERASE)
@@ -1986,10 +1786,6 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     if (cdrf == CDRF_SKIPDEFAULT)
         goto cleanup;
 
-#else
-    DrawThemeParentBackground(infoPtr->hwnd, hDC, NULL);
-    DrawThemeBackground(theme, hDC, part, state, &bgRect, NULL);
-#endif
     if (text)
     {
         DrawThemeText(theme, hDC, part, state, text, lstrlenW(text), dtFlags, 0, &textRect);
@@ -2009,26 +1805,18 @@ static void CB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
         }
 
         heap_free(text);
-#ifdef __REACTOS__
         text = NULL;
-#endif
     }
 
-#ifdef __REACTOS__
     if (cdrf == CDRF_NOTIFYPOSTPAINT)
         BUTTON_SendCustomDraw(infoPtr, hDC, CDDS_POSTPAINT, &bgRect);
 cleanup:
     if (text) heap_free(text);
-#endif
     if (created_font) DeleteObject(font);
     if (hPrevFont) SelectObject(hDC, hPrevFont);
 }
 
-#ifdef __REACTOS__ /* r73885 */
 static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused, LPARAM prfFlag)
-#else
-static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, ButtonState drawState, UINT dtFlags, BOOL focused)
-#endif
 {
     static const int states[] = { GBS_NORMAL, GBS_DISABLED, GBS_NORMAL, GBS_NORMAL, GBS_NORMAL };
 
@@ -2038,11 +1826,9 @@ static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     LOGFONTW lf;
     HFONT font, hPrevFont = NULL;
     BOOL created_font = FALSE;
-#ifdef __REACTOS__ /* r74406 */
     HWND parent;
     HBRUSH hBrush;
     RECT clientRect;
-#endif
 
     HRESULT hr = GetThemeFont(theme, hDC, BP_GROUPBOX, state, TMT_FONT, &lf);
     if (SUCCEEDED(hr)) {
@@ -2050,16 +1836,12 @@ static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
         if (!font)
             TRACE("Failed to create font\n");
         else {
-            hPrevFont = SelectObject(hDC, font);
+            hPrevFont = (HFONT)SelectObject(hDC, font);
             created_font = TRUE;
         }
     } else {
-#ifdef __REACTOS__ /* r73885 */
         font = infoPtr->font;
-#else
-        font = (HFONT)SendMessageW(infoPtr->hwnd, WM_GETFONT, 0, 0);
-#endif
-        hPrevFont = SelectObject(hDC, font);
+        hPrevFont = (HFONT)SelectObject(hDC, font);
     }
 
     GetClientRect(infoPtr->hwnd, &bgRect);
@@ -2080,13 +1862,10 @@ static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
     GetThemeBackgroundContentRect(theme, hDC, BP_GROUPBOX, state, &bgRect, &contentRect);
     ExcludeClipRect(hDC, contentRect.left, contentRect.top, contentRect.right, contentRect.bottom);
 
-#ifdef __REACTOS__ /* r73885 & r74149 */
     if (prfFlag == 0)
-#endif
     if (IsThemeBackgroundPartiallyTransparent(theme, BP_GROUPBOX, state))
         DrawThemeParentBackground(infoPtr->hwnd, hDC, NULL);
 
-#ifdef __REACTOS__ /* r74406 */
     parent = GetParent(infoPtr->hwnd);
     if (!parent) parent = infoPtr->hwnd;
     hBrush = (HBRUSH)SendMessageW(parent, WM_CTLCOLORSTATIC,
@@ -2096,7 +1875,6 @@ static void GB_ThemedPaint(HTHEME theme, const BUTTON_INFO *infoPtr, HDC hDC, Bu
                                        (WPARAM)hDC, (LPARAM)infoPtr->hwnd );
     GetClientRect(infoPtr->hwnd, &clientRect);
     FillRect( hDC, &clientRect, hBrush );
-#endif
 
     DrawThemeBackground(theme, hDC, BP_GROUPBOX, state, &bgRect, NULL);
 
@@ -2128,10 +1906,7 @@ void BUTTON_Register(void)
     RegisterClassW(&wndClass);
 }
 
-
-#ifdef __REACTOS__
 void BUTTON_Unregister(void)
 {
     UnregisterClassW(WC_BUTTONW, NULL);
 }
-#endif

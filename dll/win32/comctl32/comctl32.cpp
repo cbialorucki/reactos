@@ -45,7 +45,6 @@ static const WORD wPattern55AA[] =
 };
 
 static const WCHAR strCC32SubclassInfo[] = L"CC32SubclassInfo";
-//static const WCHAR strCC32SubclassInfo[] = {'C','C','3','2','S','u','b','c','l','a','s','s','I','n','f','o',0};
 
 #if 1
 

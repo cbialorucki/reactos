@@ -16,8 +16,8 @@ if(MSVC)
 endif()
 
 list(APPEND SOURCE
-    animate.c
-    button.c
+    animate.cpp
+    button.cpp
     combo.c
     comboex.c
     comctl32undoc.c
@@ -27,9 +27,9 @@ list(APPEND SOURCE
     draglist.c
     dsa.c
     edit.c
-    flatsb.c
+    flatsb.cpp
     header.c
-    hotkey.c
+    hotkey.cpp
     imagelist.c
     ipaddress.c
     listbox.c
@@ -50,13 +50,13 @@ list(APPEND SOURCE
     theme_scrollbar.c
     theming.c
     toolbar.c
-    tooltips.c
+    tooltips.cpp
     trackbar.c
     treeview.c
-    updown.c)
+    updown.cpp)
 
 list(APPEND PCH_SKIP_SOURCE
-    stubs.c)
+    stubs.cpp)
 
 add_library(comctl32 MODULE
     ${SOURCE}

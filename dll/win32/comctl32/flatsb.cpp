@@ -4,15 +4,21 @@
  * PURPOSE:     Flat scrollbar control
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
-/* NOTES
- *   This is just a dummy control. An author is needed! Any volunteers?
- *   I will only improve this control once in a while.
- *     Eric <ekohl@abo.rhein-zeitung.de>
+/* NOTES:
+ *  This is a stub.
  *
- * TODO:
- *   - All messages.
- *   - All notifications.
+ * 	From the Microsoft docs:
+ *	"If flat scroll bars haven't been initialized for the
+ *	window, the flat scroll bar APIs will defer to the corresponding
+ *	standard APIs.  This allows the developer to turn flat scroll
+ *	bars on and off without having to write conditional code."
  *
+ *	So, if we just call the standard functions until we implement
+ *	the flat scroll bar functions, flat scroll bars will show up and
+ *	behave properly, as though they had simply not been setup to
+ *	have flat properties.
+ *
+ *	Susan <sfarley@codeweavers.com>
  */
 
 #include <stdarg.h>
@@ -102,21 +108,6 @@ BOOL WINAPI FlatSB_SetScrollProp(HWND hwnd, UINT index, INT newValue, BOOL flag)
     TRACE("[%p] index=%u newValue=%d flag=%d\n", hwnd, index, newValue, flag);
     return FALSE;
 }
-
-/***********************************************************************
- * 	From the Microsoft docs:
- *	"If flat scroll bars haven't been initialized for the
- *	window, the flat scroll bar APIs will defer to the corresponding
- *	standard APIs.  This allows the developer to turn flat scroll
- *	bars on and off without having to write conditional code."
- *
- *	So, if we just call the standard functions until we implement
- *	the flat scroll bar functions, flat scroll bars will show up and
- *	behave properly, as though they had simply not been setup to
- *	have flat properties.
- *
- *	Susan <sfarley@codeweavers.com>
- */
 
 /***********************************************************************
  *		FlatSB_EnableScrollBar (COMCTL32.@)
@@ -225,8 +216,7 @@ static LRESULT WINAPI FlatSB_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LP
 
         default:
             if ((uMsg >= WM_USER) && (uMsg < WM_APP) && !COMCTL32_IsReflectedMessage(uMsg))
-            ERR("unknown msg %04x wp=%08lx lp=%08lx\n",
-                        uMsg, wParam, lParam);
+                ERR("unknown msg %04x wp=%08lx lp=%08lx\n", uMsg, wParam, lParam);
             return DefWindowProcW (hwnd, uMsg, wParam, lParam);
     }
 }
@@ -235,7 +225,7 @@ VOID FLATSB_Register (void)
 {
     WNDCLASSW wndClass;
 
-    ZeroMemory (&wndClass, sizeof(WNDCLASSW));
+    ZeroMemory(&wndClass, sizeof(WNDCLASSW));
     wndClass.style         = CS_GLOBALCLASS;
     wndClass.lpfnWndProc   = FlatSB_WindowProc;
     wndClass.cbClsExtra    = 0;
@@ -244,7 +234,7 @@ VOID FLATSB_Register (void)
     wndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wndClass.lpszClassName = FLATSB_CLASSW;
 
-    RegisterClassW (&wndClass);
+    RegisterClassW(&wndClass);
 }
 
 VOID FLATSB_Unregister (void)
