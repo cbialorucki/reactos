@@ -163,7 +163,7 @@ static LRESULT IPADDRESS_Draw (const IPADDRESS_INFO *infoPtr, HDC hdc)
         FillRect (hdc, &rect, (HBRUSH)(DWORD_PTR)(bgCol+1));
         DrawEdge (hdc, &rect, EDGE_SUNKEN, BF_RECT | BF_ADJUST);
     }
-    
+
     SetBkColor  (hdc, bgCol);
     SetTextColor(hdc, fgCol);
 
@@ -201,7 +201,7 @@ static LRESULT IPADDRESS_Create (HWND hwnd, const CREATESTRUCTA *lpCreate)
     SetWindowLongW (hwnd, GWL_STYLE,
 		    GetWindowLongW(hwnd, GWL_STYLE) & ~WS_BORDER);
 
-    infoPtr = heap_alloc_zero (sizeof(*infoPtr));
+    infoPtr = (IPADDRESS_INFO*)heap_alloc_zero(sizeof(*infoPtr));
     if (!infoPtr) return -1;
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
@@ -216,7 +216,7 @@ static LRESULT IPADDRESS_Create (HWND hwnd, const CREATESTRUCTA *lpCreate)
     infoPtr->Enabled = TRUE;
     infoPtr->Notify = lpCreate->hwndParent;
 
-    hSysFont = GetStockObject(ANSI_VAR_FONT);
+    hSysFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
     GetObjectW(hSysFont, sizeof(LOGFONTW), &logSysFont);
     SystemParametersInfoW(SPI_GETICONTITLELOGFONT, 0, &logFont, 0);
     strcpyW(logFont.lfFaceName, logSysFont.lfFaceName);
@@ -480,7 +480,7 @@ static BOOL IPADDRESS_GotoNextField (const IPADDRESS_INFO *infoPtr, int cur, int
 LRESULT CALLBACK
 IPADDRESS_SubclassProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    HWND Self = GetPropW (hwnd, IP_SUBCLASS_PROP);
+    HWND Self = (HWND)GetPropW(hwnd, IP_SUBCLASS_PROP);
     IPADDRESS_INFO *infoPtr = (IPADDRESS_INFO *)GetWindowLongPtrW (Self, 0);
     CHAR c = (CHAR)wParam;
     INT index, len = 0, startsel, endsel;

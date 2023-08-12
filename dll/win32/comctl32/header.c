@@ -144,7 +144,7 @@ static void HEADER_StoreHDItemInHeader(HEADER_ITEM *lpItem, UINT mask, const HDI
         {
             lpItem->pszText = NULL;
             lpItem->callbackMask |= HDI_TEXT;
-        }  
+        }
     }
 }
 

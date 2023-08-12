@@ -39,7 +39,7 @@
 
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
-static const WCHAR strMRUList[] = { 'M','R','U','L','i','s','t',0 };
+static const WCHAR strMRUList[] = L"MRUList";
 
 /**************************************************************************
  * Alloc [COMCTL32.71]

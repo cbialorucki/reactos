@@ -67,13 +67,13 @@ static inline int get_led_size ( const PROGRESS_INFO *infoPtr, LONG style,
 }
 
 /* Helper to obtain gap between progress bar chunks */
-static inline int get_led_gap ( const PROGRESS_INFO *infoPtr )
+static inline int get_led_gap (const PROGRESS_INFO *infoPtr)
 {
     HTHEME theme = GetWindowTheme (infoPtr->Self);
     if (theme)
     {
         int spaceSize;
-        if (SUCCEEDED( GetThemeInt( theme, 0, 0, TMT_PROGRESSSPACESIZE, &spaceSize )))
+        if (SUCCEEDED(GetThemeInt(theme, 0, 0, TMT_PROGRESSSPACESIZE, &spaceSize)))
             return spaceSize;
     }
 
@@ -118,9 +118,9 @@ static inline int get_bar_position( const PROGRESS_INFO *infoPtr, LONG style,
  * Don't be too clever about invalidating the progress bar.
  * InstallShield depends on this simple behaviour.
  */
-static void PROGRESS_Invalidate( const PROGRESS_INFO *infoPtr, INT old, INT new )
+static void PROGRESS_Invalidate(const PROGRESS_INFO *infoPtr, INT old, INT newProg)
 {
-    InvalidateRect( infoPtr->Self, NULL, old > new );
+    InvalidateRect(infoPtr->Self, NULL, old > newProg);
 }
 
 /* Information for a progress bar drawing helper */
@@ -497,7 +497,7 @@ static UINT PROGRESS_SetPos (PROGRESS_INFO *infoPtr, INT pos)
     {
         UINT oldVal;
         oldVal = infoPtr->CurVal;
-        if (oldVal != pos) {
+        if ((INT)oldVal != pos) {
 	    infoPtr->CurVal = pos;
 	    PROGRESS_CoercePos(infoPtr);
 	    TRACE("PBM_SETPOS: current pos changed from %d to %d\n", oldVal, infoPtr->CurVal);
@@ -540,7 +540,7 @@ static LRESULT WINAPI ProgressWindowProc(HWND hwnd, UINT message,
 	    SWP_FRAMECHANGED | SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 
         /* allocate memory for info struct */
-        infoPtr = heap_alloc_zero (sizeof(*infoPtr));
+        infoPtr = (PROGRESS_INFO*)heap_alloc_zero (sizeof(*infoPtr));
         if (!infoPtr) return -1;
         SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 

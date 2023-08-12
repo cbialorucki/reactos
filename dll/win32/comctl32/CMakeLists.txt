@@ -18,8 +18,8 @@ endif()
 list(APPEND SOURCE
     animate.cpp
     button.cpp
-    combo.c
-    comboex.c
+    combo.cpp
+    comboex.cpp
     comctl32undoc.c
     comctl32.cpp
     datetime.c
@@ -31,13 +31,13 @@ list(APPEND SOURCE
     header.c
     hotkey.cpp
     imagelist.c
-    ipaddress.c
+    ipaddress.cpp
     listbox.c
     listview.c
     monthcal.c
     nativefont.c
     pager.c
-    progress.c
+    progress.cpp
     propsheet.c
     rebar.c
     smoothscroll.c

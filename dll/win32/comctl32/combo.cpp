@@ -89,7 +89,7 @@ static BOOL COMBO_Init(void)
 
       TRACE("combo bitmap [%i,%i]\n", CBitWidth, CBitHeight );
 
-      hPrevB = SelectObject( hDC, hComboBmp);
+      hPrevB = (HBITMAP)SelectObject(hDC, hComboBmp);
       SetRect( &r, 0, 0, CBitWidth, CBitHeight );
       InvertRect( hDC, &r );
       SelectObject( hDC, hPrevB );
@@ -108,7 +108,7 @@ static LRESULT COMBO_NCCreate(HWND hwnd, LONG style)
 {
     HEADCOMBO *lphc;
 
-    if (COMBO_Init() && (lphc = heap_alloc_zero(sizeof(*lphc))))
+    if (COMBO_Init() && (lphc = (HEADCOMBO*)heap_alloc_zero(sizeof(*lphc))))
     {
         lphc->self = hwnd;
         SetWindowLongPtrW( hwnd, 0, (LONG_PTR)lphc );
@@ -185,7 +185,7 @@ static INT CBGetTextAreaHeight(
     INT         baseUnitY;
 
     if (lphc->hFont)
-      hPrevFont = SelectObject( hDC, lphc->hFont );
+      hPrevFont = (HFONT)SelectObject( hDC, lphc->hFont );
 
     GetTextMetricsW(hDC, &tm);
 
@@ -657,7 +657,7 @@ static void CBPaintText(HEADCOMBO *lphc, HDC hdc_paint)
         size = SendMessageW(lphc->hWndLBox, LB_GETTEXTLEN, id, 0);
 	if (size == LB_ERR)
 	  FIXME("LB_ERR probably not handled yet\n");
-        if ((pText = heap_alloc((size + 1) * sizeof(WCHAR))))
+        if ((pText = (LPWSTR)heap_alloc((size + 1) * sizeof(WCHAR))))
 	{
             /* size from LB_GETTEXTLEN may be too large, from LB_GETTEXT is accurate */
            size=SendMessageW(lphc->hWndLBox, LB_GETTEXT, id, (LPARAM)pText);
@@ -677,7 +677,7 @@ static void CBPaintText(HEADCOMBO *lphc, HDC hdc_paint)
      /* paint text field ourselves */
      HDC hdc = hdc_paint ? hdc_paint : GetDC(lphc->self);
      UINT itemState = ODS_COMBOBOXEDIT;
-     HFONT hPrevFont = (lphc->hFont) ? SelectObject(hdc, lphc->hFont) : 0;
+     HFONT hPrevFont = (lphc->hFont) ? (HFONT)SelectObject(hdc, lphc->hFont) : 0;
      HBRUSH hPrevBrush, hBkgBrush;
 
      /*
@@ -686,7 +686,7 @@ static void CBPaintText(HEADCOMBO *lphc, HDC hdc_paint)
      InflateRect( &rectEdit, -1, -1 );
 
      hBkgBrush = COMBO_PrepareColors( lphc, hdc );
-     hPrevBrush = SelectObject( hdc, hBkgBrush );
+     hPrevBrush = (HBRUSH)SelectObject( hdc, hBkgBrush );
      FillRect( hdc, &rectEdit, hBkgBrush );
 
      if( CB_OWNERDRAWN(lphc) )
@@ -835,7 +835,7 @@ static LRESULT COMBO_Paint(HEADCOMBO *lphc, HDC hdc)
      * DC.
      */
     hBkgBrush = COMBO_PrepareColors(lphc, hdc);
-    hPrevBrush = SelectObject(hdc, hBkgBrush);
+    hPrevBrush = (HBRUSH)SelectObject(hdc, hBkgBrush);
     if (!(lphc->wState & CBF_EDIT))
         FillRect(hdc, &lphc->textRect, hBkgBrush);
 
@@ -880,7 +880,7 @@ static INT CBUpdateLBox( LPHEADCOMBO lphc, BOOL bSelect )
    length = SendMessageW( lphc->hWndEdit, WM_GETTEXTLENGTH, 0, 0 );
 
     if (length > 0)
-        pText = heap_alloc((length + 1) * sizeof(WCHAR));
+        pText = (LPWSTR)heap_alloc((length + 1) * sizeof(WCHAR));
 
    TRACE("\t edit text length %i\n", length );
 
@@ -918,7 +918,7 @@ static void CBUpdateEdit( LPHEADCOMBO lphc , INT index )
        length = SendMessageW(lphc->hWndLBox, LB_GETTEXTLEN, index, 0);
        if( length != LB_ERR)
        {
-           if ((pText = heap_alloc((length + 1) * sizeof(WCHAR))))
+           if ((pText = (LPWSTR)heap_alloc((length + 1) * sizeof(WCHAR))))
                SendMessageW(lphc->hWndLBox, LB_GETTEXT, index, (LPARAM)pText);
        }
    }
@@ -1347,7 +1347,7 @@ static LRESULT COMBO_GetText( HEADCOMBO *lphc, INT count, LPWSTR buf )
         /* 'length' is without the terminating character */
         if (length >= count)
         {
-            WCHAR *lpBuffer = heap_alloc((length + 1) * sizeof(WCHAR));
+            WCHAR *lpBuffer = (WCHAR*)heap_alloc((length + 1) * sizeof(WCHAR));
             if (!lpBuffer) goto error;
             length = SendMessageW(lphc->hWndLBox, LB_GETTEXT, idx, (LPARAM)lpBuffer);
 
