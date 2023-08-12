@@ -4018,10 +4018,10 @@ TOOLBAR_MapAccelerator (const TOOLBAR_INFO *infoPtr, WCHAR wAccel, UINT *pIDButt
 {
     WCHAR wszAccel[] = {'&',wAccel,0};
     int i;
-    
+
     TRACE("hwnd = %p, wAccel = %x(%s), pIDButton = %p\n",
         infoPtr->hwndSelf, wAccel, debugstr_wn(&wAccel,1), pIDButton);
-    
+
     for (i = 0; i < infoPtr->nNumButtons; i++)
     {
         TBUTTON_INFO *btnPtr = infoPtr->buttons+i;
@@ -4030,7 +4030,7 @@ TOOLBAR_MapAccelerator (const TOOLBAR_INFO *infoPtr, WCHAR wAccel, UINT *pIDButt
         {
             int iLen = strlenW(wszAccel);
             LPCWSTR lpszStr = TOOLBAR_GetText(infoPtr, btnPtr);
-            
+
             if (!lpszStr)
                 continue;
 

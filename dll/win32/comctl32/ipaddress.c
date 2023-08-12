@@ -43,8 +43,7 @@ typedef struct
     IPPART_INFO	Part[4];
 } IPADDRESS_INFO;
 
-static const WCHAR IP_SUBCLASS_PROP[] = 
-    { 'C', 'C', 'I', 'P', '3', '2', 'S', 'u', 'b', 'c', 'l', 'a', 's', 's', 'I', 'n', 'f', 'o', 0 };
+static const WCHAR IP_SUBCLASS_PROP[] = L"CCIP32SubclassInfo";
 
 #define POS_DEFAULT	0
 #define POS_LEFT	1
@@ -56,8 +55,8 @@ IPADDRESS_SubclassProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 static void IPADDRESS_UpdateText (const IPADDRESS_INFO *infoPtr)
 {
-    static const WCHAR zero[] = {'0', 0};
-    static const WCHAR dot[]  = {'.', 0};
+    static const WCHAR zero[] = L"0";
+    static const WCHAR dot[] = L".";
     WCHAR field[4];
     WCHAR ip[16];
     INT i;

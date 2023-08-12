@@ -404,11 +404,8 @@ typedef struct tagLISTVIEW_INFO
   TRACE("hwndSelf=%p, rcList=%s\n", iP->hwndSelf, wine_dbgstr_rect(&iP->rcList)); \
 } while(0)
 
-static const WCHAR themeClass[] = {'L','i','s','t','V','i','e','w',0};
+static const WCHAR themeClass[] = L"ListView";
 
-/*
- * forward declarations
- */
 static BOOL LISTVIEW_GetItemT(const LISTVIEW_INFO *, LPLVITEMW, BOOL);
 static void LISTVIEW_GetItemBox(const LISTVIEW_INFO *, INT, LPRECT);
 static void LISTVIEW_GetItemOrigin(const LISTVIEW_INFO *, INT, LPPOINT);

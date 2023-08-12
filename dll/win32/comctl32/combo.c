@@ -420,8 +420,8 @@ static void CBGetDroppedControlRect( LPHEADCOMBO lphc, LPRECT lpRect)
  */
 static LRESULT COMBO_Create( HWND hwnd, LPHEADCOMBO lphc, HWND hwndParent, LONG style )
 {
-  static const WCHAR clbName[] = {'C','o','m','b','o','L','B','o','x',0};
-  static const WCHAR editName[] = {'E','d','i','t',0};
+  static const WCHAR clbName[] = L"ComboLBox";
+  static const WCHAR editName[] = L"Edit";
 
   OpenThemeData( hwnd, WC_COMBOBOXW );
   if( !CB_GETTYPE(lphc) ) lphc->dwStyle |= CBS_SIMPLE;

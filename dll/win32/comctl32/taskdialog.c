@@ -517,7 +517,7 @@ static void taskdialog_on_button_click(struct taskdialog_info *dialog_info, WORD
 
 static INT_PTR CALLBACK taskdialog_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    static const WCHAR taskdialog_info_propnameW[] = {'T','a','s','k','D','i','a','l','o','g','I','n','f','o',0};
+    static const WCHAR taskdialog_info_propnameW[] = L"TaskDialogInfo";
     struct taskdialog_info *dialog_info;
 
     TRACE("hwnd=%p msg=0x%04x wparam=%lx lparam=%lx\n", hwnd, msg, wParam, lParam);

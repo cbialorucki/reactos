@@ -3050,7 +3050,7 @@ static LRESULT EDIT_WM_Char(EDITSTATE *es, WCHAR c)
 				EDIT_MoveHome(es, FALSE, FALSE);
 				EDIT_MoveDown_ML(es, FALSE);
 			} else {
-				static const WCHAR cr_lfW[] = {'\r','\n'};
+				static const WCHAR cr_lfW[] = L"\r\n";
 				EDIT_EM_ReplaceSel(es, TRUE, cr_lfW, 2, TRUE, TRUE);
 			}
 		}
@@ -3058,7 +3058,7 @@ static LRESULT EDIT_WM_Char(EDITSTATE *es, WCHAR c)
 	case '\t':
 		if ((es->style & ES_MULTILINE) && !(es->style & ES_READONLY))
 		{
-			static const WCHAR tabW[] = {'\t'};
+			static const WCHAR tabW[] = L"\t";
                         if (EDIT_IsInsideDialog(es))
                             break;
 			EDIT_EM_ReplaceSel(es, TRUE, tabW, 1, TRUE, TRUE);

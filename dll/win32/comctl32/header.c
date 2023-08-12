@@ -96,13 +96,13 @@ static void HEADER_FreeCallbackItems(HEADER_ITEM *lpItem);
 static LRESULT HEADER_SendNotify(const HEADER_INFO *infoPtr, UINT code, NMHDR *hdr);
 static LRESULT HEADER_SendCtrlCustomDraw(const HEADER_INFO *infoPtr, DWORD dwDrawStage, HDC hdc, const RECT *rect);
 
-static const WCHAR themeClass[] = {'H','e','a','d','e','r',0};
+static const WCHAR themeClass[] = L"Header";
 
 static void HEADER_StoreHDItemInHeader(HEADER_ITEM *lpItem, UINT mask, const HDITEMW *phdi, BOOL fUnicode)
 {
     if (mask & HDI_UNSUPPORTED_FIELDS)
         FIXME("unsupported header fields %x\n", (mask & HDI_UNSUPPORTED_FIELDS));
-    
+
     if (mask & HDI_BITMAP)
         lpItem->hbm = phdi->hbm;
 
@@ -115,7 +115,7 @@ static void HEADER_StoreHDItemInHeader(HEADER_ITEM *lpItem, UINT mask, const HDI
     if (mask & HDI_WIDTH)
         lpItem->cxy = phdi->cxy;
 
-    if (mask & HDI_IMAGE) 
+    if (mask & HDI_IMAGE)
     {
         lpItem->iImage = phdi->iImage;
         if (phdi->iImage == I_IMAGECALLBACK)

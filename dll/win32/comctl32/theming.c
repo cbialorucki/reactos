@@ -28,7 +28,7 @@ extern LRESULT CALLBACK THEMING_ScrollbarSubclassProc (HWND, UINT, WPARAM, LPARA
                                                        ULONG_PTR) DECLSPEC_HIDDEN;
 
 #ifndef __REACTOS__
-static const WCHAR dialogClass[] = {'#','3','2','7','7','0',0};
+static const WCHAR dialogClass[] = L"#32770";
 #endif
 
 static const struct ThemingSubclass

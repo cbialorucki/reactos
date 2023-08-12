@@ -840,7 +840,7 @@ static void MONTHCAL_PaintButton(MONTHCAL_INFO *infoPtr, HDC hdc, enum nav_direc
         {
             if (infoPtr->dwStyle & WS_DISABLED) style |= DFCS_INACTIVE;
         }
-        
+
         DrawFrameControl(hdc, r, DFC_SCROLL, style);
     }
 }
@@ -848,12 +848,12 @@ static void MONTHCAL_PaintButton(MONTHCAL_INFO *infoPtr, HDC hdc, enum nav_direc
 /* paint a title with buttons and month/year string */
 static void MONTHCAL_PaintTitle(MONTHCAL_INFO *infoPtr, HDC hdc, const PAINTSTRUCT *ps, INT calIdx)
 {
-  static const WCHAR mmmmW[] = {'M','M','M','M',0};
-  static const WCHAR mmmW[] = {'M','M','M',0};
-  static const WCHAR mmW[] = {'M','M',0};
-  static const WCHAR fmtyearW[] = {'%','l','d',0};
-  static const WCHAR fmtmmW[] = {'%','0','2','d',0};
-  static const WCHAR fmtmW[] = {'%','d',0};
+  static const WCHAR mmmmW[] = L"MMMM";
+  static const WCHAR mmmW[] = L"MMM";
+  static const WCHAR mmW[] = L"MM";
+  static const WCHAR fmtyearW[] = L"%ld";
+  static const WCHAR fmtmmW[] = L"%02d";
+  static const WCHAR fmtmW[] = L"%d";
   RECT *title = &infoPtr->calendars[calIdx].title;
   const SYSTEMTIME *st = &infoPtr->calendars[calIdx].month;
   WCHAR monthW[80], strW[80], fmtW[80], yearW[6] /* valid year range is 1601-30827 */;

@@ -1834,8 +1834,8 @@ static LRESULT LISTBOX_Directory( LB_DESCR *descr, UINT attrib,
         /* scan drives */
         if (attrib & DDL_DRIVES)
         {
-            WCHAR buffer[] = {'[','-','a','-',']',0};
-            WCHAR root[] = {'A',':','\\',0};
+            WCHAR buffer[] = L"[-a-]";
+            WCHAR root[] = L"A:\\";
             int drive;
             for (drive = 0; drive < 26; drive++, buffer[2]++, root[0]++)
             {
@@ -3054,7 +3054,7 @@ void LISTBOX_Register(void)
 
 void COMBOLBOX_Register(void)
 {
-    static const WCHAR combolboxW[] = {'C','o','m','b','o','L','B','o','x',0};
+    static const WCHAR combolboxW[] = L"ComboLBox";
     WNDCLASSW wndClass;
 
     memset(&wndClass, 0, sizeof(wndClass));
@@ -3076,7 +3076,7 @@ void LISTBOX_Unregister(void)
 
 void COMBOLBOX_Unregister(void)
 {
-    static const WCHAR combolboxW[] = {'C','o','m','b','o','L','B','o','x',0};
+    static const WCHAR combolboxW[] = L"ComboLBox";
     UnregisterClassW(combolboxW, NULL);
 }
 #endif
