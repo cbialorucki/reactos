@@ -612,10 +612,10 @@ static void LISTBOX_RepaintItem( LB_DESCR *descr, INT index, UINT action )
     }
     if (LISTBOX_GetItemRect( descr, index, &rect ) != 1) return;
     if (!(hdc = GetDCEx( descr->self, 0, DCX_CACHE ))) return;
-    if (descr->font) oldFont = SelectObject( hdc, descr->font );
+    if (descr->font) oldFont = (HFONT)SelectObject(hdc, descr->font);
     hbrush = (HBRUSH)SendMessageW( descr->owner, WM_CTLCOLORLISTBOX,
 				   (WPARAM)hdc, (LPARAM)descr->self );
-    if (hbrush) oldBrush = SelectObject( hdc, hbrush );
+    if (hbrush) oldBrush = (HBRUSH)SelectObject( hdc, hbrush );
     if (!IsWindowEnabled(descr->self))
         SetTextColor( hdc, GetSysColor( COLOR_GRAYTEXT ) );
     SetWindowOrgEx( hdc, descr->horz_pos, 0, NULL );
@@ -624,7 +624,6 @@ static void LISTBOX_RepaintItem( LB_DESCR *descr, INT index, UINT action )
     if (oldBrush) SelectObject( hdc, oldBrush );
     ReleaseDC( descr->self, hdc );
 }
-
 
 /***********************************************************************
  *           LISTBOX_DrawFocusRect
@@ -643,7 +642,7 @@ static void LISTBOX_DrawFocusRect( LB_DESCR *descr, BOOL on )
 
     if (LISTBOX_GetItemRect( descr, descr->focus_item, &rect ) != 1) return;
     if (!(hdc = GetDCEx( descr->self, 0, DCX_CACHE ))) return;
-    if (descr->font) oldFont = SelectObject( hdc, descr->font );
+    if (descr->font) oldFont = (HFONT)SelectObject( hdc, descr->font );
     if (!IsWindowEnabled(descr->self))
         SetTextColor( hdc, GetSysColor( COLOR_GRAYTEXT ) );
     SetWindowOrgEx( hdc, descr->horz_pos, 0, NULL );
@@ -663,12 +662,12 @@ static LRESULT LISTBOX_InitStorage( LB_DESCR *descr, INT nb_items )
     nb_items += LB_ARRAY_GRANULARITY - 1;
     nb_items -= (nb_items % LB_ARRAY_GRANULARITY);
     if (descr->items) {
-        nb_items += HeapSize( GetProcessHeap(), 0, descr->items ) / sizeof(*item);
-	item = HeapReAlloc( GetProcessHeap(), 0, descr->items,
+        nb_items += HeapSize(GetProcessHeap(), 0, descr->items) / sizeof(*item);
+	item = (LB_ITEMDATA*)HeapReAlloc(GetProcessHeap(), 0, descr->items,
                               nb_items * sizeof(LB_ITEMDATA));
     }
     else {
-	item = HeapAlloc( GetProcessHeap(), 0,
+	item = (LB_ITEMDATA*)HeapAlloc(GetProcessHeap(), 0,
                               nb_items * sizeof(LB_ITEMDATA));
     }
 
@@ -701,8 +700,8 @@ static BOOL LISTBOX_SetTabStops( LB_DESCR *descr, INT count, LPINT tabs )
         descr->tabs = NULL;
         return TRUE;
     }
-    if (!(descr->tabs = HeapAlloc( GetProcessHeap(), 0,
-                                            descr->nb_tabs * sizeof(INT) )))
+    if (!(descr->tabs = (INT*)HeapAlloc(GetProcessHeap(), 0,
+                                            descr->nb_tabs * sizeof(INT))))
         return FALSE;
     memcpy( descr->tabs, tabs, descr->nb_tabs * sizeof(INT) );
 
@@ -972,10 +971,10 @@ static LRESULT LISTBOX_Paint( LB_DESCR *descr, HDC hdc )
         rect.right += descr->horz_pos;
     }
 
-    if (descr->font) oldFont = SelectObject( hdc, descr->font );
+    if (descr->font) oldFont = (HFONT)SelectObject(hdc, descr->font );
     hbrush = (HBRUSH)SendMessageW( descr->owner, WM_CTLCOLORLISTBOX,
 				   (WPARAM)hdc, (LPARAM)descr->self );
-    if (hbrush) oldBrush = SelectObject( hdc, hbrush );
+    if (hbrush) oldBrush = (HBRUSH)SelectObject(hdc, hbrush);
     if (!IsWindowEnabled(descr->self)) SetTextColor( hdc, GetSysColor( COLOR_GRAYTEXT ) );
 
     if (!descr->nb_items && (descr->focus_item != -1) && descr->caret_on &&
@@ -1085,7 +1084,6 @@ static void LISTBOX_NCPaint( LB_DESCR *descr, HRGN region )
         CombineRgn(cliprgn, cliprgn, region, RGN_AND);
     OffsetRect(&r, -r.left, -r.top);
 
-#ifdef __REACTOS__ /* r73789 */
     hdc = GetWindowDC(descr->self);
     /* Exclude client part */
     ExcludeClipRect(hdc,
@@ -1093,10 +1091,6 @@ static void LISTBOX_NCPaint( LB_DESCR *descr, HRGN region )
                     r.top + cyEdge,
                     r.right - cxEdge,
                     r.bottom -cyEdge);
-#else
-    hdc = GetDCEx(descr->self, region, DCX_WINDOW|DCX_INTERSECTRGN);
-    OffsetRect(&r, -r.left, -r.top);
-#endif
 
     if (IsThemeBackgroundPartiallyTransparent (theme, 0, 0))
         DrawThemeParentBackground(descr->self, hdc, &r);
@@ -1282,14 +1276,14 @@ static INT LISTBOX_SetFont( LB_DESCR *descr, HFONT font )
         ERR("unable to get DC.\n" );
         return 16;
     }
-    if (font) oldFont = SelectObject( hdc, font );
-    GetTextExtentPointA( hdc, alphabet, 52, &sz);
-    if (oldFont) SelectObject( hdc, oldFont );
-    ReleaseDC( descr->self, hdc );
+    if (font) oldFont = (HFONT)SelectObject(hdc, font);
+    GetTextExtentPointA(hdc, alphabet, 52, &sz);
+    if (oldFont) SelectObject(hdc, oldFont);
+    ReleaseDC(descr->self, hdc);
 
     descr->avg_char_width = (sz.cx / 26 + 1) / 2;
     if (!IS_OWNERDRAW(descr))
-        LISTBOX_SetItemHeight( descr, 0, sz.cy, FALSE );
+        LISTBOX_SetItemHeight(descr, 0, sz.cy, FALSE);
     return sz.cy;
 }
 
@@ -1509,11 +1503,11 @@ static LRESULT LISTBOX_InsertItem( LB_DESCR *descr, INT index,
         /* We need to grow the array */
         max_items += LB_ARRAY_GRANULARITY;
 	if (descr->items)
-	    item = HeapReAlloc( GetProcessHeap(), 0, descr->items,
-                                  max_items * sizeof(LB_ITEMDATA) );
+	    item = (LB_ITEMDATA*)HeapReAlloc(GetProcessHeap(), 0, descr->items,
+                                  max_items * sizeof(LB_ITEMDATA));
 	else
-	    item = HeapAlloc( GetProcessHeap(), 0,
-                                  max_items * sizeof(LB_ITEMDATA) );
+	    item = (LB_ITEMDATA*)HeapAlloc(GetProcessHeap(), 0,
+                                  max_items * sizeof(LB_ITEMDATA));
         if (!item)
         {
             SEND_NOTIFICATION( descr, LBN_ERRSPACE );
@@ -1591,7 +1585,7 @@ static LRESULT LISTBOX_InsertString( LB_DESCR *descr, INT index, LPCWSTR str )
     {
         static const WCHAR empty_stringW[] = { 0 };
         if (!str) str = empty_stringW;
-        if (!(new_str = HeapAlloc( GetProcessHeap(), 0, (strlenW(str) + 1) * sizeof(WCHAR) )))
+        if (!(new_str = (LPWSTR)HeapAlloc(GetProcessHeap(), 0, (strlenW(str) + 1) * sizeof(WCHAR))))
         {
             SEND_NOTIFICATION( descr, LBN_ERRSPACE );
             return LB_ERRSPACE;
@@ -1682,8 +1676,8 @@ static LRESULT LISTBOX_RemoveItem( LB_DESCR *descr, INT index )
     if (descr->nb_items < max_items - 2*LB_ARRAY_GRANULARITY)
     {
         max_items -= LB_ARRAY_GRANULARITY;
-        item = HeapReAlloc( GetProcessHeap(), 0, descr->items,
-                            max_items * sizeof(LB_ITEMDATA) );
+        item = (LB_ITEMDATA*)HeapReAlloc(GetProcessHeap(), 0, descr->items,
+                            max_items * sizeof(LB_ITEMDATA));
         if (item) descr->items = item;
     }
     /* Repaint the items */
@@ -2462,7 +2456,7 @@ static BOOL LISTBOX_Create( HWND hwnd, LPHEADCOMBO lphc )
     MEASUREITEMSTRUCT mis;
     RECT rect;
 
-    if (!(descr = HeapAlloc( GetProcessHeap(), 0, sizeof(*descr) )))
+    if (!(descr = (LB_DESCR*)HeapAlloc(GetProcessHeap(), 0, sizeof(*descr))))
         return FALSE;
 
     GetClientRect( hwnd, &rect );
@@ -2567,7 +2561,7 @@ static LRESULT CALLBACK LISTBOX_WindowProc( HWND hwnd, UINT msg, WPARAM wParam, 
         if (msg == WM_CREATE)
         {
 	    CREATESTRUCTW *lpcs = (CREATESTRUCTW *)lParam;
-            if (lpcs->style & LBS_COMBOBOX) lphc = lpcs->lpCreateParams;
+            if (lpcs->style & LBS_COMBOBOX) lphc = (HEADCOMBO*)lpcs->lpCreateParams;
             if (!LISTBOX_Create( hwnd, lphc )) return -1;
             TRACE("creating hwnd %p descr %p\n", hwnd, (void *)GetWindowLongPtrW( hwnd, 0 ) );
             return 0;
@@ -3068,7 +3062,6 @@ void COMBOLBOX_Register(void)
     RegisterClassW(&wndClass);
 }
 
-#ifdef __REACTOS__
 void LISTBOX_Unregister(void)
 {
     UnregisterClassW(WC_LISTBOXW, NULL);
@@ -3079,4 +3072,3 @@ void COMBOLBOX_Unregister(void)
     static const WCHAR combolboxW[] = L"ComboLBox";
     UnregisterClassW(combolboxW, NULL);
 }
-#endif

@@ -179,7 +179,7 @@ DragList_SubclassWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
  */
 BOOL WINAPI MakeDragList (HWND hwndLB)
 {
-    DRAGLISTDATA *data = Alloc(sizeof(DRAGLISTDATA));
+    DRAGLISTDATA *data = (DRAGLISTDATA*)Alloc(sizeof(DRAGLISTDATA));
 
     TRACE("(%p)\n", hwndLB);
 

@@ -40,9 +40,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(monthcal);
 #define MC_SEL_LBUTDOWN	    2	/* Left button pressed in calendar */
 #define MC_PREVPRESSED      4   /* Prev month button pressed */
 #define MC_NEXTPRESSED      8   /* Next month button pressed */
-#define MC_PREVNEXTMONTHDELAY   350	/* when continuously pressing `next/prev
-					   month', wait 350 ms before going
-					   to the next/prev month */
+#define MC_PREVNEXTMONTHDELAY   350	/* when continuously pressing `next/prev month', wait 350 ms before going to the next/prev month */
 #define MC_TODAYUPDATEDELAY 120000 /* time between today check for update (2 min) */
 
 #define MC_PREVNEXTMONTHTIMER   1	/* Timer IDs */
@@ -128,10 +126,10 @@ typedef struct
     SIZE dim;           /* [cx,cy] - dimensions of calendars matrix, row/column count */
 } MONTHCAL_INFO, *LPMONTHCAL_INFO;
 
-static const WCHAR themeClass[] = { 'S','c','r','o','l','l','b','a','r',0 };
+static const WCHAR themeClass[] = L"Scrollbar";
 
 /* empty SYSTEMTIME const */
-static const SYSTEMTIME st_null;
+static const SYSTEMTIME st_null = SYSTEMTIME();
 /* valid date limits */
 static const SYSTEMTIME max_allowed_date = { /* wYear */ 9999, /* wMonth */ 12, /* wDayOfWeek */ 0, /* wDay */ 31 };
 static const SYSTEMTIME min_allowed_date = { /* wYear */ 1752, /* wMonth */ 9,  /* wDayOfWeek */ 0, /* wDay */ 14 };
@@ -740,10 +738,10 @@ static BOOL MONTHCAL_SetDayFocus(MONTHCAL_INFO *infoPtr, const SYSTEMTIME *st)
 /* draw today boundary box for specified rectangle */
 static void MONTHCAL_Circle(const MONTHCAL_INFO *infoPtr, HDC hdc, const RECT *r)
 {
-  HPEN old_pen = SelectObject(hdc, infoPtr->pens[PenRed]);
+  HPEN old_pen = (HPEN)SelectObject(hdc, infoPtr->pens[PenRed]);
   HBRUSH old_brush;
 
-  old_brush = SelectObject(hdc, GetStockObject(NULL_BRUSH));
+  old_brush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
   Rectangle(hdc, r->left, r->top, r->right, r->bottom);
 
   SelectObject(hdc, old_brush);
@@ -1033,7 +1031,7 @@ static void MONTHCAL_PaintWeeknumbers(const MONTHCAL_INFO *infoPtr, HDC hdc, con
   }
 
   /* line separator for week numbers column */
-  old_pen = SelectObject(hdc, infoPtr->pens[PenText]);
+  old_pen = (HPEN)SelectObject(hdc, infoPtr->pens[PenText]);
   MoveToEx(hdc, infoPtr->calendars[calIdx].weeknums.right, infoPtr->calendars[calIdx].weeknums.top + 3 , NULL);
   LineTo(hdc,   infoPtr->calendars[calIdx].weeknums.right, infoPtr->calendars[calIdx].weeknums.bottom);
   SelectObject(hdc, old_pen);
@@ -1058,7 +1056,7 @@ static void MONTHCAL_PaintTodayTitle(const MONTHCAL_INFO *infoPtr, HDC hdc, cons
   box_rect = text_rect;
 
   GetDateFormatW(LOCALE_USER_DEFAULT, DATE_SHORTDATE, &infoPtr->todaysDate, NULL, buf_dateW, ARRAY_SIZE(buf_dateW));
-  old_font = SelectObject(hdc, infoPtr->hBoldFont);
+  old_font = (HFONT)SelectObject(hdc, infoPtr->hBoldFont);
   SetTextColor(hdc, infoPtr->colors[MCSC_TEXT]);
 
   wsprintfW(buf, fmt_todayW, buf_todayW, buf_dateW);
@@ -1169,7 +1167,7 @@ static void MONTHCAL_PaintCalendar(const MONTHCAL_INFO *infoPtr, HDC hdc, const 
   FillRect(hdc, &fill_bk_rect, infoPtr->brushes[BrushMonth]);
 
   /* draw line under day abbreviations */
-  old_pen = SelectObject(hdc, infoPtr->pens[PenText]);
+  old_pen = (HPEN)SelectObject(hdc, infoPtr->pens[PenText]);
   MoveToEx(hdc, infoPtr->calendars[calIdx].days.left + 3,
                 infoPtr->calendars[calIdx].title.bottom + infoPtr->textHeight + 1, NULL);
   LineTo(hdc, infoPtr->calendars[calIdx].days.right - 3,
@@ -1216,7 +1214,7 @@ static void MONTHCAL_Refresh(MONTHCAL_INFO *infoPtr, HDC hdc, const PAINTSTRUCT 
 
   old_text_clr = SetTextColor(hdc, comctl32_color.clrWindowText);
   old_bk_clr   = GetBkColor(hdc);
-  old_font     = GetCurrentObject(hdc, OBJ_FONT);
+  old_font     = (HFONT)GetCurrentObject(hdc, OBJ_FONT);
 
   for (i = 0; i < MONTHCAL_GetCalCount(infoPtr); i++)
   {
@@ -1940,7 +1938,7 @@ static void MONTHCAL_NotifyDayState(MONTHCAL_INFO *infoPtr)
   nmds.nmhdr.idFrom   = GetWindowLongPtrW(infoPtr->hwndSelf, GWLP_ID);
   nmds.nmhdr.code     = MCN_GETDAYSTATE;
   nmds.cDayState      = MONTHCAL_GetMonthRange(infoPtr, GMR_DAYSTATE, 0);
-  nmds.prgDayState    = state = heap_alloc_zero(nmds.cDayState * sizeof(MONTHDAYSTATE));
+  nmds.prgDayState    = state = (MONTHDAYSTATE*)heap_alloc_zero(nmds.cDayState * sizeof(MONTHDAYSTATE));
 
   MONTHCAL_GetMinDate(infoPtr, &nmds.stStart);
   nmds.stStart.wDay = 1;
@@ -2492,7 +2490,7 @@ static void MONTHCAL_UpdateSize(MONTHCAL_INFO *infoPtr)
   GetClientRect(infoPtr->hwndSelf, &client);
 
   hdc = GetDC(infoPtr->hwndSelf);
-  font = SelectObject(hdc, infoPtr->hFont);
+  font = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
   /* get the height and width of each day's text */
   GetTextMetricsW(hdc, &tm);
@@ -2589,9 +2587,9 @@ static void MONTHCAL_UpdateSize(MONTHCAL_INFO *infoPtr)
   {
       infoPtr->dim.cx = x;
       infoPtr->dim.cy = y;
-      infoPtr->calendars = heap_realloc(infoPtr->calendars, MONTHCAL_GetCalCount(infoPtr)*sizeof(CALENDAR_INFO));
+      infoPtr->calendars = (CALENDAR_INFO*)heap_realloc(infoPtr->calendars, MONTHCAL_GetCalCount(infoPtr)*sizeof(CALENDAR_INFO));
 
-      infoPtr->monthdayState = heap_realloc(infoPtr->monthdayState,
+      infoPtr->monthdayState = (MONTHDAYSTATE*)heap_realloc(infoPtr->monthdayState,
           MONTHCAL_GetMonthRange(infoPtr, GMR_DAYSTATE, 0)*sizeof(MONTHDAYSTATE));
       MONTHCAL_NotifyDayState(infoPtr);
 
@@ -2702,7 +2700,7 @@ static INT MONTHCAL_StyleChanged(MONTHCAL_INFO *infoPtr, WPARAM wStyleType,
     TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
           wStyleType, lpss->styleOld, lpss->styleNew);
 
-    if (wStyleType != GWL_STYLE) return 0;
+    if ((int)wStyleType != GWL_STYLE) return 0;
 
     infoPtr->dwStyle = lpss->styleNew;
 
@@ -2747,7 +2745,7 @@ MONTHCAL_Create(HWND hwnd, LPCREATESTRUCTW lpcs)
   MONTHCAL_INFO *infoPtr;
 
   /* allocate memory for info structure */
-  infoPtr = heap_alloc_zero(sizeof(*infoPtr));
+  infoPtr = (MONTHCAL_INFO*)heap_alloc_zero(sizeof(*infoPtr));
   SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)infoPtr);
 
   if (infoPtr == NULL) {
@@ -2759,9 +2757,9 @@ MONTHCAL_Create(HWND hwnd, LPCREATESTRUCTW lpcs)
   infoPtr->hwndNotify = lpcs->hwndParent;
   infoPtr->dwStyle = GetWindowLongW(hwnd, GWL_STYLE);
   infoPtr->dim.cx = infoPtr->dim.cy = 1;
-  infoPtr->calendars = heap_alloc_zero(sizeof(CALENDAR_INFO));
+  infoPtr->calendars = (CALENDAR_INFO*)heap_alloc_zero(sizeof(CALENDAR_INFO));
   if (!infoPtr->calendars) goto fail;
-  infoPtr->monthdayState = heap_alloc_zero(3 * sizeof(MONTHDAYSTATE));
+  infoPtr->monthdayState = (MONTHDAYSTATE*)heap_alloc_zero(3 * sizeof(MONTHDAYSTATE));
   if (!infoPtr->monthdayState) goto fail;
 
   /* initialize info structure */

@@ -112,7 +112,7 @@ static PDOC_ITEM SYSLINK_AppendDocItem (SYSLINK_INFO *infoPtr, LPCWSTR Text, UIN
     PDOC_ITEM Item;
 
     textlen = min(textlen, strlenW(Text));
-    Item = Alloc(FIELD_OFFSET(DOC_ITEM, Text[textlen + 1]));
+    Item = (PDOC_ITEM)Alloc(FIELD_OFFSET(DOC_ITEM, Text[textlen + 1]));
     if(Item == NULL)
     {
         ERR("Failed to alloc DOC_ITEM structure!\n");
@@ -319,7 +319,7 @@ CheckParameter:
                         {
                             nc = min(lenId, strlenW(lpID));
                             nc = min(nc, MAX_LINKID_TEXT - 1);
-                            Last->u.Link.szID = Alloc((nc + 1) * sizeof(WCHAR));
+                            Last->u.Link.szID = (WCHAR*)Alloc((nc + 1) * sizeof(WCHAR));
                             if(Last->u.Link.szID != NULL)
                             {
                                 lstrcpynW(Last->u.Link.szID, lpID, nc + 1);
@@ -330,8 +330,8 @@ CheckParameter:
                         if(lpUrl != NULL)
                         {
                             nc = min(lenUrl, strlenW(lpUrl));
-                            nc = min(nc, L_MAX_URL_LENGTH - 1);
-                            Last->u.Link.szUrl = Alloc((nc + 1) * sizeof(WCHAR));
+                            nc = min(nc, (int)(L_MAX_URL_LENGTH - 1));
+                            Last->u.Link.szUrl = (WCHAR*)Alloc((nc + 1) * sizeof(WCHAR));
                             if(Last->u.Link.szUrl != NULL)
                             {
                                 lstrcpynW(Last->u.Link.szUrl, lpUrl, nc + 1);
@@ -397,7 +397,7 @@ CheckParameter:
             {
                 nc = min(lenId, strlenW(lpID));
                 nc = min(nc, MAX_LINKID_TEXT - 1);
-                Last->u.Link.szID = Alloc((nc + 1) * sizeof(WCHAR));
+                Last->u.Link.szID = (WCHAR*)Alloc((nc + 1) * sizeof(WCHAR));
                 if(Last->u.Link.szID != NULL)
                 {
                     lstrcpynW(Last->u.Link.szID, lpID, nc + 1);
@@ -408,8 +408,8 @@ CheckParameter:
             if(lpUrl != NULL)
             {
                 nc = min(lenUrl, strlenW(lpUrl));
-                nc = min(nc, L_MAX_URL_LENGTH - 1);
-                Last->u.Link.szUrl = Alloc((nc + 1) * sizeof(WCHAR));
+                nc = min(nc, (int)(L_MAX_URL_LENGTH - 1));
+                Last->u.Link.szUrl = (WCHAR*)Alloc((nc + 1) * sizeof(WCHAR));
                 if(Last->u.Link.szUrl != NULL)
                 {
                     lstrcpynW(Last->u.Link.szUrl, lpUrl, nc + 1);
@@ -688,15 +688,15 @@ static VOID SYSLINK_Render (const SYSLINK_INFO *infoPtr, HDC hdc, PRECT pRect)
                         }
                     }
                 }
-                
-                nbl = ReAlloc(bl, (nBlocks + 1) * sizeof(DOC_TEXTBLOCK));
+
+                nbl = (PDOC_TEXTBLOCK)ReAlloc(bl, (nBlocks + 1) * sizeof(DOC_TEXTBLOCK));
                 if (nbl != NULL)
                 {
                     bl = nbl;
                     nBlocks++;
 
                     cbl = bl + nBlocks - 1;
-                    
+
                     cbl->nChars = LineLen;
                     cbl->nSkip = SkipChars;
                     SetRect(&cbl->rc, x, y, x + szDim.cx, y + szDim.cy);
@@ -759,9 +759,9 @@ static LRESULT SYSLINK_Draw (const SYSLINK_INFO *infoPtr, HDC hdc)
     COLORREF OldTextColor, OldBkColor;
     HBRUSH hBrush;
     UINT text_flags = ETO_CLIPPED;
-    UINT mode = GetBkMode( hdc );
+    UINT mode = GetBkMode(hdc);
 
-    hOldFont = SelectObject(hdc, infoPtr->Font);
+    hOldFont = (HFONT)SelectObject(hdc, infoPtr->Font);
     OldTextColor = SetTextColor(hdc, infoPtr->TextColor);
     OldBkColor = SetBkColor(hdc, comctl32_color.clrWindow);
 
@@ -1000,7 +1000,7 @@ static LRESULT SYSLINK_SetItem (const SYSLINK_INFO *infoPtr, const LITEM *Item)
     if(Item->mask & LIF_ITEMID)
     {
         nc = min(lstrlenW(Item->szID), MAX_LINKID_TEXT - 1);
-        szId = Alloc((nc + 1) * sizeof(WCHAR));
+        szId = (PWSTR)Alloc((nc + 1) * sizeof(WCHAR));
         if(szId)
         {
             lstrcpynW(szId, Item->szID, nc + 1);
@@ -1014,8 +1014,8 @@ static LRESULT SYSLINK_SetItem (const SYSLINK_INFO *infoPtr, const LITEM *Item)
 
     if(Item->mask & LIF_URL)
     {
-        nc = min(lstrlenW(Item->szUrl), L_MAX_URL_LENGTH - 1);
-        szUrl = Alloc((nc + 1) * sizeof(WCHAR));
+        nc = min(lstrlenW(Item->szUrl), (int)(L_MAX_URL_LENGTH - 1));
+        szUrl = (PWSTR)Alloc((nc + 1) * sizeof(WCHAR));
         if(szUrl)
         {
             lstrcpynW(szUrl, Item->szUrl, nc + 1);
@@ -1515,10 +1515,10 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
     {
         LHITTESTINFO ht;
         DWORD mp = GetMessagePos();
-        
+
         ht.pt.x = (short)LOWORD(mp);
         ht.pt.y = (short)HIWORD(mp);
-        
+
         ScreenToClient(infoPtr->Self, &ht.pt);
         if(SYSLINK_HitTest (infoPtr, &ht))
         {
@@ -1586,7 +1586,7 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
             return DefWindowProcW(hwnd, message, wParam, lParam);
         }
     }
-    
+
     case WM_GETDLGCODE:
     {
         LRESULT Ret = DLGC_HASSETSEL;
@@ -1612,14 +1612,14 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
         }
         return Ret;
     }
-    
+
     case WM_NCHITTEST:
     {
         POINT pt;
         RECT rc;
         pt.x = (short)LOWORD(lParam);
         pt.y = (short)HIWORD(lParam);
-        
+
         GetClientRect(infoPtr->Self, &rc);
         ScreenToClient(infoPtr->Self, &pt);
         if(pt.x < 0 || pt.y < 0 || pt.x > rc.right || pt.y > rc.bottom)
@@ -1631,7 +1631,7 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
         {
             return HTCLIENT;
         }
-        
+
         return HTTRANSPARENT;
     }
 
@@ -1663,10 +1663,9 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
         return 0;
 
     case WM_STYLECHANGED:
-        if (wParam == GWL_STYLE)
+        if ((int)wParam == GWL_STYLE)
         {
             infoPtr->Style = ((LPSTYLESTRUCT)lParam)->styleNew;
-
             InvalidateRect(infoPtr->Self, NULL, TRUE);
         }
         return 0;
@@ -1676,7 +1675,7 @@ static LRESULT WINAPI SysLinkWindowProc(HWND hwnd, UINT message,
         CREATESTRUCTW *cs = (CREATESTRUCTW*)lParam;
 
         /* allocate memory for info struct */
-        infoPtr = Alloc (sizeof(SYSLINK_INFO));
+        infoPtr = (SYSLINK_INFO*)Alloc(sizeof(SYSLINK_INFO));
         if (!infoPtr) return -1;
         SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
@@ -1740,7 +1739,6 @@ VOID SYSLINK_Register (void)
 
     RegisterClassW (&wndClass);
 }
-
 
 /***********************************************************************
  * SYSLINK_Unregister [Internal]

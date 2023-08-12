@@ -22,29 +22,29 @@ list(APPEND SOURCE
     comboex.cpp
     comctl32undoc.c
     comctl32.cpp
-    datetime.c
+    datetime.cpp
     dpa.c
-    draglist.c
-    dsa.c
+    draglist.cpp
+    dsa.cpp
     edit.c
     flatsb.cpp
-    header.c
+    header.cpp
     hotkey.cpp
     imagelist.c
     ipaddress.cpp
-    listbox.c
+    listbox.cpp
     listview.c
-    monthcal.c
-    nativefont.c
-    pager.c
+    monthcal.cpp
+    nativefont.cpp
+    pager.cpp
     progress.cpp
     propsheet.c
     rebar.c
-    smoothscroll.c
-    static.c
-    status.c
-    string.c
-    syslink.c
+    smoothscroll.cpp
+    static.cpp
+    status.cpp
+    string.cpp
+    syslink.cpp
     tab.c
     taskdialog.c
     theme_scrollbar.c

@@ -535,7 +535,7 @@ PAGER_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
     PAGER_INFO *infoPtr;
 
     /* allocate memory for info structure */
-    infoPtr = heap_alloc_zero (sizeof(*infoPtr));
+    infoPtr = (PAGER_INFO*)heap_alloc_zero(sizeof(*infoPtr));
     if (!infoPtr) return -1;
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
@@ -964,8 +964,8 @@ PAGER_StyleChanged(PAGER_INFO *infoPtr, WPARAM wStyleType, const STYLESTRUCT *lp
     TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
           wStyleType, lpss->styleOld, lpss->styleNew);
 
-    if (wStyleType != GWL_STYLE) return 0;
-  
+    if ((int)wStyleType != GWL_STYLE) return 0;
+
     infoPtr->dwStyle = lpss->styleNew;
 
     if ((oldStyle ^ lpss->styleNew) & (PGS_HORZ | PGS_VERT))

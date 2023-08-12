@@ -159,7 +159,7 @@ HEADER_IndexToOrder (const HEADER_INFO *infoPtr, INT iItem)
 static INT
 HEADER_OrderToIndex(const HEADER_INFO *infoPtr, INT iorder)
 {
-    if ((iorder <0) || iorder >= infoPtr->uNumItem)
+    if ((iorder <0) || iorder >= (INT)infoPtr->uNumItem)
       return iorder;
     return infoPtr->order[iorder];
 }
@@ -250,8 +250,8 @@ static void HEADER_GetHotDividerRect(const HEADER_INFO *infoPtr, RECT *r)
     if (infoPtr->uNumItem > 0)
     {
         HEADER_ITEM *lpItem;
-        
-        if (iDivider < infoPtr->uNumItem)
+
+        if (iDivider < (INT)infoPtr->uNumItem)
         {
             lpItem = &infoPtr->items[iDivider];
             r->left  = lpItem->rect.left - HOT_DIVIDER_WIDTH/2;
@@ -323,7 +323,7 @@ static HRGN create_sort_arrow( INT x, INT y, INT h, BOOL is_up )
 
     if (size > sizeof(buffer))
     {
-        data = heap_alloc( size );
+        data = (RGNDATA*)heap_alloc(size);
         if (!data) return NULL;
     }
     data->rdh.dwSize = sizeof(data->rdh);
@@ -493,13 +493,13 @@ HEADER_DrawItem (HEADER_INFO *infoPtr, HDC hdc, INT iItem, BOOL bHotTrack, LRESU
 	    cx = r.left + rw / 2 - cw / 2;
 	else /* HDF_RIGHT */
 	    cx = r.right - cw;
-        
+
 	/* clip cx & cw */
 	if (cx < r.left)
 	    cx = r.left;
-	if (cx + cw > r.right)
+	if (cx + (INT)cw > r.right)
 	    cw = r.right - cx;
-	
+
 	tx = cx + infoPtr->iMargin;
 	/* since cw might have changed we have to recalculate tw */
 	tw = cw - infoPtr->iMargin * 2;
@@ -615,12 +615,12 @@ HEADER_Refresh (HEADER_INFO *infoPtr, HDC hdc)
     /* get rect for the bar, adjusted for the border */
     GetClientRect (infoPtr->hwndSelf, &rect);
     lCDFlags = HEADER_SendCtrlCustomDraw(infoPtr, CDDS_PREPAINT, hdc, &rect);
-    
+
     if (infoPtr->bDragging)
 	ImageList_DragShowNolock(FALSE);
 
-    hFont = infoPtr->hFont ? infoPtr->hFont : GetStockObject (SYSTEM_FONT);
-    hOldFont = SelectObject (hdc, hFont);
+    hFont = infoPtr->hFont ? infoPtr->hFont : (HFONT)GetStockObject (SYSTEM_FONT);
+    hOldFont = (HFONT)SelectObject(hdc, hFont);
 
     /* draw Background */
     if (infoPtr->uNumItem == 0 && theme == NULL) {
@@ -973,7 +973,7 @@ HEADER_PrepareCallbackItems(const HEADER_INFO *infoPtr, INT iItem, INT reqMask)
         heap_free(lpItem->pszText);
         lpItem->pszText = NULL;
     }
-    
+
     memset(&dispInfo, 0, sizeof(NMHDDISPINFOW));
     dispInfo.hdr.hwndFrom = infoPtr->hwndSelf;
     dispInfo.hdr.idFrom   = GetWindowLongPtrW (infoPtr->hwndSelf, GWLP_ID);
@@ -989,27 +989,27 @@ HEADER_PrepareCallbackItems(const HEADER_INFO *infoPtr, INT iItem, INT reqMask)
         if (mask & HDI_TEXT)
             pvBuffer = heap_alloc_zero(MAX_HEADER_TEXT_LEN * sizeof(CHAR));
     }
-    dispInfo.pszText      = pvBuffer;
+    dispInfo.pszText      = (LPWSTR)pvBuffer;
     dispInfo.cchTextMax   = (pvBuffer!=NULL?MAX_HEADER_TEXT_LEN:0);
     dispInfo.iItem        = iItem;
     dispInfo.mask         = mask;
     dispInfo.lParam       = lpItem->lParam;
-    
+
     TRACE("Sending HDN_GETDISPINFO%c\n", infoPtr->nNotifyFormat == NFR_UNICODE?'W':'A');
     SendMessageW(infoPtr->hwndNotify, WM_NOTIFY, dispInfo.hdr.idFrom, (LPARAM)&dispInfo);
 
-    TRACE("SendMessage returns(mask:0x%x,str:%s,lParam:%p)\n", 
+    TRACE("SendMessage returns(mask:0x%x,str:%s,lParam:%p)\n",
           dispInfo.mask,
           (infoPtr->nNotifyFormat == NFR_UNICODE ? debugstr_w(dispInfo.pszText) : (LPSTR) dispInfo.pszText),
           (void*) dispInfo.lParam);
-          
+
     if (mask & HDI_IMAGE)
         lpItem->iImage = dispInfo.iImage;
     if (mask & HDI_TEXT)
     {
         if (infoPtr->nNotifyFormat == NFR_UNICODE)
         {
-            lpItem->pszText = pvBuffer;
+            lpItem->pszText = (LPWSTR)pvBuffer;
 
             /* the user might have used his own buffer */
             if (dispInfo.pszText != lpItem->pszText)
@@ -1064,8 +1064,8 @@ HEADER_CreateDragImage (HEADER_INFO *infoPtr, INT iItem)
     HDC hDeviceDC;
     int height, width;
     HFONT hFont;
-    
-    if (iItem >= infoPtr->uNumItem)
+
+    if (iItem >= (INT)infoPtr->uNumItem)
         return NULL;
 
     if (!infoPtr->bRectsValid)
@@ -1074,14 +1074,14 @@ HEADER_CreateDragImage (HEADER_INFO *infoPtr, INT iItem)
     lpItem = &infoPtr->items[iItem];
     width = lpItem->rect.right - lpItem->rect.left;
     height = lpItem->rect.bottom - lpItem->rect.top;
-    
+
     hDeviceDC = GetDC(NULL);
     hMemoryDC = CreateCompatibleDC(hDeviceDC);
     hMemory = CreateCompatibleBitmap(hDeviceDC, width, height);
     ReleaseDC(NULL, hDeviceDC);
-    hOldBitmap = SelectObject(hMemoryDC, hMemory);
+    hOldBitmap = (HBITMAP)SelectObject(hMemoryDC, hMemory);
     SetViewportOrgEx(hMemoryDC, -lpItem->rect.left, -lpItem->rect.top, NULL);
-    hFont = infoPtr->hFont ? infoPtr->hFont : GetStockObject(SYSTEM_FONT);
+    hFont = infoPtr->hFont ? infoPtr->hFont : (HFONT)GetStockObject(SYSTEM_FONT);
     SelectObject(hMemoryDC, hFont);
 
     GetClientRect(infoPtr->hwndSelf, &rc);
@@ -1089,10 +1089,10 @@ HEADER_CreateDragImage (HEADER_INFO *infoPtr, INT iItem)
     HEADER_DrawItem(infoPtr, hMemoryDC, iItem, FALSE, lCDFlags);
     if (lCDFlags & CDRF_NOTIFYPOSTPAINT)
         HEADER_SendCtrlCustomDraw(infoPtr, CDDS_POSTPAINT, hMemoryDC, &rc);
-    
-    hMemory = SelectObject(hMemoryDC, hOldBitmap);
+
+    hMemory = (HBITMAP)SelectObject(hMemoryDC, hOldBitmap);
     DeleteDC(hMemoryDC);
-    
+
     if (hMemory == NULL)    /* if anything failed */
         return NULL;
 
@@ -1173,15 +1173,15 @@ HEADER_DeleteItem (HEADER_INFO *infoPtr, INT iItem)
             (infoPtr->uNumItem - iItem) * sizeof(HEADER_ITEM));
     memmove(&infoPtr->order[iOrder], &infoPtr->order[iOrder + 1],
             (infoPtr->uNumItem - iOrder) * sizeof(INT));
-    infoPtr->items = heap_realloc(infoPtr->items, sizeof(HEADER_ITEM) * infoPtr->uNumItem);
-    infoPtr->order = heap_realloc(infoPtr->order, sizeof(INT) * infoPtr->uNumItem);
-        
+    infoPtr->items = (HEADER_ITEM*)heap_realloc(infoPtr->items, sizeof(HEADER_ITEM) * infoPtr->uNumItem);
+    infoPtr->order = (INT*)heap_realloc(infoPtr->order, sizeof(INT) * infoPtr->uNumItem);
+
     /* Correct the orders */
     for (i = 0; i < infoPtr->uNumItem; i++)
     {
         if (infoPtr->order[i] > iItem)
             infoPtr->order[i]--;
-        if (i >= iOrder)
+        if ((INT)i >= iOrder)
             infoPtr->items[infoPtr->order[i]].iOrder = i;
     }
     for (i = 0; i < infoPtr->uNumItem; i++)
@@ -1394,19 +1394,19 @@ HEADER_InsertItemT (HEADER_INFO *infoPtr, INT nItem, const HDITEMW *phdi, BOOL b
     if ((phdi == NULL) || (nItem < 0) || (phdi->mask == 0))
 	return -1;
 
-    if (nItem > infoPtr->uNumItem)
+    if (nItem > (INT)infoPtr->uNumItem)
         nItem = infoPtr->uNumItem;
 
     iOrder = (phdi->mask & HDI_ORDER) ? phdi->iOrder : nItem;
     if (iOrder < 0)
         iOrder = 0;
-    else if (infoPtr->uNumItem < iOrder)
+    else if ((INT)infoPtr->uNumItem < iOrder)
         iOrder = infoPtr->uNumItem;
 
     infoPtr->uNumItem++;
-    infoPtr->items = heap_realloc(infoPtr->items, sizeof(HEADER_ITEM) * infoPtr->uNumItem);
-    infoPtr->order = heap_realloc(infoPtr->order, sizeof(INT) * infoPtr->uNumItem);
-    
+    infoPtr->items = (HEADER_ITEM*)heap_realloc(infoPtr->items, sizeof(HEADER_ITEM) * infoPtr->uNumItem);
+    infoPtr->order = (INT*)heap_realloc(infoPtr->order, sizeof(INT) * infoPtr->uNumItem);
+
     /* make space for the new item */
     memmove(&infoPtr->items[nItem + 1], &infoPtr->items[nItem],
             (infoPtr->uNumItem - nItem - 1) * sizeof(HEADER_ITEM));
@@ -1417,7 +1417,7 @@ HEADER_InsertItemT (HEADER_INFO *infoPtr, INT nItem, const HDITEMW *phdi, BOOL b
     infoPtr->order[iOrder] = nItem;
     for (i = 0; i < infoPtr->uNumItem; i++)
     {
-        if (i != iOrder && infoPtr->order[i] >= nItem)
+        if ((INT)i != iOrder && infoPtr->order[i] >= nItem)
             infoPtr->order[i]++;
         infoPtr->items[infoPtr->order[i]].iOrder = i;
     }
@@ -1532,7 +1532,7 @@ HEADER_SetItemT (HEADER_INFO *infoPtr, INT nItem, const HDITEMW *phdi, BOOL bUni
     HEADER_StoreHDItemInHeader(lpItem, phdi->mask, phdi, bUnicode);
 
     if (phdi->mask & HDI_ORDER)
-        if (phdi->iOrder >= 0 && phdi->iOrder < infoPtr->uNumItem)
+        if (phdi->iOrder >= 0 && phdi->iOrder < (int)infoPtr->uNumItem)
             HEADER_ChangeItemOrder(infoPtr, nItem, phdi->iOrder);
 
     HEADER_SendNotifyWithHDItemT(infoPtr, HDN_ITEMCHANGEDW, nItem, &hdNotify);
@@ -1564,7 +1564,7 @@ HEADER_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
     HFONT hOldFont;
     HDC   hdc;
 
-    infoPtr = heap_alloc_zero (sizeof(*infoPtr));
+    infoPtr = (HEADER_INFO*)heap_alloc_zero(sizeof(*infoPtr));
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
     infoPtr->hwndSelf = hwnd;
@@ -1589,12 +1589,12 @@ HEADER_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
 	SendMessageW (infoPtr->hwndNotify, WM_NOTIFYFORMAT, (WPARAM)hwnd, NF_QUERY);
     infoPtr->filter_change_timeout = 1000;
 
-    hdc = GetDC (0);
-    hOldFont = SelectObject (hdc, GetStockObject (SYSTEM_FONT));
-    GetTextMetricsW (hdc, &tm);
+    hdc = GetDC(0);
+    hOldFont = (HFONT)SelectObject(hdc, GetStockObject (SYSTEM_FONT));
+    GetTextMetricsW(hdc, &tm);
     infoPtr->nHeight = tm.tmHeight + VERT_BORDER;
-    SelectObject (hdc, hOldFont);
-    ReleaseDC (0, hdc);
+    SelectObject(hdc, hOldFont);
+    ReleaseDC(0, hdc);
 
     OpenThemeData(hwnd, themeClass);
 
@@ -1618,7 +1618,7 @@ HEADER_NCDestroy (HEADER_INFO *infoPtr)
 
     if (infoPtr->items) {
         lpItem = infoPtr->items;
-        for (nItem = 0; nItem < infoPtr->uNumItem; nItem++, lpItem++)
+        for (nItem = 0; nItem < (INT)infoPtr->uNumItem; nItem++, lpItem++)
             heap_free(lpItem->pszText);
         heap_free(infoPtr->items);
     }
@@ -1743,13 +1743,13 @@ HEADER_LButtonUp (HEADER_INFO *infoPtr, INT x, INT y)
 	{
             HEADER_ITEM *lpItem = &infoPtr->items[infoPtr->iMoveItem];
             INT iNewOrder;
-            
+
 	    ImageList_DragShowNolock(FALSE);
 	    ImageList_EndDrag();
 
             if (infoPtr->iHotDivider == -1)
                 iNewOrder = -1;
-            else if (infoPtr->iHotDivider == infoPtr->uNumItem)
+            else if (infoPtr->iHotDivider == (INT)infoPtr->uNumItem)
                 iNewOrder = infoPtr->uNumItem-1;
             else
 	    {
@@ -2051,7 +2051,7 @@ HEADER_SetFont (HEADER_INFO *infoPtr, HFONT hFont, WORD Redraw)
     infoPtr->hFont = hFont;
 
     hdc = GetDC (0);
-    hOldFont = SelectObject (hdc, infoPtr->hFont ? infoPtr->hFont : GetStockObject (SYSTEM_FONT));
+    hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont ? infoPtr->hFont : GetStockObject(SYSTEM_FONT));
     GetTextMetricsW (hdc, &tm);
     infoPtr->nHeight = tm.tmHeight + VERT_BORDER;
     SelectObject (hdc, hOldFont);
@@ -2084,7 +2084,7 @@ static INT HEADER_StyleChanged(HEADER_INFO *infoPtr, WPARAM wStyleType,
     TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
           wStyleType, lpss->styleOld, lpss->styleNew);
 
-    if (wStyleType != GWL_STYLE) return 0;
+    if ((INT)wStyleType != GWL_STYLE) return 0;
 
     infoPtr->dwStyle = lpss->styleNew;
 

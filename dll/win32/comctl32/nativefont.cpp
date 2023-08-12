@@ -38,7 +38,7 @@ static LRESULT NATIVEFONT_Create (HWND hwnd)
     NATIVEFONT_INFO *infoPtr;
 
     /* allocate memory for info structure */
-    infoPtr = Alloc (sizeof(NATIVEFONT_INFO));
+    infoPtr = (NATIVEFONT_INFO*)Alloc(sizeof(NATIVEFONT_INFO));
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
     /* initialize info structure */

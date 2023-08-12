@@ -72,7 +72,7 @@ typedef struct
 #define VERT_BORDER 2
 #define HORZ_GAP    2
 
-static const WCHAR themeClass[] = { 'S','t','a','t','u','s',0 };
+static const WCHAR themeClass[] = L"Status";
 
 /* prototype */
 static void
@@ -95,7 +95,7 @@ STATUSBAR_ComputeHeight(STATUS_INFO *infoPtr)
 
     COMCTL32_GetFontMetrics(infoPtr->hFont ? infoPtr->hFont : infoPtr->hDefaultFont, &tm);
     margin = (tm.tmInternalLeading ? tm.tmInternalLeading : 2);
-    height = max(tm.tmHeight + margin + 2*GetSystemMetrics(SM_CYBORDER), infoPtr->minHeight) + infoPtr->verticalBorder;
+    height = max(tm.tmHeight + margin + 2*GetSystemMetrics(SM_CYBORDER), (LONG)infoPtr->minHeight) + infoPtr->verticalBorder;
 
     if ((theme = GetWindowTheme(infoPtr->Self)))
     {
@@ -104,7 +104,7 @@ STATUSBAR_ComputeHeight(STATUS_INFO *infoPtr)
         HDC hdc = GetDC(infoPtr->Self);
         RECT r;
 
-        SetRect(&r, 0, 0, 0, max(infoPtr->minHeight, tm.tmHeight));
+        SetRect(&r, 0, 0, 0, max((LONG)infoPtr->minHeight, tm.tmHeight));
         if (SUCCEEDED(GetThemeBackgroundExtent(theme, hdc, SP_PANE, 0, &r, &r)))
         {
             height = r.bottom - r.top;
@@ -269,7 +269,7 @@ STATUSBAR_Refresh (STATUS_INFO *infoPtr, HDC hdc)
             DeleteObject (hbrBk);
     }
 
-    hOldFont = SelectObject (hdc, infoPtr->hFont ? infoPtr->hFont : infoPtr->hDefaultFont);
+    hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont ? infoPtr->hFont : infoPtr->hDefaultFont);
 
     if (infoPtr->simple) {
 	STATUSBAR_RefreshPart (infoPtr, hdc, &infoPtr->part0, 0);
@@ -614,7 +614,7 @@ STATUSBAR_SetMinHeight (STATUS_INFO *infoPtr, INT height)
 {
     DWORD ysize = GetSystemMetrics(SM_CYSIZE);
     if (ysize & 1) ysize--;
-    infoPtr->minHeight = max(height, ysize);
+    infoPtr->minHeight = max(height, (INT)ysize);
     infoPtr->height = STATUSBAR_ComputeHeight(infoPtr);
     /* like native, don't resize the control */
     return TRUE;
@@ -639,7 +639,7 @@ STATUSBAR_SetParts (STATUS_INFO *infoPtr, INT count, LPINT parts)
 		Free (infoPtr->parts[i].text);
 	}
     } else if (oldNumParts < infoPtr->numParts) {
-	tmp = Alloc (sizeof(STATUSWINDOWPART) * infoPtr->numParts);
+	tmp = (STATUSWINDOWPART*)Alloc(sizeof(STATUSWINDOWPART) * infoPtr->numParts);
 	if (!tmp) return FALSE;
 	for (i = 0; i < oldNumParts; i++) {
 	    tmp[i] = infoPtr->parts[i];
@@ -735,11 +735,11 @@ STATUSBAR_SetTextT (STATUS_INFO *infoPtr, INT nPart, WORD style,
 	if (text && !isW) {
 	    LPCSTR atxt = (LPCSTR)text;
             DWORD len = MultiByteToWideChar( CP_ACP, 0, atxt, -1, NULL, 0 );
-	    ntext = Alloc( (len + 1)*sizeof(WCHAR) );
+	    ntext = (LPWSTR)Alloc((len + 1)*sizeof(WCHAR));
 	    if (!ntext) return FALSE;
             MultiByteToWideChar( CP_ACP, 0, atxt, -1, ntext, len );
 	} else if (text) {
-	    ntext = Alloc( (strlenW(text) + 1)*sizeof(WCHAR) );
+	    ntext = (LPWSTR)Alloc((strlenW(text) + 1)*sizeof(WCHAR));
 	    if (!ntext) return FALSE;
 	    strcpyW (ntext, text);
 	} else ntext = 0;
@@ -885,7 +885,7 @@ STATUSBAR_WMCreate (HWND hwnd, const CREATESTRUCTA *lpCreate)
     int	len;
 
     TRACE("\n");
-    infoPtr = Alloc (sizeof(STATUS_INFO));
+    infoPtr = (STATUS_INFO*)Alloc(sizeof(STATUS_INFO));
     if (!infoPtr) goto create_fail;
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
@@ -919,19 +919,19 @@ STATUSBAR_WMCreate (HWND hwnd, const CREATESTRUCTA *lpCreate)
     infoPtr->part0.hIcon = 0;
 
     /* initialize first part */
-    infoPtr->parts = Alloc (sizeof(STATUSWINDOWPART));
+    infoPtr->parts = (STATUSWINDOWPART*)Alloc(sizeof(STATUSWINDOWPART));
     if (!infoPtr->parts) goto create_fail;
     infoPtr->parts[0].bound = rect;
     infoPtr->parts[0].text = 0;
     infoPtr->parts[0].x = -1;
     infoPtr->parts[0].style = 0;
     infoPtr->parts[0].hIcon = 0;
-    
+
     OpenThemeData (hwnd, themeClass);
 
     if (lpCreate->lpszName && (len = strlenW ((LPCWSTR)lpCreate->lpszName)))
     {
-        infoPtr->parts[0].text = Alloc ((len + 1)*sizeof(WCHAR));
+        infoPtr->parts[0].text = (LPWSTR)Alloc((len + 1)*sizeof(WCHAR));
         if (!infoPtr->parts[0].text) goto create_fail;
         strcpyW (infoPtr->parts[0].text, (LPCWSTR)lpCreate->lpszName);
     }
@@ -1069,7 +1069,7 @@ STATUSBAR_WMSetText (const STATUS_INFO *infoPtr, LPCSTR text)
     part->text = 0;
 
     if (text && (len = strlenW((LPCWSTR)text))) {
-        part->text = Alloc ((len+1)*sizeof(WCHAR));
+        part->text = (LPWSTR)Alloc((len+1)*sizeof(WCHAR));
         if (!part->text) return FALSE;
         strcpyW (part->text, (LPCWSTR)text);
     }

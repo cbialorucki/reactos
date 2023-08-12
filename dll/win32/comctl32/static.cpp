@@ -81,16 +81,11 @@ static BOOL get_icon_size( HICON handle, SIZE *size )
     if (!GetIconInfo(handle, &info))
         return FALSE;
 
-#ifdef __REACTOS__
     ret = GetObjectW(info.hbmMask, sizeof(bmp), &bmp);
-#else
-    ret = GetObjectW(info.hbmColor, sizeof(bmp), &bmp);
-#endif
     if (ret)
     {
         size->cx = bmp.bmWidth;
         size->cy = bmp.bmHeight;
-#ifdef __REACTOS__
         /*
             If this structure defines a black and white icon, this bitmask is formatted
             so that the upper half is the icon AND bitmask and the lower half is
@@ -98,7 +93,6 @@ static BOOL get_icon_size( HICON handle, SIZE *size )
         */
         if (!info.hbmColor)
             size->cy /= 2;
-#endif
     }
 
     DeleteObject(info.hbmMask);
@@ -235,11 +229,11 @@ static HICON STATIC_LoadIconW( HINSTANCE hInstance, LPCWSTR name, DWORD style )
     if (hInstance && ((ULONG_PTR)hInstance >> 16))
     {
         if ((style & SS_REALSIZEIMAGE) != 0)
-            hicon = LoadImageW(hInstance, name, IMAGE_ICON, 0, 0, LR_SHARED);
+            hicon = (HICON)LoadImageW(hInstance, name, IMAGE_ICON, 0, 0, LR_SHARED);
         else
         {
             hicon = LoadIconW( hInstance, name );
-            if (!hicon) hicon = LoadCursorW( hInstance, name );
+            if (!hicon) hicon = LoadCursorW(hInstance, name);
         }
     }
     if (!hicon) hicon = LoadIconW( 0, name );
@@ -514,7 +508,7 @@ static void STATIC_PaintOwnerDrawfn( HWND hwnd, HDC hdc, DWORD style )
     GetClientRect( hwnd, &dis.rcItem );
 
     font = (HFONT)GetWindowLongPtrW( hwnd, HFONT_GWL_OFFSET );
-    if (font) oldFont = SelectObject( hdc, font );
+    if (font) oldFont = (HFONT)SelectObject( hdc, font );
     SendMessageW( GetParent(hwnd), WM_CTLCOLORSTATIC, (WPARAM)hdc, (LPARAM)hwnd );
     SendMessageW( GetParent(hwnd), WM_DRAWITEM, id, (LPARAM)&dis );
     if (font) SelectObject( hdc, oldFont );
@@ -578,7 +572,7 @@ static void STATIC_PaintTextfn( HWND hwnd, HDC hdc, DWORD style )
     }
 
     if ((hFont = (HFONT)GetWindowLongPtrW( hwnd, HFONT_GWL_OFFSET )))
-        hOldFont = SelectObject( hdc, hFont );
+        hOldFont = (HFONT)SelectObject( hdc, hFont );
 
     /* SS_SIMPLE controls: WM_CTLCOLORSTATIC is sent, but the returned
                            brush is not used */
@@ -591,13 +585,13 @@ static void STATIC_PaintTextfn( HWND hwnd, HDC hdc, DWORD style )
     }
 
     buf_size = 256;
-    if (!(text = HeapAlloc( GetProcessHeap(), 0, buf_size * sizeof(WCHAR) )))
+    if (!(text = (WCHAR*)HeapAlloc(GetProcessHeap(), 0, buf_size * sizeof(WCHAR))))
         goto no_TextOut;
 
     while ((len = InternalGetWindowText( hwnd, text, buf_size )) == buf_size - 1)
     {
         buf_size *= 2;
-        if (!(text = HeapReAlloc( GetProcessHeap(), 0, text, buf_size * sizeof(WCHAR) )))
+        if (!(text = (WCHAR*)HeapReAlloc(GetProcessHeap(), 0, text, buf_size * sizeof(WCHAR))))
             goto no_TextOut;
     }
 
@@ -608,19 +602,18 @@ static void STATIC_PaintTextfn( HWND hwnd, HDC hdc, DWORD style )
         /* Windows uses the faster ExtTextOut() to draw the text and
            to paint the whole client rectangle with the text background
            color. Reference: "Static Controls" by Kyle Marsh, 1992 */
-        ExtTextOutW( hdc, rc.left, rc.top, ETO_CLIPPED | ETO_OPAQUE,
-                     &rc, text, len, NULL );
+        ExtTextOutW( hdc, rc.left, rc.top, ETO_CLIPPED | ETO_OPAQUE, &rc, text, len, NULL );
     }
     else
     {
-        DrawTextW( hdc, text, -1, &rc, format );
+        DrawTextW(hdc, text, -1, &rc, format);
     }
 
 no_TextOut:
     HeapFree( GetProcessHeap(), 0, text );
 
     if (hFont)
-        SelectObject( hdc, hOldFont );
+        SelectObject(hdc, hOldFont);
 }
 
 static void STATIC_PaintRectfn( HWND hwnd, HDC hdc, DWORD style )
@@ -704,16 +697,16 @@ static void STATIC_PaintBitmapfn(HWND hwnd, HDC hdc, DWORD style )
     /* message is still sent, even if the returned brush is not used */
     hbrush = STATIC_SendWmCtlColorStatic(hwnd, hdc);
 
-    if ((hBitmap = (HBITMAP)GetWindowLongPtrW( hwnd, HICON_GWL_OFFSET ))
+    if ((hBitmap = (HBITMAP)GetWindowLongPtrW(hwnd, HICON_GWL_OFFSET))
          && (GetObjectType(hBitmap) == OBJ_BITMAP)
-         && (hMemDC = CreateCompatibleDC( hdc )))
+         && (hMemDC = CreateCompatibleDC(hdc)))
     {
         BITMAP bm;
         RECT rcClient;
         LOGBRUSH brush;
 
         GetObjectW(hBitmap, sizeof(bm), &bm);
-        oldbitmap = SelectObject(hMemDC, hBitmap);
+        oldbitmap = (HBITMAP)SelectObject(hMemDC, hBitmap);
 
         /* Set the background color for monochrome bitmaps
            to the color of the background brush */
@@ -792,9 +785,7 @@ void STATIC_Register(void)
     RegisterClassW(&wndClass);
 }
 
-#ifdef __REACTOS__
 void STATIC_Unregister(void)
 {
     UnregisterClassW(WC_STATICW, NULL);
 }
-#endif

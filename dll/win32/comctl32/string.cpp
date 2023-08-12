@@ -6,7 +6,7 @@
  */
 
 #include "config.h"
-#include "wine/port.h"
+//#include "wine/port.h" //Not needed?
 
 #include <stdarg.h>
 #include <string.h>
@@ -22,6 +22,10 @@
 #include "wine/unicode.h"
 
 #include "wine/debug.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
@@ -165,7 +169,7 @@ BOOL WINAPI Str_SetPtrA (LPSTR *lppDest, LPCSTR lpSrc)
     TRACE("(%p %p)\n", lppDest, lpSrc);
 
     if (lpSrc) {
-        LPSTR ptr = ReAlloc (*lppDest, strlen (lpSrc) + 1);
+        LPSTR ptr = (LPSTR)ReAlloc(*lppDest, strlen (lpSrc) + 1);
         if (!ptr)
             return FALSE;
         strcpy (ptr, lpSrc);
@@ -222,7 +226,7 @@ BOOL WINAPI Str_SetPtrW (LPWSTR *lppDest, LPCWSTR lpSrc)
 
     if (lpSrc) {
         INT len = strlenW (lpSrc) + 1;
-        LPWSTR ptr = ReAlloc (*lppDest, len * sizeof(WCHAR));
+        LPWSTR ptr = (LPWSTR)ReAlloc(*lppDest, len * sizeof(WCHAR));
         if (!ptr)
             return FALSE;
         strcpyW (ptr, lpSrc);
@@ -844,8 +848,7 @@ int WINAPI StrCSpnW(LPCWSTR lpszStr, LPCWSTR lpszMatch)
  *  TRUE  If the strings are equal.
  *  FALSE Otherwise.
  */
-BOOL WINAPI IntlStrEqWorkerA(BOOL bCase, LPCSTR lpszStr, LPCSTR lpszComp,
-                             int iLen)
+BOOL WINAPI IntlStrEqWorkerA(BOOL bCase, LPCSTR lpszStr, LPCSTR lpszComp, int iLen)
 {
   DWORD dwFlags;
   int iRet;
@@ -894,3 +897,6 @@ BOOL WINAPI IntlStrEqWorkerW(BOOL bCase, LPCWSTR lpszStr, LPCWSTR lpszComp,
 
   return iRet == CSTR_EQUAL;
 }
+#ifdef __cplusplus
+}
+#endif

@@ -24,6 +24,10 @@
 #include "comctl32.h"
 #include "wine/debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 WINE_DEFAULT_DEBUG_CHANNEL(dsa);
 
 struct _DSA
@@ -59,7 +63,7 @@ HDSA WINAPI DSA_Create (INT nSize, INT nGrow)
 
     TRACE("(size=%d grow=%d)\n", nSize, nGrow);
 
-    hdsa = Alloc (sizeof(*hdsa));
+    hdsa = (HDSA)Alloc(sizeof(*hdsa));
     if (hdsa)
     {
         hdsa->nItemCount = 0;
@@ -75,7 +79,7 @@ HDSA WINAPI DSA_Create (INT nSize, INT nGrow)
 
 /**************************************************************************
  * DSA_Destroy [COMCTL32.321]
- * 
+ *
  * Destroys a dynamic storage array
  *
  * PARAMS
@@ -478,3 +482,6 @@ ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 
     return sizeof(*hdsa) + (ULONGLONG)hdsa->nMaxCount*hdsa->nItemSize;
 }
+#ifdef __cplusplus
+}
+#endif
