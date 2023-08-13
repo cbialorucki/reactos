@@ -27,9 +27,7 @@
 #include "wingdi.h"
 #include "winuser.h"
 #include "imm.h"
-#ifdef __REACTOS__
-    #include <immdev.h>
-#endif
+//#include <immdev.h>
 #include "usp10.h"
 #include "commctrl.h"
 #include "uxtheme.h"
@@ -60,6 +58,10 @@ WINE_DEFAULT_DEBUG_CHANNEL(edit);
 
 #define ID_CB_LISTBOX 1000
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum
 {
 	END_0 = 0,			/* line ends with terminating '\0' character */
@@ -88,9 +90,7 @@ typedef struct
 	HFONT font;			/* NULL means standard system font */
 	INT x_offset;			/* scroll offset	for multi lines this is in pixels
 								for single lines it's in characters */
-#ifdef __REACTOS__
     DWORD dwCaretWidth;
-#endif
 	INT line_height;		/* height of a screen line in pixels */
 	INT char_width;			/* average character width in pixels */
 	DWORD style;			/* sane version of wnd->dwStyle */
@@ -132,10 +132,6 @@ typedef struct
 	/*
 	 * IME Data
 	 */
-#ifndef __REACTOS__ /* Rely on the composition window */
-	UINT composition_len;   /* length of composition, 0 == no composition */
-	int composition_start;  /* the character position for the composition */
-#endif
 	/*
 	 * Uniscribe Data
 	 */
@@ -232,7 +228,7 @@ static INT EDIT_WordBreakProc(EDITSTATE *es, LPWSTR s, INT index, INT count, INT
         memset(&psa,0,sizeof(SCRIPT_ANALYSIS));
         psa.eScript = SCRIPT_UNDEFINED;
 
-        es->logAttr = heap_alloc(sizeof(SCRIPT_LOGATTR) * get_text_length(es));
+        es->logAttr = (SCRIPT_LOGATTR*)heap_alloc(sizeof(SCRIPT_LOGATTR) * get_text_length(es));
         ScriptBreak(es->text, get_text_length(es), &psa, es->logAttr);
     }
 
@@ -327,7 +323,7 @@ static SCRIPT_STRING_ANALYSIS EDIT_UpdateUniscribeData_linedef(EDITSTATE *es, HD
 		if (!udc)
 			udc = GetDC(es->hwndSelf);
 		if (es->font)
-			old_font = SelectObject(udc, es->font);
+			old_font = (HFONT)SelectObject(udc, es->font);
 
 		tabdef.cTabStops = es->tabs_count;
 		tabdef.iScale = GdiGetCharDimensions(udc, NULL, NULL);
@@ -368,7 +364,7 @@ static SCRIPT_STRING_ANALYSIS EDIT_UpdateUniscribeData(EDITSTATE *es, HDC dc, IN
 			if (!udc)
 				udc = GetDC(es->hwndSelf);
 			if (es->font)
-				old_font = SelectObject(udc, es->font);
+				old_font = (HFONT)SelectObject(udc, es->font);
 
 			if (es->style & ES_PASSWORD)
 				ScriptStringAnalyse(udc, &es->password_char, length, (1.5*length+16), -1, SSA_LINK|SSA_FALLBACK|SSA_GLYPHS|SSA_PASSWORD, -1, NULL, NULL, NULL, NULL, NULL, &es->ssa);
@@ -470,7 +466,7 @@ static void EDIT_BuildLineDefs_ML(EDITSTATE *es, INT istart, INT iend, INT delta
 			{
 				/* The buffer has been expanded, create a new line and
 				   insert it into the link list */
-				LINEDEF *new_line = heap_alloc_zero(sizeof(*new_line));
+				LINEDEF *new_line = (LINEDEF*)heap_alloc_zero(sizeof(*new_line));
 				new_line->next = previous_line->next;
 				previous_line->next = new_line;
 				current_line = new_line;
@@ -580,7 +576,7 @@ static void EDIT_BuildLineDefs_ML(EDITSTATE *es, INT istart, INT iend, INT delta
 				if (current_line->ssa)
 				{
 					count = ScriptString_pcOutChars(current_line->ssa);
-					piDx = heap_alloc(sizeof(INT) * (*count));
+					piDx = (INT*)heap_alloc(sizeof(INT) * (*count));
 					ScriptStringGetLogicalWidths(current_line->ssa,piDx);
 
 					prev = current_line->net_length-1;
@@ -708,11 +704,7 @@ static void EDIT_BuildLineDefs_ML(EDITSTATE *es, INT istart, INT iend, INT delta
 		if ((es->style & ES_CENTER) || (es->style & ES_RIGHT))
 			rc.left = es->format_rect.left;
 		else
-#ifdef __REACTOS__ /* CORE-11475 */
 			rc.left = (short)LOWORD(EDIT_EM_PosFromChar(es, nstart_index, FALSE));
-#else
-                        rc.left = LOWORD(EDIT_EM_PosFromChar(es, nstart_index, FALSE));
-#endif
 		rc.right = es->format_rect.right;
 		SetRectRgn(hrgn, rc.left, rc.top, rc.right, rc.bottom);
 
@@ -826,7 +818,7 @@ static INT EDIT_CharFromPos(EDITSTATE *es, INT x, INT y, LPBOOL after_wrap)
 		{
 			if (es->ssa)
 			{
-				if (es->x_offset>= get_text_length(es))
+				if ((UINT)es->x_offset >= get_text_length(es))
 				{
 					const SIZE *size;
 					size = ScriptString_pSize(es->ssa);
@@ -1038,11 +1030,7 @@ static LRESULT EDIT_EM_PosFromChar(EDITSTATE *es, INT index, BOOL after_wrap)
 			x -= es->x_offset;
 		}
 		else
-#ifdef __REACTOS__ /* CORE-15780 */
 			x = (lw > 0 ? es->x_offset : x - es->x_offset);
-#else
-			x = es->x_offset;
-#endif
 
 		if (es->style & ES_RIGHT)
 			x = w - (lw - x);
@@ -1056,7 +1044,7 @@ static LRESULT EDIT_EM_PosFromChar(EDITSTATE *es, INT index, BOOL after_wrap)
 		{
 			if (es->ssa)
 			{
-				if (es->x_offset >= get_text_length(es))
+				if ((UINT)es->x_offset >= get_text_length(es))
 				{
 					int leftover = es->x_offset - get_text_length(es);
 					if (es->ssa)
@@ -1077,7 +1065,7 @@ static LRESULT EDIT_EM_PosFromChar(EDITSTATE *es, INT index, BOOL after_wrap)
 		}
 		if (index)
 		{
-			if (index >= get_text_length(es))
+			if ((UINT)index >= get_text_length(es))
 			{
 				if (es->ssa)
 				{
@@ -1195,7 +1183,7 @@ static void EDIT_LockBuffer(EDITSTATE *es)
         if (!es->hloc32W)
             return;
 
-        es->text = LocalLock(es->hloc32W);
+        es->text = (LPWSTR)LocalLock(es->hloc32W);
     }
 
     es->lock_count++;
@@ -1304,7 +1292,7 @@ static BOOL EDIT_MakeUndoFit(EDITSTATE *es, UINT size)
 	TRACE("trying to ReAlloc to %d+1\n", size);
 
 	alloc_size = ROUND_TO_GROW((size + 1) * sizeof(WCHAR));
-	if ((es->undo_text = HeapReAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, es->undo_text, alloc_size))) {
+	if ((es->undo_text = (LPWSTR)HeapReAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, es->undo_text, alloc_size))) {
 		es->undo_buffer_size = alloc_size/sizeof(WCHAR) - 1;
 		return TRUE;
 	}
@@ -1694,8 +1682,6 @@ static LRESULT EDIT_EM_Scroll(EDITSTATE *es, INT action)
 	return (LRESULT)FALSE;
 }
 
-
-#ifdef __REACTOS__
 static void EDIT_ImmSetCompositionWindow(EDITSTATE *es, POINT pt)
 {
     COMPOSITIONFORM CompForm;
@@ -1721,17 +1707,14 @@ static void EDIT_ImmSetCompositionWindow(EDITSTATE *es, POINT pt)
     ImmSetCompositionWindow(hIMC, &CompForm);
     ImmReleaseContext(es->hwndSelf, hIMC);
 }
-#endif
 /*********************************************************************
  *
  *	EDIT_SetCaretPos
  *
  */
-static void EDIT_SetCaretPos(EDITSTATE *es, INT pos,
-			     BOOL after_wrap)
+static void EDIT_SetCaretPos(EDITSTATE *es, INT pos, BOOL after_wrap)
 {
 	LRESULT res = EDIT_EM_PosFromChar(es, pos, after_wrap);
-#ifdef __REACTOS__
     HKL hKL = GetKeyboardLayout(0);
     POINT pt = { (short)LOWORD(res), (short)HIWORD(res) };
     SetCaretPos(pt.x, pt.y);
@@ -1740,10 +1723,6 @@ static void EDIT_SetCaretPos(EDITSTATE *es, INT pos,
         return;
 
     EDIT_ImmSetCompositionWindow(es, pt);
-#else
-	TRACE("%d - %dx%d\n", pos, (short)LOWORD(res), (short)HIWORD(res));
-	SetCaretPos((short)LOWORD(res), (short)HIWORD(res));
-#endif
 }
 
 
@@ -2098,23 +2077,19 @@ static INT EDIT_PaintText(EDITSTATE *es, HDC dc, INT x, INT y, INT line, INT col
 	BkColor = GetBkColor(dc);
 	TextColor = GetTextColor(dc);
 	if (rev) {
-#ifdef __REACTOS__
             if (TRUE)
-#else
-	        if (es->composition_len == 0)
-#endif
 	        {
 			SetBkColor(dc, GetSysColor(COLOR_HIGHLIGHT));
 			SetTextColor(dc, GetSysColor(COLOR_HIGHLIGHTTEXT));
-			SetBkMode( dc, OPAQUE);
+			SetBkMode(dc, OPAQUE);
 	        }
 		else
 		{
-			HFONT current = GetCurrentObject(dc,OBJ_FONT);
+			HFONT current = (HFONT)GetCurrentObject(dc,OBJ_FONT);
 			GetObjectW(current,sizeof(LOGFONTW),&underline_font);
 			underline_font.lfUnderline = TRUE;
 			hUnderline = CreateFontIndirectW(&underline_font);
-			old_font = SelectObject(dc,hUnderline);
+			old_font = (HFONT)SelectObject(dc,hUnderline);
 	        }
 	}
 	li = EDIT_EM_LineIndex(es, line);
@@ -2127,11 +2102,7 @@ static INT EDIT_PaintText(EDITSTATE *es, HDC dc, INT x, INT y, INT line, INT col
 		ret = size.cx;
 	}
 	if (rev) {
-#ifdef __REACTOS__
         if (TRUE)
-#else
-		if (es->composition_len == 0)
-#endif
 		{
 			SetBkColor(dc, BkColor);
 			SetTextColor(dc, TextColor);
@@ -2147,7 +2118,6 @@ static INT EDIT_PaintText(EDITSTATE *es, HDC dc, INT x, INT y, INT line, INT col
 	}
 	return ret;
 }
-
 
 /*********************************************************************
  *
@@ -2508,7 +2478,7 @@ static void EDIT_EM_ReplaceSel(EDITSTATE *es, BOOL can_undo, const WCHAR *lpsz_r
 		/* there is something to be deleted */
 		TRACE("deleting stuff.\n");
 		bufl = e - s;
-		buf = heap_alloc((bufl + 1) * sizeof(WCHAR));
+		buf = (LPWSTR)heap_alloc((bufl + 1) * sizeof(WCHAR));
 		if (!buf) return;
 		memcpy(buf, es->text + s, bufl * sizeof(WCHAR));
 		buf[bufl] = 0; /* ensure 0 termination */
@@ -2757,7 +2727,7 @@ static void EDIT_EM_SetMargins(EDITSTATE *es, INT action,
         /* Set the default margins depending on the font */
         if (es->font && (left == EC_USEFONTINFO || right == EC_USEFONTINFO)) {
             HDC dc = GetDC(es->hwndSelf);
-            HFONT old_font = SelectObject(dc, es->font);
+            HFONT old_font = (HFONT)SelectObject(dc, es->font);
             LONG width = GdiGetCharDimensions(dc, &tm, NULL);
             RECT rc;
 
@@ -2853,7 +2823,7 @@ static BOOL EDIT_EM_SetTabStops(EDITSTATE *es, INT count, const INT *tabs)
 	if (!count)
 		es->tabs = NULL;
 	else {
-		es->tabs = heap_alloc(count * sizeof(INT));
+		es->tabs = (LPINT)heap_alloc(count * sizeof(INT));
 		memcpy(es->tabs, tabs, count * sizeof(INT));
 	}
 	EDIT_InvalidateUniscribeData(es);
@@ -2897,7 +2867,7 @@ static BOOL EDIT_EM_Undo(EDITSTATE *es)
 
 	ulength = strlenW(es->undo_text);
 
-	utext = heap_alloc((ulength + 1) * sizeof(WCHAR));
+	utext = (LPWSTR)heap_alloc((ulength + 1) * sizeof(WCHAR));
 
 	strcpyW(utext, es->undo_text);
 
@@ -2949,7 +2919,7 @@ static void EDIT_WM_Paste(EDITSTATE *es)
 
 	OpenClipboard(es->hwndSelf);
 	if ((hsrc = GetClipboardData(CF_UNICODETEXT))) {
-		src = GlobalLock(hsrc);
+		src = (LPWSTR)GlobalLock(hsrc);
                 len = strlenW(src);
 		/* Protect single-line edit against pasting new line character */
 		if (!(es->style & ES_MULTILINE) && ((ptr = strchrW(src, '\n')))) {
@@ -2985,7 +2955,7 @@ static void EDIT_WM_Copy(EDITSTATE *es)
 
 	len = e - s;
 	hdst = GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, (len + 1) * sizeof(WCHAR));
-	dst = GlobalLock(hdst);
+	dst = (LPWSTR)GlobalLock(hdst);
 	memcpy(dst, es->text + s, len * sizeof(WCHAR));
 	dst[len] = 0; /* ensure 0 termination */
 	TRACE("%s\n", debugstr_w(dst));
@@ -3608,7 +3578,7 @@ static void EDIT_WM_Paint(EDITSTATE *es, HDC hdc)
 		}
 
 		/* Draw the frame. Same code as in nonclient.c */
-		old_brush = SelectObject(dc, GetSysColorBrush(COLOR_WINDOWFRAME));
+		old_brush = (HBRUSH)SelectObject(dc, GetSysColorBrush(COLOR_WINDOWFRAME));
 		PatBlt(dc, rc.left, rc.top, rc.right - rc.left, bh, PATCOPY);
 		PatBlt(dc, rc.left, rc.top, bw, rc.bottom - rc.top, PATCOPY);
 		PatBlt(dc, rc.left, rc.bottom - 1, rc.right - rc.left, -bw, PATCOPY);
@@ -3632,7 +3602,7 @@ static void EDIT_WM_Paint(EDITSTATE *es, HDC hdc)
 		IntersectClipRect(dc, rc.left, rc.top, rc.right, rc.bottom);
 	}
 	if (es->font)
-		old_font = SelectObject(dc, es->font);
+		old_font = (HFONT)SelectObject(dc, es->font);
 
 	if (!es->bEnableState)
 		SetTextColor(dc, GetSysColor(COLOR_GRAYTEXT));
@@ -3690,7 +3660,6 @@ static void EDIT_WM_NCPaint(HWND hwnd, HRGN region)
             CombineRgn(cliprgn, cliprgn, region, RGN_AND);
         OffsetRect(&r, -r.left, -r.top);
 
-#ifdef __REACTOS__ /* r73789 */
         dc = GetWindowDC(hwnd);
         /* Exclude client part */
         ExcludeClipRect(dc,
@@ -3698,10 +3667,6 @@ static void EDIT_WM_NCPaint(HWND hwnd, HRGN region)
                         r.top + cyEdge,
                         r.right - cxEdge,
                         r.bottom -cyEdge);
-#else
-        dc = GetDCEx(hwnd, region, DCX_WINDOW|DCX_INTERSECTRGN);
-        OffsetRect(&r, -r.left, -r.top);
-#endif
 
         if (IsThemeBackgroundPartiallyTransparent(theme, part, state))
             DrawThemeParentBackground(hwnd, dc, &r);
@@ -3727,12 +3692,8 @@ static void EDIT_WM_SetFocus(HTHEME theme, EDITSTATE *es)
     if (!(es->style & ES_NOHIDESEL))
         EDIT_InvalidateText(es, es->selection_start, es->selection_end);
 
-#ifdef __REACTOS__
     SystemParametersInfo(SPI_GETCARETWIDTH, 0, &es->dwCaretWidth, 0);
     CreateCaret(es->hwndSelf, NULL, es->dwCaretWidth, es->line_height);
-#else
-    CreateCaret(es->hwndSelf, 0, 1, es->line_height);
-#endif
     EDIT_SetCaretPos(es, es->selection_end, es->flags & EF_AFTER_WRAP);
     ShowCaret(es->hwndSelf);
     if (!notify_parent(es, EN_SETFOCUS)) return;
@@ -3764,7 +3725,7 @@ static void EDIT_WM_SetFont(EDITSTATE *es, HFONT font, BOOL redraw)
 	EDIT_InvalidateUniscribeData(es);
 	dc = GetDC(es->hwndSelf);
 	if (font)
-		old_font = SelectObject(dc, font);
+		old_font = (HFONT)SelectObject(dc, font);
 	GetTextMetricsW(dc, &tm);
 	es->line_height = tm.tmHeight;
 	es->char_width = tm.tmAveCharWidth;
@@ -3787,16 +3748,11 @@ static void EDIT_WM_SetFont(EDITSTATE *es, HFONT font, BOOL redraw)
 		EDIT_UpdateText(es, NULL, TRUE);
 	if (es->flags & EF_FOCUSED) {
 		DestroyCaret();
-#ifdef __REACTOS__
 		CreateCaret(es->hwndSelf, NULL, es->dwCaretWidth, es->line_height);
-#else
-		CreateCaret(es->hwndSelf, 0, 1, es->line_height);
-#endif
 		EDIT_SetCaretPos(es, es->selection_end,
 				 es->flags & EF_AFTER_WRAP);
 		ShowCaret(es->hwndSelf);
 	}
-#ifdef __REACTOS__
     if (ImmIsIME(GetKeyboardLayout(0)))
     {
         LOGFONTW lf;
@@ -3807,7 +3763,6 @@ static void EDIT_WM_SetFont(EDITSTATE *es, HFONT font, BOOL redraw)
         ImmSetCompositionFontW(hIMC, &lf);
         ImmReleaseContext(es->hwndSelf, hIMC);
     }
-#endif
 }
 
 
@@ -3900,7 +3855,7 @@ static void EDIT_WM_Size(EDITSTATE *es, UINT action)
  */
 static LRESULT  EDIT_WM_StyleChanged ( EDITSTATE *es, WPARAM which, const STYLESTRUCT *style)
 {
-        if (GWL_STYLE == which) {
+        if ((WPARAM)GWL_STYLE == which) {
                 DWORD style_change_mask;
                 DWORD new_style;
                 /* Only a subset of changes can be applied after the control
@@ -3924,7 +3879,7 @@ static LRESULT  EDIT_WM_StyleChanged ( EDITSTATE *es, WPARAM which, const STYLES
                 }
 
                 es->style = (es->style & ~style_change_mask) | new_style;
-        } else if (GWL_EXSTYLE == which) {
+        } else if ((WPARAM)GWL_EXSTYLE == which) {
                 ; /* FIXME - what is needed here */
         } else {
                 WARN ("Invalid style change %ld\n",which);
@@ -4253,7 +4208,7 @@ static void EDIT_GetCompositionStr(HIMC hIMC, LPARAM CompFlag, EDITSTATE *es)
         return;
     }
 
-    lpCompStr = heap_alloc(buflen);
+    lpCompStr = (LPWSTR)heap_alloc(buflen);
     if (!lpCompStr)
     {
         ERR("Unable to allocate IME CompositionString\n");
@@ -4273,7 +4228,7 @@ static void EDIT_GetCompositionStr(HIMC hIMC, LPARAM CompFlag, EDITSTATE *es)
         if (dwBufLenAttr)
         {
             dwBufLenAttr ++;
-            lpCompStrAttr = heap_alloc(dwBufLenAttr + 1);
+            lpCompStrAttr = (LPSTR)heap_alloc(dwBufLenAttr + 1);
             if (!lpCompStrAttr)
             {
                 ERR("Unable to allocate IME Attribute String\n");
@@ -4285,26 +4240,6 @@ static void EDIT_GetCompositionStr(HIMC hIMC, LPARAM CompFlag, EDITSTATE *es)
             lpCompStrAttr[dwBufLenAttr] = 0;
         }
     }
-
-#ifndef __REACTOS__ /* We don't use internal composition string. Rely on the composition window */
-    /* check for change in composition start */
-    if (es->selection_end < es->composition_start)
-        es->composition_start = es->selection_end;
-
-    /* replace existing selection string */
-    es->selection_start = es->composition_start;
-
-    if (es->composition_len > 0)
-        es->selection_end = es->composition_start + es->composition_len;
-    else
-        es->selection_end = es->selection_start;
-
-    EDIT_EM_ReplaceSel(es, FALSE, lpCompStr, buflen / sizeof(WCHAR), TRUE, TRUE);
-    es->composition_len = abs(es->composition_start - es->selection_end);
-
-    es->selection_start = es->composition_start;
-    es->selection_end = es->selection_start + es->composition_len;
-#endif
 
     heap_free(lpCompStrAttr);
     heap_free(lpCompStr);
@@ -4321,7 +4256,7 @@ static void EDIT_GetResultStr(HIMC hIMC, EDITSTATE *es)
         return;
     }
 
-    lpResultStr = heap_alloc(buflen);
+    lpResultStr = (LPWSTR)heap_alloc(buflen);
     if (!lpResultStr)
     {
         ERR("Unable to alloc buffer for IME string\n");
@@ -4329,18 +4264,6 @@ static void EDIT_GetResultStr(HIMC hIMC, EDITSTATE *es)
     }
 
     ImmGetCompositionStringW(hIMC, GCS_RESULTSTR, lpResultStr, buflen);
-
-#ifndef __REACTOS__
-    /* check for change in composition start */
-    if (es->selection_end < es->composition_start)
-        es->composition_start = es->selection_end;
-
-    es->selection_start = es->composition_start;
-    es->selection_end = es->composition_start + es->composition_len;
-    EDIT_EM_ReplaceSel(es, TRUE, lpResultStr, buflen / sizeof(WCHAR), TRUE, TRUE);
-    es->composition_start = es->selection_end;
-    es->composition_len = 0;
-#endif
 
     heap_free(lpResultStr);
 }
@@ -4350,16 +4273,8 @@ static void EDIT_ImeComposition(HWND hwnd, LPARAM CompFlag, EDITSTATE *es)
     HIMC hIMC;
     int cursor;
 
-#ifdef __REACTOS__
     if (es->selection_start != es->selection_end)
         EDIT_EM_ReplaceSel(es, TRUE, NULL, 0, TRUE, TRUE);
-#else
-    if (es->composition_len == 0 && es->selection_start != es->selection_end)
-    {
-        EDIT_EM_ReplaceSel(es, TRUE, NULL, 0, TRUE, TRUE);
-        es->composition_start = es->selection_end;
-    }
-#endif
 
     hIMC = ImmGetContext(hwnd);
     if (!hIMC)
@@ -4374,11 +4289,7 @@ static void EDIT_ImeComposition(HWND hwnd, LPARAM CompFlag, EDITSTATE *es)
     {
         if (CompFlag & GCS_COMPSTR)
             EDIT_GetCompositionStr(hIMC, CompFlag, es);
-#ifdef __REACTOS__
         cursor = 0;
-#else
-        cursor = ImmGetCompositionStringW(hIMC, GCS_CURSORPOS, 0, 0);
-#endif
     }
     ImmReleaseContext(hwnd, hIMC);
     EDIT_SetCaretPos(es, es->selection_start + cursor, es->flags & EF_AFTER_WRAP);
@@ -4398,7 +4309,7 @@ static LRESULT EDIT_WM_NCCreate(HWND hwnd, LPCREATESTRUCTW lpcs)
 
     TRACE("Creating edit control, style = %08x\n", lpcs->style);
 
-    if (!(es = heap_alloc_zero(sizeof(*es))))
+    if (!(es = (EDITSTATE*)heap_alloc_zero(sizeof(*es))))
         return FALSE;
     SetWindowLongPtrW( hwnd, 0, (LONG_PTR)es );
 
@@ -4460,12 +4371,12 @@ static LRESULT EDIT_WM_NCCreate(HWND hwnd, LPCREATESTRUCTW lpcs)
 	    goto cleanup;
 	es->buffer_size = LocalSize(es->hloc32W)/sizeof(WCHAR) - 1;
 
-	if (!(es->undo_text = heap_alloc_zero((es->buffer_size + 1) * sizeof(WCHAR))))
+	if (!(es->undo_text = (LPWSTR)heap_alloc_zero((es->buffer_size + 1) * sizeof(WCHAR))))
 		goto cleanup;
 	es->undo_buffer_size = es->buffer_size;
 
 	if (es->style & ES_MULTILINE)
-	    if (!(es->first_line_def = heap_alloc_zero(sizeof(LINEDEF))))
+	    if (!(es->first_line_def = (LINEDEF*)heap_alloc_zero(sizeof(LINEDEF))))
 	        goto cleanup;
 	es->line_count = 1;
 
@@ -4764,7 +4675,7 @@ static LRESULT CALLBACK EDIT_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
     }
 
     case EM_SETWORDBREAKPROC:
-        EDIT_EM_SetWordBreakProc(es, (void *)lParam);
+        EDIT_EM_SetWordBreakProc(es, (EDITWORDBREAKPROCW)lParam);
         result = 1;
         break;
 
@@ -4789,7 +4700,7 @@ static LRESULT CALLBACK EDIT_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
         break;
 
     case EM_POSFROMCHAR:
-        if ((INT)wParam >= get_text_length(es)) result = -1;
+        if (wParam >= get_text_length(es)) result = -1;
         else result = EDIT_EM_PosFromChar(es, (INT)wParam, FALSE);
         break;
 
@@ -4836,10 +4747,9 @@ static LRESULT CALLBACK EDIT_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
         break;
 
     case WM_IME_CHAR:
-#ifdef __REACTOS__
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
         break;
-#endif
+
     case WM_CHAR:
     {
         WCHAR charW = wParam;
@@ -5035,72 +4945,51 @@ static LRESULT CALLBACK EDIT_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
 
     /* IME messages to make the edit control IME aware */
     case WM_IME_SETCONTEXT:
-#ifdef __REACTOS__
         if (FALSE) /* FIXME: Condition */
             lParam &= ~ISC_SHOWUICOMPOSITIONWINDOW;
 
         if (wParam)
         {
-            HIMC hIMC = ImmGetContext(hwnd);
+			/* FIXME: Requires <immdev.h>*/
+            /*HIMC hIMC = ImmGetContext(hwnd);
             LPINPUTCONTEXTDX pIC = (LPINPUTCONTEXTDX)ImmLockIMC(hIMC);
             if (pIC)
             {
                 pIC->dwUIFlags &= ~0x40000;
                 ImmUnlockIMC(hIMC);
             }
-            if (FALSE) /* FIXME: Condition */
+            if (FALSE) // FIXME: Condition
                 ImmNotifyIME(hIMC, NI_COMPOSITIONSTR, CPS_CANCEL, 0);
-            ImmReleaseContext(hwnd, hIMC);
+            ImmReleaseContext(hwnd, hIMC);*/
         }
 
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#endif
         break;
 
     case WM_IME_STARTCOMPOSITION:
-#ifdef __REACTOS__
         if (FALSE) /* FIXME: Condition */
             return TRUE;
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#else
-        es->composition_start = es->selection_end;
-        es->composition_len = 0;
-#endif
         break;
 
     case WM_IME_COMPOSITION:
         EDIT_ImeComposition(hwnd, lParam, es);
-#ifdef __REACTOS__
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#endif
         break;
 
     case WM_IME_ENDCOMPOSITION:
-#ifdef __REACTOS__
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#else
-        if (es->composition_len > 0)
-        {
-            EDIT_EM_ReplaceSel(es, TRUE, NULL, 0, TRUE, TRUE);
-            es->selection_end = es->selection_start;
-            es->composition_len= 0;
-        }
-#endif
         break;
 
     case WM_IME_COMPOSITIONFULL:
         break;
 
     case WM_IME_SELECT:
-#ifdef __REACTOS__
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#endif
         break;
 
     case WM_IME_CONTROL:
-#ifdef __REACTOS__
         result = DefWindowProcW(hwnd, msg, wParam, lParam);
-#endif
         break;
 
     case WM_IME_REQUEST:
@@ -5161,9 +5050,10 @@ void EDIT_Register(void)
     RegisterClassW(&wndClass);
 }
 
-#ifdef __REACTOS__
 void EDIT_Unregister(void)
 {
     UnregisterClassW(WC_EDITW, NULL);
+}
+#ifdef __cplusplus
 }
 #endif

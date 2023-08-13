@@ -33,7 +33,8 @@ WINE_DEFAULT_DEBUG_CHANNEL(imagelist);
 
 #define MAX_OVERLAYIMAGE 15
 
-//The big bad ReactOS image list hack!
+#ifdef __REACTOS__
+//The big bad reactos image list hack!
 BOOL is_valid2(HIMAGELIST himl);
 INT WINAPI Internal_ReplaceIcon (HIMAGELIST himl, INT nIndex, HICON hIcon);
 BOOL WINAPI Internal_DrawIndirect (IMAGELISTDRAWPARAMS *pimldp);
@@ -59,6 +60,7 @@ BOOL WINAPI Internal_SetOverlayImage (HIMAGELIST himl, INT iImage, INT iOverlay)
 #define ImageList_GetBkColor Internal_GetBkColor
 #define ImageList_BeginDrag Internal_BeginDrag
 #define ImageList_DrawIndirect Internal_DrawIndirect
+#endif
 
 struct _IMAGELIST
 {
@@ -3980,11 +3982,15 @@ static BOOL is_valid(HIMAGELIST himl)
     BOOL valid;
     __TRY
     {
+    #ifdef __REACTOS__
         valid = himl && himl->usMagic == IMAGELIST_MAGIC;
         if (!valid && himl && himl->usMagic == IMAGELIST_MAGIC_DESTROYED)
         {
             ERR("Imagelist no longer valid: 0x%p\n", himl);
         }
+    #else
+        valid = himl && himl->IImageList2_iface.lpVtbl == &ImageListImpl_Vtbl;
+    #endif
 
     }
     __EXCEPT_PAGE_FAULT
@@ -4032,7 +4038,9 @@ static HRESULT ImageListImpl_CreateInstance(const IUnknown *pUnkOuter, REFIID ii
     if (!This) return E_OUTOFMEMORY;
 
     This->IImageList2_iface.lpVtbl = &ImageListImpl_Vtbl;
+#ifdef __REACTOS__
     This->usMagic = IMAGELIST_MAGIC;
+#endif
     This->ref = 1;
 
     ret = IImageList2_QueryInterface(&This->IImageList2_iface, iid, ppv);
@@ -4041,6 +4049,9 @@ static HRESULT ImageListImpl_CreateInstance(const IUnknown *pUnkOuter, REFIID ii
     return ret;
 }
 
+
+
+#ifdef __REACTOS__
 //The big bad reactos image list hack!
 #undef ImageList_Add
 #undef ImageList_ReplaceIcon
@@ -4076,8 +4087,8 @@ BOOL is_valid2(HIMAGELIST himl)
     BOOL valid;
     __TRY
     {
-        valid = himl &&
-                himl->IImageList2_iface.lpVtbl == &ImageListImpl_Vtbl &&
+        valid = himl && 
+                himl->IImageList2_iface.lpVtbl == &ImageListImpl_Vtbl && 
                 himl->usMagic == IMAGELIST_MAGIC;
         if (!valid && himl &&
             himl->usMagic == IMAGELIST_MAGIC_DESTROYED)
@@ -4348,3 +4359,5 @@ ImageList_DrawIndirect (IMAGELISTDRAWPARAMS *pimldp)
 
     return (piml->lpVtbl->Draw(piml, pimldp) == S_OK) ? TRUE : FALSE;
 }
+
+#endif

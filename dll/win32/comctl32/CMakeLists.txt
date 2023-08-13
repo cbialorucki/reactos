@@ -23,23 +23,23 @@ list(APPEND SOURCE
     comctl32undoc.c
     comctl32.cpp
     datetime.cpp
-    dpa.c
+    dpa.cpp
     draglist.cpp
     dsa.cpp
-    edit.c
+    edit.cpp
     flatsb.cpp
     header.cpp
     hotkey.cpp
     imagelist.c
     ipaddress.cpp
     listbox.cpp
-    listview.c
+    listview.cpp
     monthcal.cpp
     nativefont.cpp
     pager.cpp
     progress.cpp
-    propsheet.c
-    rebar.c
+    propsheet.cpp
+    rebar.cpp
     smoothscroll.cpp
     static.cpp
     status.cpp
