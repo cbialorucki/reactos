@@ -6,7 +6,7 @@
  */
 /* NOTES
  *
- * Note that TREEVIEW_INFO * and HTREEITEM are the same thing.
+ * Note that TREEVIEW_INFO * and HTREEITEM are the same thing. FIX THIS.
  *
  * Note2: If item's text == LPSTR_TEXTCALLBACKA we allocate buffer
  *      of size TEXT_CALLBACK_SIZE in DoSetItem.
@@ -26,7 +26,7 @@
  */
 
 #include "config.h"
-#include "wine/port.h"
+//#include "wine/port.h"
 
 #include <assert.h>
 #include <ctype.h>
@@ -537,9 +537,9 @@ TREEVIEW_TVItemFromItem(const TREEVIEW_INFO *infoPtr, UINT mask, TVITEMW *tvItem
     {
         if (!infoPtr->bNtfUnicode)
         {
-            tvItem->cchTextMax = WideCharToMultiByte( CP_ACP, 0, item->pszText, -1, NULL, 0, NULL, NULL );
-            tvItem->pszText = heap_alloc (tvItem->cchTextMax);
-            WideCharToMultiByte( CP_ACP, 0, item->pszText, -1, (LPSTR)tvItem->pszText, tvItem->cchTextMax, 0, 0 );
+            tvItem->cchTextMax = WideCharToMultiByte(CP_ACP, 0, item->pszText, -1, NULL, 0, NULL, NULL);
+            tvItem->pszText = (LPWSTR)heap_alloc(tvItem->cchTextMax);
+            WideCharToMultiByte(CP_ACP, 0, item->pszText, -1, (LPSTR)tvItem->pszText, tvItem->cchTextMax, 0, 0);
 	}
         else
         {
@@ -725,7 +725,7 @@ TREEVIEW_UpdateDispInfo(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item,
 					   (LPSTR)callback.item.pszText, -1,
                                            NULL, 0);
 	    buflen = max((len)*sizeof(WCHAR), TEXT_CALLBACK_SIZE);
-            newText = heap_realloc(item->pszText, buflen);
+            newText = (LPWSTR)heap_realloc(item->pszText, buflen);
 
 	    TRACE("returned str %s, len=%d, buflen=%d\n",
 		  debugstr_a((LPSTR)callback.item.pszText), len, buflen);
@@ -741,9 +741,8 @@ TREEVIEW_UpdateDispInfo(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item,
 	    /* If realloc fails we have nothing to do, but keep original text */
 	}
 	else {
-	    int len = max(lstrlenW(callback.item.pszText) + 1,
-			  TEXT_CALLBACK_SIZE);
-	    LPWSTR newText = heap_realloc(item->pszText, len);
+	    int len = max(lstrlenW(callback.item.pszText) + 1, TEXT_CALLBACK_SIZE);
+	    LPWSTR newText = (LPWSTR)heap_realloc(item->pszText, len);
 
 	    TRACE("returned wstr %s, len=%d\n",
 		  debugstr_w(callback.item.pszText), len);
@@ -766,7 +765,7 @@ TREEVIEW_UpdateDispInfo(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item,
 					  (LPSTR)callback.item.pszText, -1,
                                            NULL, 0);
 	    buflen = max((len)*sizeof(WCHAR), TEXT_CALLBACK_SIZE);
-            newText = heap_alloc(buflen);
+            newText = (LPWSTR)heap_alloc(buflen);
 
 	    TRACE("same buffer str %s, len=%d, buflen=%d\n",
 		  debugstr_a((LPSTR)callback.item.pszText), len, buflen);
@@ -883,7 +882,7 @@ TREEVIEW_ComputeTextWidth(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item, HDC
     else
     {
 	hdc = GetDC(infoPtr->hwnd);
-	hOldFont = SelectObject(hdc, TREEVIEW_FontForItem(infoPtr, item));
+	hOldFont = (HFONT)SelectObject(hdc, TREEVIEW_FontForItem(infoPtr, item));
     }
 
     GetTextExtentPoint32W(hdc, item->pszText, strlenW(item->pszText), &sz);
@@ -961,7 +960,7 @@ TREEVIEW_UpdateSubTree(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *root)
    root->state |= TVIS_EXPANDED;
 
    hdc = GetDC(infoPtr->hwnd);
-   hOldFont = SelectObject(hdc, infoPtr->hFont);
+   hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
    for (; root != sibling;
         root = TREEVIEW_GetNextListItem(infoPtr, root))
@@ -987,7 +986,7 @@ TREEVIEW_UpdateSubTree(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *root)
 static TREEVIEW_ITEM *
 TREEVIEW_AllocateItem(const TREEVIEW_INFO *infoPtr)
 {
-    TREEVIEW_ITEM *newItem = heap_alloc_zero(sizeof(*newItem));
+    TREEVIEW_ITEM *newItem = (TREEVIEW_ITEM*)heap_alloc_zero(sizeof(*newItem));
 
     if (!newItem)
 	return NULL;
@@ -1119,7 +1118,7 @@ TREEVIEW_DoSetItemT(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item,
             else
                 len = MultiByteToWideChar(CP_ACP, 0, (LPSTR)tvItem->pszText, -1, NULL, 0);
 
-            newText  = heap_realloc(item->pszText, len * sizeof(WCHAR));
+            newText  = (LPWSTR)heap_realloc(item->pszText, len * sizeof(WCHAR));
 
             if (newText == NULL) return FALSE;
 
@@ -1138,7 +1137,7 @@ TREEVIEW_DoSetItemT(const TREEVIEW_INFO *infoPtr, TREEVIEW_ITEM *item,
 	else
 	{
             callbackSet |= TVIF_TEXT;
-            item->pszText = heap_realloc(item->pszText, TEXT_CALLBACK_SIZE * sizeof(WCHAR));
+            item->pszText = (LPWSTR)heap_realloc(item->pszText, TEXT_CALLBACK_SIZE * sizeof(WCHAR));
 	    item->cchTextMax = TEXT_CALLBACK_SIZE;
 	    TRACE("setting callback, item %p\n", item);
 	}
@@ -1238,20 +1237,15 @@ TREEVIEW_InsertItemT(TREEVIEW_INFO *infoPtr, const TVINSERTSTRUCTW *ptdi, BOOL i
     insertAfter = ptdi->hInsertAfter;
 
     /* Validate this now for convenience. */
-    switch ((DWORD_PTR)insertAfter)
+    if ((DWORD_PTR)insertAfter != (DWORD_PTR)TVI_FIRST &&
+        (DWORD_PTR)insertAfter != (DWORD_PTR)TVI_LAST &&
+        (DWORD_PTR)insertAfter != (DWORD_PTR)TVI_SORT)
     {
-    case (DWORD_PTR)TVI_FIRST:
-    case (DWORD_PTR)TVI_LAST:
-    case (DWORD_PTR)TVI_SORT:
-	break;
-
-    default:
-	if (!TREEVIEW_ValidItem(infoPtr, insertAfter) ||
-            insertAfter->parent != parentItem)
-	{
-	    WARN("invalid insert after %p\n", insertAfter);
-	    insertAfter = TVI_LAST;
-	}
+        if (!TREEVIEW_ValidItem(infoPtr, insertAfter) || insertAfter->parent != parentItem)
+        {
+            WARN("invalid insert after %p\n", insertAfter);
+            insertAfter = TVI_LAST;
+        }
     }
 
     TRACE("parent %p position %p: %s\n", parentItem, insertAfter,
@@ -1275,31 +1269,24 @@ TREEVIEW_InsertItemT(TREEVIEW_INFO *infoPtr, const TVINSERTSTRUCTW *ptdi, BOOL i
 
     infoPtr->uNumItems++;
 
-    switch ((DWORD_PTR)insertAfter)
+    if ((DWORD_PTR)insertAfter == (DWORD_PTR)TVI_FIRST)
     {
-    case (DWORD_PTR)TVI_FIRST:
-        {
-           TREEVIEW_ITEM *originalFirst = parentItem->firstChild;
-           TREEVIEW_InsertBefore(newItem, parentItem->firstChild, parentItem);
-           if (infoPtr->firstVisible == originalFirst)
-              TREEVIEW_SetFirstVisible(infoPtr, newItem, TRUE);
-        }
-	break;
+        TREEVIEW_ITEM *originalFirst = parentItem->firstChild;
+        TREEVIEW_InsertBefore(newItem, parentItem->firstChild, parentItem);
+        if (infoPtr->firstVisible == originalFirst)
+            TREEVIEW_SetFirstVisible(infoPtr, newItem, TRUE);
+    }
 
-    case (DWORD_PTR)TVI_LAST:
-	TREEVIEW_InsertAfter(newItem, parentItem->lastChild, parentItem);
-	break;
+    else if ((DWORD_PTR)insertAfter == (DWORD_PTR)TVI_LAST)
+    {
+        TREEVIEW_InsertAfter(newItem, parentItem->lastChild, parentItem);
+    }
 
-	/* hInsertAfter names a specific item we want to insert after */
-    default:
-	TREEVIEW_InsertAfter(newItem, insertAfter, insertAfter->parent);
-	break;
-
-    case (DWORD_PTR)TVI_SORT:
-	{
+    else if ((DWORD_PTR)insertAfter == (DWORD_PTR)TVI_SORT)
+    {
 	    TREEVIEW_ITEM *aChild;
 	    TREEVIEW_ITEM *previousChild = NULL;
-            TREEVIEW_ITEM *originalFirst = parentItem->firstChild;
+        TREEVIEW_ITEM *originalFirst = parentItem->firstChild;
 	    BOOL bItemInserted = FALSE;
 
 	    aChild = parentItem->firstChild;
@@ -1354,11 +1341,12 @@ TREEVIEW_InsertItemT(TREEVIEW_INFO *infoPtr, const TVINSERTSTRUCTW *ptdi, BOOL i
 	     */
 	    if ((!bItemInserted) && (aChild == NULL))
 		TREEVIEW_InsertAfter(newItem, previousChild, parentItem);
-
-	    break;
 	}
-    }
 
+    else
+    {
+        TREEVIEW_InsertAfter(newItem, insertAfter, insertAfter->parent);
+    }
 
     TRACE("new item %p; parent %p, mask 0x%x\n", newItem,
 	  newItem->parent, tvItem->mask);
@@ -1720,7 +1708,7 @@ TREEVIEW_NaturalHeight(const TREEVIEW_INFO *infoPtr)
 {
     TEXTMETRICW tm;
     HDC hdc = GetDC(0);
-    HFONT hOldFont = SelectObject(hdc, infoPtr->hFont);
+    HFONT hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
     UINT height;
 
     /* Height is the maximum of:
@@ -1733,9 +1721,9 @@ TREEVIEW_NaturalHeight(const TREEVIEW_INFO *infoPtr)
     ReleaseDC(0, hdc);
 
     height = TVHEIGHT_MIN;
-    if (height < tm.tmHeight + tm.tmExternalLeading + TVHEIGHT_FONT_ADJUST)
+    if (height < (UINT)(tm.tmHeight + tm.tmExternalLeading + TVHEIGHT_FONT_ADJUST))
         height = tm.tmHeight + tm.tmExternalLeading + TVHEIGHT_FONT_ADJUST;
-    if (height < infoPtr->normalImageHeight)
+    if (height < (UINT)infoPtr->normalImageHeight)
         height = infoPtr->normalImageHeight;
 
     /* Round down, unless we support odd ("non even") heights. */
@@ -1802,8 +1790,7 @@ TREEVIEW_SetImageList(TREEVIEW_INFO *infoPtr, UINT type, HIMAGELIST himlNew)
             bRecalcVisible = TRUE;
         }
 
-        if (infoPtr->normalImageWidth > MINIMUM_INDENT &&
-            infoPtr->normalImageWidth != infoPtr->uIndent)
+        if (infoPtr->normalImageWidth > MINIMUM_INDENT && (UINT)infoPtr->normalImageWidth != infoPtr->uIndent)
         {
             infoPtr->uIndent = infoPtr->normalImageWidth;
             bRecalcVisible = TRUE;
@@ -1846,7 +1833,7 @@ TREEVIEW_SetItemHeight(TREEVIEW_INFO *infoPtr, INT newHeight)
         TRACE("after rounding=%d\n", infoPtr->uItemHeight);
     }
 
-    if (infoPtr->uItemHeight != prevHeight)
+    if (infoPtr->uItemHeight != (UINT)prevHeight)
     {
 	TREEVIEW_RecalculateVisibleOrder(infoPtr, NULL);
 	TREEVIEW_UpdateScrollBars(infoPtr);
@@ -2361,7 +2348,7 @@ TREEVIEW_DrawItemLines(const TREEVIEW_INFO *infoPtr, HDC hdc, const TREEVIEW_ITE
 	return;
 
     hbr    = CreateSolidBrush(clrBk);
-    hbrOld = SelectObject(hdc, hbr);
+    hbrOld = (HBRUSH)SelectObject(hdc, hbr);
 
     centerx = (item->linesOffset + item->stateOffset) / 2;
     centery = (item->rect.top + item->rect.bottom) / 2;
@@ -2376,7 +2363,7 @@ TREEVIEW_DrawItemLines(const TREEVIEW_INFO *infoPtr, HDC hdc, const TREEVIEW_ITE
         lb.lbStyle = BS_SOLID;
         lb.lbColor = GETLINECOLOR(infoPtr->clrLine);
         hNewPen = ExtCreatePen(PS_COSMETIC|PS_ALTERNATE, 1, &lb, 0, NULL);
-	hOldPen = SelectObject(hdc, hNewPen);
+	hOldPen = (HPEN)SelectObject(hdc, hNewPen);
 
         /* Make sure the center is on a dot (using +2 instead
          * of +1 gives us pixel-by-pixel compat with native) */
@@ -2445,7 +2432,7 @@ TREEVIEW_DrawItemLines(const TREEVIEW_INFO *infoPtr, HDC hdc, const TREEVIEW_ITE
                 LONG plussize = (rectsize + 1) * 3 / 4;
 
                 HPEN new_pen  = CreatePen(PS_SOLID, 0, GETLINECOLOR(infoPtr->clrLine));
-                HPEN old_pen  = SelectObject(hdc, new_pen);
+                HPEN old_pen  = (HPEN)SelectObject(hdc, new_pen);
 
                 Rectangle(hdc, centerx - rectsize - 1, centery - rectsize - 1,
                           centerx + rectsize + 2, centery + rectsize + 2);
@@ -2455,13 +2442,13 @@ TREEVIEW_DrawItemLines(const TREEVIEW_INFO *infoPtr, HDC hdc, const TREEVIEW_ITE
 
                 /* draw +/- signs with current text color */
                 new_pen = CreatePen(PS_SOLID, 0, GETTXTCOLOR(infoPtr->clrText));
-                old_pen = SelectObject(hdc, new_pen);
+                old_pen = (HPEN)SelectObject(hdc, new_pen);
 
                 if (height < 18 || width < 18)
                 {
                     MoveToEx(hdc, centerx - plussize + 1, centery, NULL);
                     LineTo(hdc, centerx + plussize, centery);
-    
+
                     if (!(item->state & TVIS_EXPANDED) ||
                          (item->state & TVIS_EXPANDPARTIAL))
                     {
@@ -2535,7 +2522,7 @@ TREEVIEW_DrawItem(const TREEVIEW_INFO *infoPtr, HDC hdc, TREEVIEW_ITEM *item)
 	    nmcdhdr.clrText = GETTXTCOLOR(infoPtr->clrText);
     }
 
-    hOldFont = SelectObject(hdc, TREEVIEW_FontForItem(infoPtr, item));
+    hOldFont = (HFONT)SelectObject(hdc, TREEVIEW_FontForItem(infoPtr, item));
     oldTextColor = SetTextColor(hdc, nmcdhdr.clrText);
     oldTextBkColor = SetBkColor(hdc, nmcdhdr.clrTextBk);
 
@@ -2686,7 +2673,7 @@ TREEVIEW_DrawItem(const TREEVIEW_INFO *infoPtr, HDC hdc, TREEVIEW_ITEM *item)
 	int left, right;
 
 	hNewPen = CreatePen(PS_SOLID, 2, GETINSCOLOR(infoPtr->clrInsertMark));
-	hOldPen = SelectObject(hdc, hNewPen);
+	hOldPen = (HPEN)SelectObject(hdc, hNewPen);
 
 	if (infoPtr->insertBeforeorAfter)
 	    offset = item->rect.bottom - 1;
@@ -2821,7 +2808,7 @@ TREEVIEW_UpdateScrollBars(TREEVIEW_INFO *infoPtr)
 	si.nPos  = infoPtr->scrollX;
 	si.nMax  = infoPtr->treeWidth - 1;
 
-	if (si.nPos > si.nMax - max( si.nPage-1, 0 ))
+	if (si.nPos > si.nMax - max((int)(si.nPage-1), 0 ))
         {
            si.nPos = si.nMax - max( si.nPage-1, 0 );
            scrollX = si.nPos;
@@ -2959,7 +2946,7 @@ TREEVIEW_InitCheckboxes(TREEVIEW_INFO *infoPtr)
 
     hdc = CreateCompatibleDC(hdcScreen);
     hbm = CreateCompatibleBitmap(hdcScreen, 48, 16);
-    hbmOld = SelectObject(hdc, hbm);
+    hbmOld = (HBITMAP)SelectObject(hdc, hbm);
 
     SetRect(&rc, 0, 0, 48, 16);
     FillRect(hdc, &rc, (HBRUSH)(COLOR_WINDOW+1));
@@ -3198,8 +3185,8 @@ TREEVIEW_Sort(TREEVIEW_INFO *infoPtr, HTREEITEM parent,
 	/* The order of DPA entries has been changed, so fixup the
 	 * nextSibling and prevSibling pointers. */
 
-        item = DPA_GetPtr(sortList, count++);
-        while ((nextItem = DPA_GetPtr(sortList, count++)) != NULL)
+        item = (HTREEITEM)DPA_GetPtr(sortList, count++);
+        while ((nextItem = (HTREEITEM)DPA_GetPtr(sortList, count++)) != NULL)
 	{
 	    /* link the two current item together */
 	    item->nextSibling = nextItem;
@@ -3828,7 +3815,7 @@ TREEVIEW_Command(TREEVIEW_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
 
 	    if (hFont != 0)
 	    {
-		hOldFont = SelectObject(hdc, hFont);
+		hOldFont = (HFONT)SelectObject(hdc, hFont);
 	    }
 
 	    if (GetTextExtentPoint32W(hdc, buffer, strlenW(buffer), &sz))
@@ -3906,7 +3893,7 @@ TREEVIEW_EditLabel(TREEVIEW_INFO *infoPtr, HTREEITEM hItem)
     /* Select the font to get appropriate metric dimensions */
     if (infoPtr->hFont != 0)
     {
-	hOldFont = SelectObject(hdc, infoPtr->hFont);
+	hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
     }
 
     /* Get string length in pixels */
@@ -4022,14 +4009,14 @@ TREEVIEW_EndEditLabelNow(TREEVIEW_INFO *infoPtr, BOOL bCancel)
         if (!infoPtr->bNtfUnicode)
         {
             DWORD len = MultiByteToWideChar( CP_ACP, 0, (LPSTR)tmpText, -1, NULL, 0 );
-            newText = heap_alloc(len * sizeof(WCHAR));
+            newText = (WCHAR*)heap_alloc(len * sizeof(WCHAR));
             MultiByteToWideChar( CP_ACP, 0, (LPSTR)tmpText, -1, newText, len );
             iLength = len - 1;
         }
 
         if (strcmpW(newText, editedItem->pszText) != 0)
         {
-            WCHAR *ptr = heap_realloc(editedItem->pszText, sizeof(WCHAR)*(iLength + 1));
+            WCHAR *ptr = (WCHAR*)heap_realloc(editedItem->pszText, sizeof(WCHAR)*(iLength + 1));
             if (ptr == NULL)
             {
                 ERR("OutOfMemory, cannot allocate space for label\n");
@@ -4400,7 +4387,7 @@ TREEVIEW_CreateDragImage(TREEVIEW_INFO *infoPtr, LPARAM lParam)
     htopdc = GetDC(hwtop);
     hdc = CreateCompatibleDC(htopdc);
 
-    hOldFont = SelectObject(hdc, infoPtr->hFont);
+    hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
     if (dragItem->pszText)
         GetTextExtentPoint32W(hdc, dragItem->pszText, strlenW(dragItem->pszText),
@@ -4410,7 +4397,7 @@ TREEVIEW_CreateDragImage(TREEVIEW_INFO *infoPtr, LPARAM lParam)
 
     TRACE("%d %d %s\n", size.cx, size.cy, debugstr_w(dragItem->pszText));
     hbmp = CreateCompatibleBitmap(htopdc, size.cx, size.cy);
-    hOldbmp = SelectObject(hdc, hbmp);
+    hOldbmp = (HBITMAP)SelectObject(hdc, hbmp);
 
     ImageList_GetIconSize(infoPtr->himlNormal, &cx, &cy);
     size.cx += cx;
@@ -4631,7 +4618,7 @@ static INT TREEVIEW_ProcessLetterKeys(TREEVIEW_INFO *infoPtr, WPARAM charCode, L
     /* update the search parameters */
     infoPtr->lastKeyPressTimestamp=timestamp;
     if (elapsed < KEY_DELAY) {
-        if (infoPtr->nSearchParamLength < ARRAY_SIZE(infoPtr->szSearchParam)) {
+        if ((unsigned int)infoPtr->nSearchParamLength < ARRAY_SIZE(infoPtr->szSearchParam)) {
             infoPtr->szSearchParam[infoPtr->nSearchParamLength++]=charCode;
         }
         if (infoPtr->charCode != charCode) {
@@ -5069,7 +5056,7 @@ TREEVIEW_Create(HWND hwnd, const CREATESTRUCTW *lpcs)
 
     TRACE("wnd %p, style 0x%x\n", hwnd, GetWindowLongW(hwnd, GWL_STYLE));
 
-    infoPtr = heap_alloc_zero(sizeof(TREEVIEW_INFO));
+    infoPtr = (TREEVIEW_INFO*)heap_alloc_zero(sizeof(TREEVIEW_INFO));
 
     if (infoPtr == NULL)
     {
@@ -5520,7 +5507,7 @@ TREEVIEW_StyleChanged(TREEVIEW_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
 {
     TRACE("(%lx %lx)\n", wParam, lParam);
 
-    if (wParam == GWL_STYLE)
+    if (wParam == (WPARAM)GWL_STYLE)
     {
         DWORD dwNewStyle = ((LPSTYLESTRUCT)lParam)->styleNew;
 

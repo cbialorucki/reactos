@@ -26,7 +26,7 @@
 WINE_DEFAULT_DEBUG_CHANNEL(taskdialog);
 
 #define ALIGNED_LENGTH(_Len, _Align) (((_Len)+(_Align))&~(_Align))
-#define ALIGNED_POINTER(_Ptr, _Align) ((LPVOID)ALIGNED_LENGTH((ULONG_PTR)(_Ptr), _Align))
+#define ALIGNED_POINTER(_Ptr, _Align) ((char*)ALIGNED_LENGTH((ULONG_PTR)(_Ptr), _Align))
 #define ALIGN_LENGTH(_Len, _Align) _Len = ALIGNED_LENGTH(_Len, _Align)
 #define ALIGN_POINTER(_Ptr, _Align) _Ptr = ALIGNED_POINTER(_Ptr, _Align)
 
@@ -41,7 +41,7 @@ static const UINT ID_CONTENT          = 0xf001;
 struct taskdialog_control
 {
     struct list entry;
-    DLGITEMTEMPLATE *template;
+    DLGITEMTEMPLATE *DialogItemTemplate;
     unsigned int template_size;
 };
 
@@ -100,9 +100,9 @@ static void template_write_data(char **ptr, const void *src, unsigned int size)
 static void taskdialog_get_text_extent(const struct taskdialog_template_desc *desc, const WCHAR *text,
         BOOL user_resource, SIZE *sz)
 {
-    RECT rect = { 0, 0, desc->dialog_width - DIALOG_SPACING * 2, 0}; /* padding left and right of the control */
+    RECT rect = { 0, 0, (LONG)(desc->dialog_width - DIALOG_SPACING * 2), 0}; /* padding left and right of the control */
     const WCHAR *textW = NULL;
-    static const WCHAR nulW;
+    static WCHAR nulW = NULL;
     unsigned int length;
     HFONT oldfont;
     HDC hdc;
@@ -124,7 +124,7 @@ static void taskdialog_get_text_extent(const struct taskdialog_template_desc *de
     }
 
     hdc = GetDC(0);
-    oldfont = SelectObject(hdc, desc->font);
+    oldfont = (HFONT)SelectObject(hdc, desc->font);
 
     dialogunits_to_pixels(desc, &rect.right, NULL);
     DrawTextW(hdc, textW, length, &rect, DT_LEFT | DT_EXPANDTABS | DT_CALCRECT | DT_WORDBREAK);
@@ -137,17 +137,17 @@ static void taskdialog_get_text_extent(const struct taskdialog_template_desc *de
     sz->cy = rect.bottom - rect.top;
 }
 
-static unsigned int taskdialog_add_control(struct taskdialog_template_desc *desc, WORD id, const WCHAR *class,
+static unsigned int taskdialog_add_control(struct taskdialog_template_desc *desc, WORD id, const WCHAR *ctlclass,
         HINSTANCE hInstance, const WCHAR *text, DWORD style, short x, short y, short cx, short cy)
 {
-    struct taskdialog_control *control = Alloc(sizeof(*control));
+    struct taskdialog_control *control = (taskdialog_control*)Alloc(sizeof(*control));
     unsigned int size, class_size, text_size;
-    DLGITEMTEMPLATE *template;
-    static const WCHAR nulW;
+    DLGITEMTEMPLATE *DialogItemTemplate;
+    static WCHAR nulW;
     const WCHAR *textW;
     char *ptr;
 
-    class_size = (strlenW(class) + 1) * sizeof(WCHAR);
+    class_size = (strlenW(ctlclass) + 1) * sizeof(WCHAR);
 
     if (IS_INTRESOURCE(text))
         text_size = LoadStringW(hInstance, (UINT_PTR)text, (WCHAR *)&textW, 0) * sizeof(WCHAR);
@@ -162,18 +162,18 @@ static unsigned int taskdialog_add_control(struct taskdialog_template_desc *desc
     size += text_size + sizeof(WCHAR);
     size += sizeof(WORD); /* creation data */
 
-    control->template = template = Alloc(size);
+    control->DialogItemTemplate = DialogItemTemplate = (DLGITEMTEMPLATE*)Alloc(size);
     control->template_size = size;
 
-    template->style = WS_VISIBLE | style;
-    template->dwExtendedStyle = 0;
-    template->x = x;
-    template->y = y;
-    template->cx = cx;
-    template->cy = cy;
-    template->id = id;
-    ptr = (char *)(template + 1);
-    template_write_data(&ptr, class, class_size);
+    DialogItemTemplate->style = WS_VISIBLE | style;
+    DialogItemTemplate->dwExtendedStyle = 0;
+    DialogItemTemplate->x = x;
+    DialogItemTemplate->y = y;
+    DialogItemTemplate->cx = cx;
+    DialogItemTemplate->cy = cy;
+    DialogItemTemplate->id = id;
+    ptr = (char *)(DialogItemTemplate + 1);
+    template_write_data(&ptr, ctlclass, class_size);
     template_write_data(&ptr, textW, text_size);
     template_write_data(&ptr, &nulW, sizeof(nulW));
 
@@ -264,7 +264,7 @@ static unsigned int taskdialog_add_buttons(struct taskdialog_template_desc *desc
     if (taskconfig->cButtons && taskconfig->pButtons)
         buttons_size += taskconfig->cButtons;
 
-    if (!(buttons = Alloc(buttons_size * sizeof(*buttons))))
+    if (!(buttons = (taskdialog_button_desc*)Alloc(buttons_size * sizeof(*buttons))))
         return 0;
 
     /* Custom buttons */
@@ -284,7 +284,7 @@ static unsigned int taskdialog_add_buttons(struct taskdialog_template_desc *desc
         desc->default_button = &buttons[0];
 
     /* For easy handling just allocate as many lines as buttons, the worst case. */
-    line_widths = Alloc(count * sizeof(*line_widths));
+    line_widths = (unsigned int*)Alloc(count * sizeof(*line_widths));
 
     /* Separate buttons into lines */
     location_x = DIALOG_SPACING;
@@ -329,7 +329,7 @@ static unsigned int taskdialog_add_buttons(struct taskdialog_template_desc *desc
     for (i = 0; i < line_count; i++)
     {
         int new_alignment = desc->dialog_width - line_widths[i];
-        if (new_alignment < alignment)
+        if (new_alignment < (int)alignment)
             alignment = new_alignment;
     }
 
@@ -367,7 +367,7 @@ static void taskdialog_clear_controls(struct list *controls)
     LIST_FOR_EACH_ENTRY_SAFE(control, control2, controls, struct taskdialog_control, entry)
     {
         list_remove(&control->entry);
-        Free(control->template);
+        Free(control->DialogItemTemplate);
         Free(control);
     }
 }
@@ -416,7 +416,7 @@ static DLGTEMPLATE *create_taskdialog_template(const TASKDIALOGCONFIG *taskconfi
     static const WORD fontsize = 0x7fff;
     static const WCHAR emptyW[] = { 0 };
     const WCHAR *titleW = NULL;
-    DLGTEMPLATE *template;
+    DLGTEMPLATE *DialogTemplate;
     NONCLIENTMETRICSW ncm;
     WCHAR pathW[MAX_PATH];
     RECT ref_rect;
@@ -465,22 +465,22 @@ static DLGTEMPLATE *create_taskdialog_template(const TASKDIALOGCONFIG *taskconfi
     size += taskdialog_add_content(&desc);
     size += taskdialog_add_buttons(&desc);
 
-    template = Alloc(size);
-    if (!template)
+    DialogTemplate = (DLGTEMPLATE*)Alloc(size);
+    if (!DialogTemplate)
     {
         taskdialog_clear_controls(&desc.controls);
         DeleteObject(desc.font);
         return NULL;
     }
 
-    template->style = DS_MODALFRAME | DS_SETFONT | WS_CAPTION | WS_VISIBLE | WS_SYSMENU;
-    template->cdit = desc.control_count;
-    template->x = (ref_rect.left + ref_rect.right + desc.dialog_width) / 2;
-    template->y = (ref_rect.top + ref_rect.bottom + desc.dialog_height) / 2;
-    template->cx = desc.dialog_width;
-    template->cy = desc.dialog_height;
+    DialogTemplate->style = DS_MODALFRAME | DS_SETFONT | WS_CAPTION | WS_VISIBLE | WS_SYSMENU;
+    DialogTemplate->cdit = desc.control_count;
+    DialogTemplate->x = (ref_rect.left + ref_rect.right + desc.dialog_width) / 2;
+    DialogTemplate->y = (ref_rect.top + ref_rect.bottom + desc.dialog_height) / 2;
+    DialogTemplate->cx = desc.dialog_width;
+    DialogTemplate->cy = desc.dialog_height;
 
-    ptr = (char *)(template + 1);
+    ptr = (char *)(DialogTemplate + 1);
     ptr += 2; /* menu */
     ptr += 2; /* class */
     template_write_data(&ptr, titleW, title_size);
@@ -491,16 +491,16 @@ static DLGTEMPLATE *create_taskdialog_template(const TASKDIALOGCONFIG *taskconfi
     {
         ALIGN_POINTER(ptr, 3);
 
-        template_write_data(&ptr, control->template, control->template_size);
+        template_write_data(&ptr, control->DialogItemTemplate, control->template_size);
 
         /* list item won't be needed later */
         list_remove(&control->entry);
-        Free(control->template);
+        Free(control->DialogItemTemplate);
         Free(control);
     }
 
     DeleteObject(desc.font);
-    return template;
+    return DialogTemplate;
 }
 
 static HRESULT taskdialog_notify(struct taskdialog_info *dialog_info, UINT notification, WPARAM wparam, LPARAM lparam)
@@ -523,7 +523,7 @@ static INT_PTR CALLBACK taskdialog_proc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
     TRACE("hwnd=%p msg=0x%04x wparam=%lx lparam=%lx\n", hwnd, msg, wParam, lParam);
 
     if (msg != WM_INITDIALOG)
-        dialog_info = GetPropW(hwnd, taskdialog_info_propnameW);
+        dialog_info = (taskdialog_info*)GetPropW(hwnd, taskdialog_info_propnameW);
 
     switch (msg)
     {
@@ -562,7 +562,7 @@ HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *taskconfig, int *butto
                                   int *radio_button, BOOL *verification_flag_checked)
 {
     struct taskdialog_info dialog_info;
-    DLGTEMPLATE *template;
+    DLGTEMPLATE *DialogTemplate;
     INT ret;
 
     TRACE("%p, %p, %p, %p\n", taskconfig, button, radio_button, verification_flag_checked);
@@ -573,10 +573,10 @@ HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *taskconfig, int *butto
     dialog_info.callback = taskconfig->pfCallback;
     dialog_info.callback_data = taskconfig->lpCallbackData;
 
-    template = create_taskdialog_template(taskconfig);
-    ret = (short)DialogBoxIndirectParamW(taskconfig->hInstance, template, taskconfig->hwndParent,
+    DialogTemplate = create_taskdialog_template(taskconfig);
+    ret = (short)DialogBoxIndirectParamW(taskconfig->hInstance, DialogTemplate, taskconfig->hwndParent,
             taskdialog_proc, (LPARAM)&dialog_info);
-    Free(template);
+    Free(DialogTemplate);
 
     if (button) *button = ret;
     if (radio_button) *radio_button = taskconfig->nDefaultButton;

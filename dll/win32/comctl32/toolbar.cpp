@@ -346,7 +346,7 @@ static void set_string_index( TBUTTON_INFO *btn, INT_PTR str, BOOL unicode )
 
 static void set_stringT( TBUTTON_INFO *btn, const WCHAR *str, BOOL unicode )
 {
-    if (IS_INTRESOURCE( (DWORD_PTR)str ) || (DWORD_PTR)str == -1) return;
+    if (IS_INTRESOURCE((DWORD_PTR)str) || (int)str == -1) return;
     set_string_index( btn, (DWORD_PTR)str, unicode );
 }
 
@@ -570,15 +570,13 @@ TOOLBAR_DrawFlatHorizontalSeparator (const RECT *lpRect, HDC hdc,
     SetBkColor (hdc, oldcolor);
 }
 
-
-static void
-TOOLBAR_DrawArrow (HDC hdc, INT left, INT top, COLORREF clr)
+static void TOOLBAR_DrawArrow (HDC hdc, INT left, INT top, COLORREF clr)
 {
     INT x, y;
     HPEN hPen, hOldPen;
 
-    if (!(hPen = CreatePen( PS_SOLID, 1, clr))) return;
-    hOldPen = SelectObject ( hdc, hPen );
+    if (!(hPen = CreatePen(PS_SOLID, 1, clr))) return;
+    hOldPen = (HPEN)SelectObject(hdc, hPen);
     x = left + 2;
     y = top;
     MoveToEx (hdc, x, y, NULL);
@@ -587,8 +585,8 @@ TOOLBAR_DrawArrow (HDC hdc, INT left, INT top, COLORREF clr)
     LineTo (hdc, x+3, y++); x++;
     MoveToEx (hdc, x, y, NULL);
     LineTo (hdc, x+1, y);
-    SelectObject( hdc, hOldPen );
-    DeleteObject( hPen );
+    SelectObject(hdc, hOldPen);
+    DeleteObject(hPen);
 }
 
 /*
@@ -616,8 +614,7 @@ TOOLBAR_DrawString (const TOOLBAR_INFO *infoPtr, RECT *rcText, LPCWSTR lpText,
         TRACE("string=%s rect=(%s)\n", debugstr_w(lpText),
               wine_dbgstr_rect(rcText));
 
-	hOldFont = SelectObject (hdc, infoPtr->hFont);
-#ifdef __REACTOS__
+	hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
     if (theme)
     {
         DWORD dwDTFlags2 = 0;
@@ -640,7 +637,6 @@ TOOLBAR_DrawString (const TOOLBAR_INFO *infoPtr, RECT *rcText, LPCWSTR lpText,
         SelectObject (hdc, hOldFont);
         return;
     }
-#endif
 
 	if ((state & CDIS_HOT) && (dwItemCDFlag & TBCDRF_HILITEHOTTRACK )) {
 	    clrOld = SetTextColor (hdc, tbcd->clrTextHighlight);
@@ -680,7 +676,7 @@ static void
 TOOLBAR_DrawPattern (const RECT *lpRect, const NMTBCUSTOMDRAW *tbcd)
 {
     HDC hdc = tbcd->nmcd.hdc;
-    HBRUSH hbr = SelectObject (hdc, tbcd->hbrMonoDither);
+    HBRUSH hbr = (HBRUSH)SelectObject(hdc, tbcd->hbrMonoDither);
     COLORREF clrTextOld;
     COLORREF clrBkOld;
     INT cx = lpRect->right - lpRect->left;
@@ -1373,7 +1369,7 @@ TOOLBAR_CalcStrings (const TOOLBAR_INFO *infoPtr, LPSIZE lpSize)
         return;
 
     hdc = GetDC (infoPtr->hwndSelf);
-    hOldFont = SelectObject (hdc, infoPtr->hFont);
+    hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
     if (infoPtr->nNumButtons == 0 && infoPtr->nNumStrings > 0)
     {
@@ -1834,21 +1830,17 @@ TOOLBAR_LayoutToolbar(TOOLBAR_INFO *infoPtr)
 	{
             if (btnPtr->cx)
               cx = btnPtr->cx;
-#ifdef __REACTOS__
+
             /* Revert Wine Commit 5b7b911 as it breaks Explorer Toolbar Buttons
                FIXME: Revisit this when the bug is fixed. CORE-9970 */
-            else if ((infoPtr->dwExStyle & TBSTYLE_EX_MIXEDBUTTONS) || 
-                (btnPtr->fsStyle & BTNS_AUTOSIZE))
-#else
-            else if (btnPtr->fsStyle & BTNS_AUTOSIZE)
-#endif
+            else if ((infoPtr->dwExStyle & TBSTYLE_EX_MIXEDBUTTONS) || (btnPtr->fsStyle & BTNS_AUTOSIZE))
             {
               SIZE sz;
 	      HDC hdc;
 	      HFONT hOldFont;
 
 	      hdc = GetDC (infoPtr->hwndSelf);
-	      hOldFont = SelectObject (hdc, infoPtr->hFont);
+	      hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
               TOOLBAR_MeasureString(infoPtr, btnPtr, hdc, &sz);
 
@@ -1984,13 +1976,13 @@ TOOLBAR_InternalInsertButtonsT(TOOLBAR_INFO *infoPtr, INT iIndex, UINT nAddButto
     nOldButtons = infoPtr->nNumButtons;
     nNewButtons = nOldButtons + nAddButtons;
 
-    infoPtr->buttons = ReAlloc(infoPtr->buttons, sizeof(TBUTTON_INFO)*nNewButtons);
+    infoPtr->buttons = (TBUTTON_INFO*)ReAlloc(infoPtr->buttons, sizeof(TBUTTON_INFO)*nNewButtons);
     memmove(&infoPtr->buttons[iIndex + nAddButtons], &infoPtr->buttons[iIndex],
             (nOldButtons - iIndex) * sizeof(TBUTTON_INFO));
     infoPtr->nNumButtons += nAddButtons;
 
     /* insert new buttons data */
-    for (iButton = 0; iButton < nAddButtons; iButton++) {
+    for (iButton = 0; iButton < (INT)nAddButtons; iButton++) {
         TBUTTON_INFO *btnPtr = &infoPtr->buttons[iIndex + iButton];
         INT_PTR str;
 
@@ -2292,7 +2284,7 @@ static void TOOLBAR_Cust_AddButton(const CUSTDLG_INFO *custInfo, HWND hwnd, INT 
             PCUSTOMBUTTON btnNew;
 
             /* duplicate 'separator' button */
-            btnNew = Alloc(sizeof(CUSTOMBUTTON));
+            btnNew = (PCUSTOMBUTTON)Alloc(sizeof(CUSTOMBUTTON));
             *btnNew = *btnInfo;
             btnInfo = btnNew;
         }
@@ -2515,7 +2507,7 @@ TOOLBAR_CustomizeDialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		/* add items to 'toolbar buttons' list and check if removable */
 		for (i = 0; i < custInfo->tbInfo->nNumButtons; i++)
                 {
-                    btnInfo = Alloc(sizeof(CUSTOMBUTTON));
+                    btnInfo = (PCUSTOMBUTTON)Alloc(sizeof(CUSTOMBUTTON));
                     memset (&btnInfo->btn, 0, sizeof(TBBUTTON));
                     btnInfo->btn.fsStyle = BTNS_SEP;
                     btnInfo->bVirtual = FALSE;
@@ -2531,7 +2523,7 @@ TOOLBAR_CustomizeDialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SendDlgItemMessageW (hwnd, IDC_TOOLBARBTN_LBOX, LB_SETITEMHEIGHT, 0, infoPtr->nBitmapHeight + 8);
 
 		/* insert separator button into 'available buttons' list */
-                btnInfo = Alloc(sizeof(CUSTOMBUTTON));
+                btnInfo = (PCUSTOMBUTTON)Alloc(sizeof(CUSTOMBUTTON));
 		memset (&btnInfo->btn, 0, sizeof(TBBUTTON));
 		btnInfo->btn.fsStyle = BTNS_SEP;
 		btnInfo->bVirtual = FALSE;
@@ -2566,7 +2558,7 @@ TOOLBAR_CustomizeDialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		    index = TOOLBAR_GetButtonIndex (custInfo->tbInfo, nmtb.tbButton.idCommand, FALSE);
 		    if (index == -1)
 		    {
-                        btnInfo = Alloc(sizeof(CUSTOMBUTTON));
+                        btnInfo = (PCUSTOMBUTTON)Alloc(sizeof(CUSTOMBUTTON));
 			btnInfo->bVirtual = FALSE;
 			btnInfo->bRemovable = TRUE;
 		    }
@@ -2599,7 +2591,7 @@ TOOLBAR_CustomizeDialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SendDlgItemMessageW (hwnd, IDC_AVAILBTN_LBOX, LB_SETCURSEL, 0, 0);
 
 		/* append 'virtual' separator button to the 'toolbar buttons' list */
-                btnInfo = Alloc(sizeof(CUSTOMBUTTON));
+                btnInfo = (PCUSTOMBUTTON)Alloc(sizeof(CUSTOMBUTTON));
 		memset (&btnInfo->btn, 0, sizeof(TBBUTTON));
 		btnInfo->btn.fsStyle = BTNS_SEP;
 		btnInfo->bVirtual = TRUE;
@@ -2784,8 +2776,8 @@ TOOLBAR_CustomizeDialogProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		   oldText = SetTextColor (lpdis->hDC, (lpdis->itemState & ODS_FOCUS)?comctl32_color.clrHighlightText:comctl32_color.clrWindowText);
                 hPen = CreatePen( PS_SOLID, 1,
                                  (lpdis->itemState & ODS_SELECTED)?comctl32_color.clrHighlight:comctl32_color.clrWindow);
-		hOldPen = SelectObject (lpdis->hDC, hPen );
-		hOldBrush = SelectObject (lpdis->hDC, GetSysColorBrush ((lpdis->itemState & ODS_FOCUS)?COLOR_HIGHLIGHT:COLOR_WINDOW));
+		hOldPen = (HPEN)SelectObject(lpdis->hDC, hPen);
+		hOldBrush = (HBRUSH)SelectObject(lpdis->hDC, GetSysColorBrush ((lpdis->itemState & ODS_FOCUS)?COLOR_HIGHLIGHT:COLOR_WINDOW));
 
 		/* fill background rectangle */
 		Rectangle (lpdis->hDC, lpdis->rcItem.left, lpdis->rcItem.top,
@@ -2872,23 +2864,22 @@ TOOLBAR_AddBitmapToImageList(TOOLBAR_INFO *infoPtr, HIMAGELIST himlDef, const TB
     TRACE("adding hInst=%p nID=%d nButtons=%d\n", bitmap->hInst, bitmap->nID, bitmap->nButtons);
     /* Add bitmaps to the default image list */
     if (bitmap->hInst == NULL)         /* a handle was passed */
-        hbmLoad = CopyImage(ULongToHandle(bitmap->nID), IMAGE_BITMAP, 0, 0, 0);
+        hbmLoad = (HBITMAP)CopyImage(ULongToHandle(bitmap->nID), IMAGE_BITMAP, 0, 0, 0);
     else if (bitmap->hInst == COMCTL32_hModule)
-        hbmLoad = LoadImageW( bitmap->hInst, MAKEINTRESOURCEW(bitmap->nID),
-                              IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+        hbmLoad = (HBITMAP)LoadImageW(bitmap->hInst, MAKEINTRESOURCEW(bitmap->nID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
     else
-        hbmLoad = CreateMappedBitmap(bitmap->hInst, bitmap->nID, 0, NULL, 0);
+        hbmLoad = (HBITMAP)CreateMappedBitmap(bitmap->hInst, bitmap->nID, 0, NULL, 0);
 
     /* enlarge the bitmap if needed */
     ImageList_GetIconSize(himlDef, &cxIcon, &cyIcon);
     if (bitmap->hInst != COMCTL32_hModule)
         COMCTL32_EnsureBitmapSize(&hbmLoad, cxIcon*(INT)bitmap->nButtons, cyIcon, comctl32_color.clrBtnFace);
-    
+
     nIndex = ImageList_AddMasked(himlDef, hbmLoad, comctl32_color.clrBtnFace);
     DeleteObject(hbmLoad);
     if (nIndex == -1)
         return FALSE;
-    
+
     nCountAfter = ImageList_GetImageCount(himlDef);
     nAdded =  nCountAfter - nCountBefore;
     if (bitmap->nButtons == 0) /* wParam == 0 is special and means add only one image */
@@ -3042,7 +3033,7 @@ TOOLBAR_AddBitmap (TOOLBAR_INFO *infoPtr, INT count, const TBADDBITMAP *lpAddBmp
         return -1;
 
     TRACE("Number of bitmap infos: %d\n", infoPtr->nNumBitmapInfos);
-    infoPtr->bitmaps = ReAlloc(infoPtr->bitmaps, (infoPtr->nNumBitmapInfos + 1) * sizeof(TBITMAP_INFO));
+    infoPtr->bitmaps = (TBITMAP_INFO*)ReAlloc(infoPtr->bitmaps, (infoPtr->nNumBitmapInfos + 1) * sizeof(TBITMAP_INFO));
     infoPtr->bitmaps[infoPtr->nNumBitmapInfos] = info;
     infoPtr->nNumBitmapInfos++;
     TRACE("Number of bitmap infos: %d\n", infoPtr->nNumBitmapInfos);
@@ -3110,7 +3101,7 @@ TOOLBAR_AddStringW (TOOLBAR_INFO *infoPtr, HINSTANCE hInstance, LPARAM lParam)
                 break;
             }
 
-            infoPtr->strings = ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
+            infoPtr->strings = (WCHAR**)ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
             Str_SetPtrW(&infoPtr->strings[infoPtr->nNumStrings], p);
             infoPtr->nNumStrings++;
 
@@ -3128,7 +3119,7 @@ TOOLBAR_AddStringW (TOOLBAR_INFO *infoPtr, HINSTANCE hInstance, LPARAM lParam)
             len = strlenW (p);
 
             TRACE("len=%d %s\n", len, debugstr_w(p));
-            infoPtr->strings = ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
+            infoPtr->strings = (WCHAR**)ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
             Str_SetPtrW (&infoPtr->strings[infoPtr->nNumStrings], p);
 	    infoPtr->nNumStrings++;
 
@@ -3165,7 +3156,7 @@ TOOLBAR_AddStringA (TOOLBAR_INFO *infoPtr, HINSTANCE hInstance, LPARAM lParam)
         len = strlen (p);
         TRACE("len=%d \"%s\"\n", len, p);
 
-        infoPtr->strings = ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
+        infoPtr->strings = (WCHAR**)ReAlloc(infoPtr->strings, sizeof(LPWSTR)*(infoPtr->nNumStrings+1));
         Str_SetPtrAtoW(&infoPtr->strings[infoPtr->nNumStrings], p);
         infoPtr->nNumStrings++;
 
@@ -3177,9 +3168,7 @@ TOOLBAR_AddStringA (TOOLBAR_INFO *infoPtr, HINSTANCE hInstance, LPARAM lParam)
     return nIndex;
 }
 
-
-static LRESULT
-TOOLBAR_AutoSize (TOOLBAR_INFO *infoPtr)
+static LRESULT TOOLBAR_AutoSize (TOOLBAR_INFO *infoPtr)
 {
     TRACE("auto sizing, style=%#x\n", infoPtr->dwStyle);
     TRACE("nRows: %d, infoPtr->nButtonHeight: %d\n", infoPtr->nRows, infoPtr->nButtonHeight);
@@ -3398,7 +3387,7 @@ TOOLBAR_DeleteButton (TOOLBAR_INFO *infoPtr, INT nIndex)
         TRACE("complex delete [nIndex=%d]\n", nIndex);
 
 	infoPtr->nNumButtons--;
-	infoPtr->buttons = Alloc (sizeof (TBUTTON_INFO) * infoPtr->nNumButtons);
+	infoPtr->buttons = (TBUTTON_INFO*)Alloc(sizeof (TBUTTON_INFO) * infoPtr->nNumButtons);
         if (nIndex > 0) {
             memcpy (&infoPtr->buttons[0], &oldButtons[0],
                     nIndex * sizeof(TBUTTON_INFO));
@@ -4221,14 +4210,14 @@ TOOLBAR_ReplaceBitmap (TOOLBAR_INFO *infoPtr, const TBREPLACEBITMAP *lpReplace)
         WARN("No hinst/bitmap found! hInst %p nID %lx\n", lpReplace->hInstOld, lpReplace->nIDOld);
         return FALSE;
     }
-    
+
     /* copy the bitmap before adding it as ImageList_AddMasked modifies the
     * bitmap
     */
     if (lpReplace->hInstNew)
-        hBitmap = LoadBitmapW(lpReplace->hInstNew,(LPWSTR)lpReplace->nIDNew);
+        hBitmap = LoadBitmapW(lpReplace->hInstNew, (LPWSTR)lpReplace->nIDNew);
     else
-        hBitmap = CopyImage((HBITMAP)lpReplace->nIDNew, IMAGE_BITMAP, 0, 0, 0);
+        hBitmap = (HBITMAP)CopyImage((HBITMAP)lpReplace->nIDNew, IMAGE_BITMAP, 0, 0, 0);
 
     himlDef = GETDEFIMAGELIST(infoPtr, 0); /* fixme: correct? */
     nOldBitmaps = ImageList_GetImageCount(himlDef);
@@ -4266,16 +4255,16 @@ TOOLBAR_Save(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *params)
 
     TRACE( "save to %s %s\n", debugstr_w(params->pszSubKey), debugstr_w(params->pszValueName) );
 
-    memset( &save, 0, sizeof(save) );
+    memset(&save, 0, sizeof(save));
     save.cbData = infoPtr->nNumButtons * sizeof(DWORD);
     save.iItem = -1;
     save.cButtons = infoPtr->nNumButtons;
     save.tbButton.idCommand = -1;
-    TOOLBAR_SendNotify( &save.hdr, infoPtr, TBN_SAVE );
+    TOOLBAR_SendNotify(&save.hdr, infoPtr, TBN_SAVE);
 
     if (!save.pData)
     {
-        save.pData = Alloc( save.cbData );
+        save.pData = (DWORD*)Alloc(save.cbData);
         if (!save.pData) return FALSE;
         alloced = TRUE;
     }
@@ -4288,7 +4277,7 @@ TOOLBAR_Save(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *params)
         save.tbButton.idCommand = infoPtr->buttons[i].idCommand;
         save.tbButton.fsState = infoPtr->buttons[i].fsState;
         save.tbButton.fsStyle = infoPtr->buttons[i].fsStyle;
-        memset( save.tbButton.bReserved, 0, sizeof(save.tbButton.bReserved) );
+        memset(save.tbButton.bReserved, 0, sizeof(save.tbButton.bReserved));
         save.tbButton.dwData = infoPtr->buttons[i].dwData;
         save.tbButton.iString = infoPtr->buttons[i].iString;
 
@@ -4354,7 +4343,7 @@ TOOLBAR_Restore(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *lpSave)
         res = ERROR_FILE_NOT_FOUND;
     if (!res)
     {
-        nmtbr.pData = Alloc(dwSize);
+        nmtbr.pData = (DWORD*)Alloc(dwSize);
         nmtbr.cbData = dwSize;
         if (!nmtbr.pData) res = ERROR_OUTOFMEMORY;
     }
@@ -4488,12 +4477,12 @@ TOOLBAR_SaveRestoreA (TOOLBAR_INFO *infoPtr, WPARAM wParam, const TBSAVEPARAMSA 
     if (lpSave == NULL) return 0;
 
     len = MultiByteToWideChar(CP_ACP, 0, lpSave->pszSubKey, -1, NULL, 0);
-    pszSubKey = Alloc(len * sizeof(WCHAR));
+    pszSubKey = (LPWSTR)Alloc(len * sizeof(WCHAR));
     if (!pszSubKey) goto exit;
     MultiByteToWideChar(CP_ACP, 0, lpSave->pszSubKey, -1, pszSubKey, len);
 
     len = MultiByteToWideChar(CP_ACP, 0, lpSave->pszValueName, -1, NULL, 0);
-    pszValueName = Alloc(len * sizeof(WCHAR));
+    pszValueName = (LPWSTR)Alloc(len * sizeof(WCHAR));
     if (!pszValueName) goto exit;
     MultiByteToWideChar(CP_ACP, 0, lpSave->pszValueName, -1, pszValueName, len);
 
@@ -5544,8 +5533,8 @@ TOOLBAR_Destroy (TOOLBAR_INFO *infoPtr)
 	DestroyWindow (infoPtr->hwndToolTip);
 
     /* delete temporary buffer for tooltip text */
-    Free (infoPtr->pszTooltipText);
-    Free (infoPtr->bitmaps);            /* bitmaps list */
+    Free(infoPtr->pszTooltipText);
+    Free(infoPtr->bitmaps);            /* bitmaps list */
 
     /* delete button data */
     for (i = 0; i < infoPtr->nNumButtons; i++)
@@ -6259,7 +6248,7 @@ TOOLBAR_NCCreate (HWND hwnd, WPARAM wParam, const CREATESTRUCTW *lpcs)
     DWORD styleadd = 0;
 
     /* allocate memory for info structure */
-    infoPtr = Alloc (sizeof(TOOLBAR_INFO));
+    infoPtr = (TOOLBAR_INFO*)Alloc(sizeof(TOOLBAR_INFO));
     SetWindowLongPtrW (hwnd, 0, (LONG_PTR)infoPtr);
 
     /* paranoid!! */
@@ -6405,7 +6394,7 @@ static LRESULT TOOLBAR_TTGetDispInfo (TOOLBAR_INFO *infoPtr, NMTTDISPINFOW *lpnm
             /* need to allocate temporary buffer in infoPtr as there
              * isn't enough space in buffer passed to us by the
              * tooltip control */
-            infoPtr->pszTooltipText = Alloc((len+1)*sizeof(WCHAR));
+            infoPtr->pszTooltipText = (LPWSTR)Alloc((len+1)*sizeof(WCHAR));
             if (infoPtr->pszTooltipText)
             {
                 memcpy(infoPtr->pszTooltipText, tbgit.pszText, (len+1)*sizeof(WCHAR));
@@ -6443,7 +6432,7 @@ static LRESULT TOOLBAR_TTGetDispInfo (TOOLBAR_INFO *infoPtr, NMTTDISPINFOW *lpnm
             /* need to allocate temporary buffer in infoPtr as there
              * isn't enough space in buffer passed to us by the
              * tooltip control */
-            infoPtr->pszTooltipText = Alloc(len*sizeof(WCHAR));
+            infoPtr->pszTooltipText = (LPWSTR)Alloc(len*sizeof(WCHAR));
             if (infoPtr->pszTooltipText)
             {
                 MultiByteToWideChar(CP_ACP, 0, tbgit.pszText, -1, infoPtr->pszTooltipText, len);
@@ -6473,7 +6462,7 @@ static LRESULT TOOLBAR_TTGetDispInfo (TOOLBAR_INFO *infoPtr, NMTTDISPINFOW *lpnm
             /* need to allocate temporary buffer in infoPtr as there
              * isn't enough space in buffer passed to us by the
              * tooltip control */
-            infoPtr->pszTooltipText = Alloc((len+1)*sizeof(WCHAR));
+            infoPtr->pszTooltipText = (LPWSTR)Alloc((len+1)*sizeof(WCHAR));
             if (infoPtr->pszTooltipText)
             {
                 memcpy(infoPtr->pszTooltipText, pszText, (len+1)*sizeof(WCHAR));
@@ -7236,10 +7225,10 @@ static HIMAGELIST TOOLBAR_InsertImageList(PIMLENTRY **pies, INT *cies, HIMAGELIS
     {
         PIMLENTRY *pnies;
 
-        c = Alloc(sizeof(IMLENTRY));
+        c = (PIMLENTRY)Alloc(sizeof(IMLENTRY));
 	c->id = id;
 
-	pnies = Alloc((*cies + 1) * sizeof(PIMLENTRY));
+	pnies = (PIMLENTRY*)Alloc((*cies + 1) * sizeof(PIMLENTRY));
 	memcpy(pnies, *pies, ((*cies) * sizeof(PIMLENTRY)));
 	pnies[*cies] = c;
 	(*cies)++;

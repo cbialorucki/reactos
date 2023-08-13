@@ -57,7 +57,7 @@ typedef struct
 
 /* The size of a tab item depends on how much extra data is requested.
    TCM_INSERTITEM always stores at least LPARAM sized data. */
-#define EXTRA_ITEM_SIZE(infoPtr) (max((infoPtr)->cbInfo, sizeof(LPARAM)))
+#define EXTRA_ITEM_SIZE(infoPtr) (max((infoPtr)->cbInfo, (INT)sizeof(LPARAM)))
 #define TAB_ITEM_SIZE(infoPtr) FIELD_OFFSET(TAB_ITEM, extra[EXTRA_ITEM_SIZE(infoPtr)])
 
 typedef struct
@@ -123,12 +123,12 @@ typedef struct
 #define TAB_HOTTRACK_TIMER            1
 #define TAB_HOTTRACK_TIMER_INTERVAL   100   /* milliseconds */
 
-static const WCHAR themeClass[] = { 'T','a','b',0 };
+static const WCHAR themeClass[] = L"Tab";
 
 static inline TAB_ITEM* TAB_GetItem(const TAB_INFO *infoPtr, INT i)
 {
-    assert(i >= 0 && i < infoPtr->uNumItem);
-    return DPA_GetPtr(infoPtr->items, i);
+    assert(i >= 0 && i < (INT)infoPtr->uNumItem);
+    return (TAB_ITEM*)DPA_GetPtr(infoPtr->items, i);
 }
 
 /******************************************************************************
@@ -264,7 +264,7 @@ static LRESULT TAB_SetCurFocus (TAB_INFO *infoPtr, INT iItem)
           TAB_InvalidateTabArea(infoPtr);
       }
   }
-  else if (iItem < infoPtr->uNumItem) {
+  else if (iItem < (INT)infoPtr->uNumItem) {
     if (infoPtr->dwStyle & TCS_BUTTONS) {
       /* set focus to new item, leave selection as is */
       if (infoPtr->uFocus != iItem) {
@@ -350,7 +350,7 @@ static BOOL TAB_InternalGetItemRect(
 
   /* Perform a sanity check and a trivial visibility check. */
   if ( (infoPtr->uNumItem <= 0) ||
-       (itemIndex >= infoPtr->uNumItem) ||
+       (itemIndex >= (INT)infoPtr->uNumItem) ||
        (!(((infoPtr->dwStyle & TCS_MULTILINE) || (infoPtr->dwStyle & TCS_VERTICAL))) &&
          (itemIndex < infoPtr->leftmostVisible)))
     {
@@ -509,7 +509,7 @@ static LRESULT TAB_KeyDown(TAB_INFO* infoPtr, WPARAM keyCode, LPARAM lParam)
   }
 
   /* If we changed to a valid item, change focused item */
-  if (newItem >= 0 && newItem < infoPtr->uNumItem && infoPtr->uFocus != newItem)
+  if (newItem >= 0 && newItem < (INT)infoPtr->uNumItem && infoPtr->uFocus != newItem)
       TAB_SetCurFocus(infoPtr, newItem);
 
   return 0;
@@ -567,7 +567,7 @@ static INT TAB_InternalHitTest (const TAB_INFO *infoPtr, POINT pt, UINT *flags)
   RECT rect;
   INT iCount;
 
-  for (iCount = 0; iCount < infoPtr->uNumItem; iCount++)
+  for (iCount = 0; iCount < (INT)infoPtr->uNumItem; iCount++)
   {
     TAB_InternalGetItemRect(infoPtr, iCount, &rect, NULL);
 
@@ -661,7 +661,7 @@ TAB_LButtonDown (TAB_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
       BOOL pressed = FALSE;
 
       /* any button pressed ? */
-      for (i = 0; i < infoPtr->uNumItem; i++)
+      for (i = 0; i < (INT)infoPtr->uNumItem; i++)
         if ((TAB_GetItem (infoPtr, i)->dwState & TCIS_BUTTONPRESSED) &&
             (infoPtr->iSelected != i))
         {
@@ -1061,7 +1061,7 @@ static void TAB_SetupScrolling(
              break;
        }
 
-       if(maxRange == infoPtr->uNumItem)
+       if(maxRange == (INT)infoPtr->uNumItem)
           maxRange--;
     }
   }
@@ -1105,8 +1105,8 @@ static void TAB_SetItemBounds (TAB_INFO *infoPtr)
    */
   hdc = GetDC(infoPtr->hwnd);
 
-  hFont = infoPtr->hFont ? infoPtr->hFont : GetStockObject (SYSTEM_FONT);
-  hOldFont = SelectObject (hdc, hFont);
+  hFont = infoPtr->hFont ? infoPtr->hFont : (HFONT)GetStockObject(SYSTEM_FONT);
+  hOldFont = (HFONT)SelectObject(hdc, hFont);
 
   /*
    * We will base the rectangle calculations on the client rectangle
@@ -1181,7 +1181,7 @@ static void TAB_SetItemBounds (TAB_INFO *infoPtr)
   for (curItem = 0; curItem < infoPtr->uNumItem; curItem++)
   {
     TAB_ITEM *curr = TAB_GetItem(infoPtr, curItem);
-	
+
     /* Set the leftmost position of the tab. */
     curr->rect.left = curItemLeftPos;
 
@@ -1364,7 +1364,7 @@ static void TAB_SetItemBounds (TAB_INFO *infoPtr)
 	INT remainder;
 	INT iCount=0;
 
-        while(iIndexStart < infoPtr->uNumItem)
+        while(iIndexStart < (INT)infoPtr->uNumItem)
         {
           TAB_ITEM *start = TAB_GetItem(infoPtr, iIndexStart);
 
@@ -1373,7 +1373,7 @@ static void TAB_SetItemBounds (TAB_INFO *infoPtr)
            */
           /* find the first item on the next row */
           for (iIndexEnd=iIndexStart;
-              (iIndexEnd < infoPtr->uNumItem) &&
+              (iIndexEnd < (INT)infoPtr->uNumItem) &&
  	      (TAB_GetItem(infoPtr, iIndexEnd)->rect.top ==
                 start->rect.top) ;
               iIndexEnd++)
@@ -1425,7 +1425,7 @@ static void TAB_SetItemBounds (TAB_INFO *infoPtr)
   if(infoPtr->dwStyle & TCS_VERTICAL)
   {
     RECT rcOriginal;
-    for(iIndex = 0; iIndex < infoPtr->uNumItem; iIndex++)
+    for(iIndex = 0; iIndex < (INT)infoPtr->uNumItem; iIndex++)
     {
       rcItem = &TAB_GetItem(infoPtr, iIndex)->rect;
 
@@ -1665,8 +1665,8 @@ HTHEME    theme = GetWindowTheme (infoPtr->hwnd);
    * Text pen
    */
   htextPen = CreatePen( PS_SOLID, 1, comctl32_color.clrBtnText );
-  holdPen  = SelectObject(hdc, htextPen);
-  hOldFont = SelectObject(hdc, infoPtr->hFont);
+  holdPen  = (HPEN)SelectObject(hdc, htextPen);
+  hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
   /*
    * Setup for text output
@@ -1713,7 +1713,7 @@ HTHEME    theme = GetWindowTheme (infoPtr->hwnd);
     dis.rcItem = *drawRect;
 
     /* when extra data fits ULONG_PTR, store it directly */
-    if (infoPtr->cbInfo > sizeof(LPARAM))
+    if (infoPtr->cbInfo > (INT)sizeof(LPARAM))
         dis.itemData =  (ULONG_PTR) TAB_GetItem(infoPtr, iItem)->extra;
     else
     {
@@ -2090,7 +2090,7 @@ static void TAB_DrawItem(const TAB_INFO *infoPtr, HDC  hdc, INT  iItem)
               stateId = TIS_FOCUSED;
 
           /* Adjust rectangle for bottommost row */
-          if (TAB_GetItem(infoPtr, iItem)->rect.top == infoPtr->uNumRows-1)
+          if (TAB_GetItem(infoPtr, iItem)->rect.top == (LONG)infoPtr->uNumRows-1)
             r.bottom += 3;
 
           DrawThemeBackground (theme, hdc, partIds[partIndex], stateId, &r, NULL);
@@ -2202,7 +2202,7 @@ static void TAB_DrawItem(const TAB_INFO *infoPtr, HDC  hdc, INT  iItem)
         if (infoPtr->dwStyle & TCS_BOTTOM)
         {
 	  /* Adjust both rectangles for topmost row */
-	  if (TAB_GetItem(infoPtr, iItem)->rect.top == infoPtr->uNumRows-1)
+	  if (TAB_GetItem(infoPtr, iItem)->rect.top == (LONG)infoPtr->uNumRows-1)
 	  {
 	    fillRect.top -= 2;
 	    r.top -= 1;
@@ -2254,7 +2254,7 @@ static void TAB_DrawItem(const TAB_INFO *infoPtr, HDC  hdc, INT  iItem)
         else
         {
 	  /* Adjust both rectangles for bottommost row */
-	  if (TAB_GetItem(infoPtr, iItem)->rect.top == infoPtr->uNumRows-1)
+	  if (TAB_GetItem(infoPtr, iItem)->rect.top == (LONG)infoPtr->uNumRows-1)
 	  {
 	    fillRect.bottom += 3;
 	    r.bottom += 2;
@@ -2349,17 +2349,17 @@ static void TAB_Refresh (const TAB_INFO *infoPtr, HDC hdc)
   if (!infoPtr->DoRedraw)
     return;
 
-  hOldFont = SelectObject (hdc, infoPtr->hFont);
+  hOldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
 
   if (infoPtr->dwStyle & TCS_BUTTONS)
   {
-    for (i = 0; i < infoPtr->uNumItem; i++)
+    for (i = 0; i < (INT)infoPtr->uNumItem; i++)
       TAB_DrawItem (infoPtr, hdc, i);
   }
   else
   {
     /* Draw all the non selected item first */
-    for (i = 0; i < infoPtr->uNumItem; i++)
+    for (i = 0; i < (INT)infoPtr->uNumItem; i++)
     {
       if (i != infoPtr->iSelected)
 	TAB_DrawItem (infoPtr, hdc, i);
@@ -2602,12 +2602,12 @@ TAB_InsertItemT (TAB_INFO *infoPtr, INT iItem, const TCITEMW *pti, BOOL bUnicode
   TRACE("Rect: %p %s\n", infoPtr->hwnd, wine_dbgstr_rect(&rect));
 
   if (iItem < 0) return -1;
-  if (iItem > infoPtr->uNumItem)
+  if (iItem > (INT)infoPtr->uNumItem)
     iItem = infoPtr->uNumItem;
 
   TAB_DumpItemExternalT(pti, iItem, bUnicode);
 
-  if (!(item = Alloc(TAB_ITEM_SIZE(infoPtr)))) return FALSE;
+  if (!(item = (TAB_ITEM*)Alloc(TAB_ITEM_SIZE(infoPtr)))) return FALSE;
   if (DPA_InsertPtr(infoPtr->items, iItem, item) == -1)
   {
       Free(item);
@@ -2706,7 +2706,7 @@ static inline LRESULT TAB_SetMinTabWidth (TAB_INFO *infoPtr, INT cx)
   return oldcx;
 }
 
-static inline LRESULT 
+static inline LRESULT
 TAB_HighlightItem (TAB_INFO *infoPtr, INT iItem, BOOL fHighlight)
 {
   LPDWORD lpState;
@@ -2715,7 +2715,7 @@ TAB_HighlightItem (TAB_INFO *infoPtr, INT iItem, BOOL fHighlight)
 
   TRACE("(%p,%d,%s)\n", infoPtr, iItem, fHighlight ? "true" : "false");
 
-  if (iItem < 0 || iItem >= infoPtr->uNumItem)
+  if (iItem < 0 || iItem >= (INT)infoPtr->uNumItem)
     return FALSE;
 
   lpState = &TAB_GetItem(infoPtr, iItem)->dwState;
@@ -2739,7 +2739,7 @@ TAB_SetItemT (TAB_INFO *infoPtr, INT iItem, LPTCITEMW tabItem, BOOL bUnicode)
 
   TRACE("(%p,%d,%p,%s)\n", infoPtr, iItem, tabItem, bUnicode ? "true" : "false");
 
-  if (iItem < 0 || iItem >= infoPtr->uNumItem)
+  if (iItem < 0 || iItem >= (INT)infoPtr->uNumItem)
     return FALSE;
 
   TAB_DumpItemExternalT(tabItem, iItem, bUnicode);
@@ -2792,7 +2792,7 @@ TAB_GetItemT (TAB_INFO *infoPtr, INT iItem, LPTCITEMW tabItem, BOOL bUnicode)
 
   if (!tabItem) return FALSE;
 
-  if (iItem < 0 || iItem >= infoPtr->uNumItem)
+  if (iItem < 0 || iItem >= (INT)infoPtr->uNumItem)
   {
     /* init requested fields */
     if (tabItem->mask & TCIF_IMAGE) tabItem->iImage  = 0;
@@ -2835,7 +2835,7 @@ static LRESULT TAB_DeleteItem (TAB_INFO *infoPtr, INT iItem)
 
     TRACE("(%p, %d)\n", infoPtr, iItem);
 
-    if (iItem < 0 || iItem >= infoPtr->uNumItem) return FALSE;
+    if (iItem < 0 || iItem >= (INT)infoPtr->uNumItem) return FALSE;
 
     TAB_InvalidateTabArea(infoPtr);
     item = TAB_GetItem(infoPtr, iItem);
@@ -2980,7 +2980,7 @@ static LRESULT TAB_Create (HWND hwnd, LPARAM lParam)
   HFONT hOldFont;
   DWORD style;
 
-  infoPtr = Alloc (sizeof(TAB_INFO));
+  infoPtr = (TAB_INFO*)Alloc(sizeof(TAB_INFO));
 
   SetWindowLongPtrW(hwnd, 0, (DWORD_PTR)infoPtr);
 
@@ -3049,7 +3049,7 @@ static LRESULT TAB_Create (HWND hwnd, LPARAM lParam)
    * a font.
    */
   hdc = GetDC(hwnd);
-  hOldFont = SelectObject (hdc, GetStockObject (SYSTEM_FONT));
+  hOldFont = (HFONT)SelectObject(hdc, GetStockObject (SYSTEM_FONT));
 
   /* Use the system font to determine the initial height of a tab. */
   GetTextMetricsW(hdc, &fontMetrics);
@@ -3148,7 +3148,7 @@ static LRESULT TAB_RemoveImage (TAB_INFO *infoPtr, INT image)
     RECT r;
 
     /* shift indices, repaint items if needed */
-    for (i = 0; i < infoPtr->uNumItem; i++)
+    for (i = 0; i < (INT)infoPtr->uNumItem; i++)
     {
       idx = &TAB_GetItem(infoPtr, i)->iImage;
       if (*idx >= image)
@@ -3212,7 +3212,7 @@ TAB_DeselectAll (TAB_INFO *infoPtr, BOOL excludesel)
   if (!(infoPtr->dwStyle & TCS_BUTTONS))
     return 0;
 
-  for (i = 0; i < infoPtr->uNumItem; i++)
+  for (i = 0; i < (INT)infoPtr->uNumItem; i++)
   {
     if ((TAB_GetItem(infoPtr, i)->dwState & TCIS_BUTTONPRESSED) &&
         (selected != i))
@@ -3253,7 +3253,7 @@ static INT TAB_StyleChanged(TAB_INFO *infoPtr, WPARAM wStyleType,
     TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
           wStyleType, lpss->styleOld, lpss->styleNew);
 
-    if (wStyleType != GWL_STYLE) return 0;
+    if ((int)wStyleType != GWL_STYLE) return 0;
 
     infoPtr->dwStyle = lpss->styleNew;
 

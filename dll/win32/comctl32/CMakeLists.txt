@@ -45,14 +45,14 @@ list(APPEND SOURCE
     status.cpp
     string.cpp
     syslink.cpp
-    tab.c
-    taskdialog.c
-    theme_scrollbar.c
-    theming.c
-    toolbar.c
+    tab.cpp
+    taskdialog.cpp
+    theme_scrollbar.cpp
+    theming.cpp
+    toolbar.cpp
     tooltips.cpp
-    trackbar.c
-    treeview.c
+    trackbar.cpp
+    treeview.cpp
     updown.cpp)
 
 list(APPEND PCH_SKIP_SOURCE

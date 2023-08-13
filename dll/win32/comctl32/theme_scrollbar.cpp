@@ -24,6 +24,10 @@
 /* Minimum size of the rectangle between the arrows */
 #define SCROLL_MIN_RECT  4
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum SCROLL_HITTEST
 {
     SCROLL_NOWHERE,      /* Outside the scroll bar */
@@ -43,7 +47,7 @@ static void calc_thumb_dimensions(unsigned int size, SCROLLINFO *si, unsigned in
 {
     if (size <= SCROLL_MIN_RECT)
         *thumbpos = *thumbsize = 0;
-    else if (si->nPage > si->nMax - si->nMin)
+    else if ((int)si->nPage > si->nMax - si->nMin)
         *thumbpos = *thumbsize = 0;
     else {
         if (si->nPage > 0) {
@@ -418,13 +422,13 @@ static void paint_scrollbar(HWND hwnd, HTHEME theme)
                     MARGINS margins;
 
                     if (SUCCEEDED(GetThemeMargins(theme, dc, SBP_THUMBBTNVERT, thumbstate, TMT_CONTENTMARGINS, &partrect, &margins))) {
-                        if (grippersize.cy <= (thumbsize - margins.cyTopHeight - margins.cyBottomHeight))
+                        if (grippersize.cy <= (LONG)(thumbsize - margins.cyTopHeight - margins.cyBottomHeight))
                             DrawThemeBackground(theme, dc, SBP_GRIPPERVERT, thumbstate, &partrect, NULL);
                     }
                 }
             }
 
-            if (thumbpos + thumbsize < trackrect.bottom - trackrect.top) {
+            if ((LONG)(thumbpos + thumbsize) < trackrect.bottom - trackrect.top) {
                 partrect.bottom = trackrect.bottom;
                 partrect.top = trackrect.top + thumbsize + thumbpos;
 
@@ -493,13 +497,13 @@ static void paint_scrollbar(HWND hwnd, HTHEME theme)
                     MARGINS margins;
 
                     if (SUCCEEDED(GetThemeMargins(theme, dc, SBP_THUMBBTNHORZ, thumbstate, TMT_CONTENTMARGINS, &partrect, &margins))) {
-                        if (grippersize.cx <= (thumbsize - margins.cxLeftWidth - margins.cxRightWidth))
+                        if (grippersize.cx <= (LONG)(thumbsize - margins.cxLeftWidth - margins.cxRightWidth))
                             DrawThemeBackground(theme, dc, SBP_GRIPPERHORZ, thumbstate, &partrect, NULL);
                     }
                 }
             }
 
-            if (thumbpos + thumbsize < trackrect.right - trackrect.left) {
+            if ((LONG)(thumbpos + thumbsize) < trackrect.right - trackrect.left) {
                 partrect.right = trackrect.right;
                 partrect.left = trackrect.left + thumbsize + thumbpos;
 
@@ -569,3 +573,6 @@ LRESULT CALLBACK THEMING_ScrollbarSubclassProc (HWND hwnd, UINT msg,
 
     return 0;
 }
+#ifdef __cplusplus
+}
+#endif
