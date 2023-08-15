@@ -4,12 +4,24 @@
  * PURPOSE:     Button control header file
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
+#pragma once
+
+#include <stdarg.h>
+#include <string.h>
+#include <stdlib.h>
+
 #include "windef.h"
 #include "winbase.h"
 #include "wingdi.h"
 #include "winuser.h"
 #include "uxtheme.h"
+#include "vssym32.h"
+#include "wine/debug.h"
+#include "wine/heap.h"
 
+#include "comctl32.h"
+
+#define OEMRESOURCE
 #define MAX_BTN_TYPE 16
 
 /* Undocumented Flags */

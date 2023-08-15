@@ -33,12 +33,6 @@
 
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
-typedef struct
-{
-    DWORD dwDummy;  /* just to keep the compiler happy ;-) */
-} FLATSB_INFO, *LPFLATSB_INFO;
-
-
 /***********************************************************************
  *		InitializeFlatSB (COMCTL32.@)
  *
@@ -204,7 +198,7 @@ static LRESULT FlatSB_Destroy (HWND hwnd, WPARAM wParam, LPARAM lParam)
 static LRESULT WINAPI FlatSB_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (!GetWindowLongPtrW(hwnd, 0) && (uMsg != WM_CREATE))
-	    return DefWindowProcW( hwnd, uMsg, wParam, lParam );
+	    return DefWindowProcW(hwnd, uMsg, wParam, lParam);
 
     switch (uMsg)
     {
@@ -221,23 +215,22 @@ static LRESULT WINAPI FlatSB_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LP
     }
 }
 
-VOID FLATSB_Register (void)
+void FLATSB_Register()
 {
-    WNDCLASSW wndClass;
+    WNDCLASSW wndClass = {0};
 
-    ZeroMemory(&wndClass, sizeof(WNDCLASSW));
-    wndClass.style         = CS_GLOBALCLASS;
-    wndClass.lpfnWndProc   = FlatSB_WindowProc;
-    wndClass.cbClsExtra    = 0;
-    wndClass.cbWndExtra    = sizeof(FLATSB_INFO *);
-    wndClass.hCursor       = LoadCursorW (0, (LPWSTR)IDC_ARROW);
+    wndClass.style = CS_GLOBALCLASS;
+    wndClass.lpfnWndProc = FlatSB_WindowProc;
+    wndClass.cbClsExtra = 0;
+    wndClass.cbWndExtra = sizeof(DWORD*);
+    wndClass.hCursor = LoadCursorW (0, (LPWSTR)IDC_ARROW);
     wndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wndClass.lpszClassName = FLATSB_CLASSW;
 
     RegisterClassW(&wndClass);
 }
 
-VOID FLATSB_Unregister (void)
+void FLATSB_Unregister ()
 {
     UnregisterClassW (FLATSB_CLASSW, NULL);
 }

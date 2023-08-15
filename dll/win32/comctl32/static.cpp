@@ -72,7 +72,7 @@ static const pfPaint staticPaintFunc[SS_TYPEMASK+1] =
     STATIC_PaintEtchedfn,    /* SS_ETCHEDFRAME */
 };
 
-static BOOL get_icon_size( HICON handle, SIZE *size )
+static BOOL get_icon_size(HICON handle, SIZE *size)
 {
     ICONINFO info;
     BITMAP bmp;

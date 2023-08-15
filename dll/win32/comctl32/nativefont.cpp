@@ -28,7 +28,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(nativefont);
 
 typedef struct
 {
-    HWND hwndSelf;        /* my own handle */
+    HWND m_hwnd;
 } NATIVEFONT_INFO;
 
 #define NATIVEFONT_GetInfoPtr(hwnd) ((NATIVEFONT_INFO *)GetWindowLongPtrW (hwnd, 0))
@@ -42,7 +42,7 @@ static LRESULT NATIVEFONT_Create (HWND hwnd)
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
 
     /* initialize info structure */
-    infoPtr->hwndSelf = hwnd;
+    infoPtr->m_hwnd = hwnd;
 
     return 0;
 }
@@ -50,8 +50,8 @@ static LRESULT NATIVEFONT_Create (HWND hwnd)
 static LRESULT NATIVEFONT_Destroy (NATIVEFONT_INFO *infoPtr)
 {
     /* free control info data */
-    SetWindowLongPtrW( infoPtr->hwndSelf, 0, 0 );
-    Free (infoPtr);
+    SetWindowLongPtrW(infoPtr->m_hwnd, 0, 0);
+    Free(infoPtr);
 
     return 0;
 }

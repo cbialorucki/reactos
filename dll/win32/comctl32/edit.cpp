@@ -51,8 +51,7 @@ WINE_DEFAULT_DEBUG_CHANNEL(edit);
 #define EF_UPDATE		0x0004	/* notify parent of changed state */
 #define EF_VSCROLL_TRACK	0x0008	/* don't SetScrollPos() since we are tracking the thumb */
 #define EF_HSCROLL_TRACK	0x0010	/* don't SetScrollPos() since we are tracking the thumb */
-#define EF_AFTER_WRAP		0x0080	/* the caret is displayed after the last character of a
-					   wrapped line, instead of in front of the next character */
+#define EF_AFTER_WRAP		0x0080	/* the caret is displayed after the last character of a wrapped line, instead of in front of the next character */
 #define EF_USE_SOFTBRK		0x0100	/* Enable soft breaks in text. */
 #define EF_DIALOGMODE           0x0200  /* Indicates that we are inside a dialog window */
 

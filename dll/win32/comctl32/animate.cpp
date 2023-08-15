@@ -22,6 +22,8 @@
 #include "wine/debug.h"
 #include "wine/heap.h"
 
+#define ANIMATE_COLOR_NONE  	0xffffffff
+
 WINE_DEFAULT_DEBUG_CHANNEL(animate);
 
 static struct {
@@ -66,8 +68,6 @@ typedef struct
    HBRUSH           	hbrushBG;
    HBITMAP  	    	hbmPrevFrame;
 } ANIMATE_INFO;
-
-#define ANIMATE_COLOR_NONE  	0xffffffff
 
 static void ANIMATE_Notify(const ANIMATE_INFO *infoPtr, UINT notif)
 {

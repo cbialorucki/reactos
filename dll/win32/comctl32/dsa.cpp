@@ -57,7 +57,7 @@ struct _DSA
  *     fixed-size memory blocks. These arrays can store any kind of data
  *     (e.g. strings and icons).
  */
-HDSA WINAPI DSA_Create (INT nSize, INT nGrow)
+HDSA WINAPI DSA_Create(INT nSize, INT nGrow)
 {
     HDSA hdsa;
 
@@ -89,7 +89,7 @@ HDSA WINAPI DSA_Create (INT nSize, INT nGrow)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DSA_Destroy (HDSA hdsa)
+BOOL WINAPI DSA_Destroy(HDSA hdsa)
 {
     TRACE("(%p)\n", hdsa);
 
@@ -99,9 +99,8 @@ BOOL WINAPI DSA_Destroy (HDSA hdsa)
     if (hdsa->pData && (!Free (hdsa->pData)))
         return FALSE;
 
-    return Free (hdsa);
+    return Free(hdsa);
 }
-
 
 /**************************************************************************
  * DSA_GetItem [COMCTL32.322]
@@ -125,15 +124,15 @@ BOOL WINAPI DSA_GetItem (HDSA hdsa, INT nIndex, LPVOID pDest)
 
     if (!hdsa)
         return FALSE;
+
     if ((nIndex < 0) || (nIndex >= hdsa->nItemCount))
         return FALSE;
 
     pSrc = (char *) hdsa->pData + (hdsa->nItemSize * nIndex);
-    memmove (pDest, pSrc, hdsa->nItemSize);
+    memmove(pDest, pSrc, hdsa->nItemSize);
 
     return TRUE;
 }
-
 
 /**************************************************************************
  * DSA_GetItemPtr [COMCTL32.323]
@@ -156,6 +155,7 @@ LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
 
     if (!hdsa)
         return NULL;
+
     if ((nIndex < 0) || (nIndex >= hdsa->nItemCount))
         return NULL;
 
@@ -191,16 +191,18 @@ BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
     if ((!hdsa) || nIndex < 0)
         return FALSE;
 
-    if (hdsa->nItemCount <= nIndex) {
+    if (hdsa->nItemCount <= nIndex)
+    {
         /* within the old array */
-        if (hdsa->nMaxCount > nIndex) {
+        if (hdsa->nMaxCount > nIndex)
+        {
             /* within the allocated space, set a new boundary */
             hdsa->nItemCount = nIndex + 1;
         }
-        else {
+        else
+        {
             /* resize the block of memory */
-            nNewItems =
-                hdsa->nGrow * ((((nIndex + 1) - 1) / hdsa->nGrow) + 1);
+            nNewItems = hdsa->nGrow * ((((nIndex + 1) - 1) / hdsa->nGrow) + 1);
             nSize = hdsa->nItemSize * nNewItems;
 
             lpTemp = ReAlloc (hdsa->pData, nSize);
@@ -215,9 +217,8 @@ BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
 
     /* put the new entry in */
     pDest = (char *) hdsa->pData + (hdsa->nItemSize * nIndex);
-    TRACE("-- move dest=%p src=%p size=%d\n",
-           pDest, pSrc, hdsa->nItemSize);
-    memmove (pDest, pSrc, hdsa->nItemSize);
+    TRACE("-- move dest=%p src=%p size=%d\n", pDest, pSrc, hdsa->nItemSize);
+    memmove(pDest, pSrc, hdsa->nItemSize);
 
     return TRUE;
 }
@@ -268,25 +269,23 @@ INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
     }
 
     /* do we need to move elements ? */
-    if (nIndex < hdsa->nItemCount) {
+    if (nIndex < hdsa->nItemCount)
+    {
         lpTemp = (char *) hdsa->pData + (hdsa->nItemSize * nIndex);
         lpDest = (char *) lpTemp + hdsa->nItemSize;
         nSize = (hdsa->nItemCount - nIndex) * hdsa->nItemSize;
-        TRACE("-- move dest=%p src=%p size=%d\n",
-               lpDest, lpTemp, nSize);
+        TRACE("-- move dest=%p src=%p size=%d\n", lpDest, lpTemp, nSize);
         memmove (lpDest, lpTemp, nSize);
     }
 
     /* ok, we can put the new Item in */
     hdsa->nItemCount++;
     lpDest = (char *) hdsa->pData + (hdsa->nItemSize * nIndex);
-    TRACE("-- move dest=%p src=%p size=%d\n",
-           lpDest, pSrc, hdsa->nItemSize);
+    TRACE("-- move dest=%p src=%p size=%d\n", lpDest, pSrc, hdsa->nItemSize);
     memmove (lpDest, pSrc, hdsa->nItemSize);
 
     return nIndex;
 }
-
 
 /**************************************************************************
  * DSA_DeleteItem [COMCTL32.326]
@@ -314,32 +313,30 @@ INT WINAPI DSA_DeleteItem (HDSA hdsa, INT nIndex)
         return -1;
 
     /* do we need to move ? */
-    if (nIndex < hdsa->nItemCount - 1) {
+    if (nIndex < hdsa->nItemCount - 1)
+    {
         lpDest = (char *) hdsa->pData + (hdsa->nItemSize * nIndex);
         lpSrc = (char *) lpDest + hdsa->nItemSize;
         nSize = hdsa->nItemSize * (hdsa->nItemCount - nIndex - 1);
-        TRACE("-- move dest=%p src=%p size=%d\n",
-               lpDest, lpSrc, nSize);
+        TRACE("-- move dest=%p src=%p size=%d\n", lpDest, lpSrc, nSize);
         memmove (lpDest, lpSrc, nSize);
     }
 
     hdsa->nItemCount--;
 
     /* free memory ? */
-    if ((hdsa->nMaxCount - hdsa->nItemCount) >= hdsa->nGrow) {
+    if ((hdsa->nMaxCount - hdsa->nItemCount) >= hdsa->nGrow)
+    {
         nSize = hdsa->nItemSize * hdsa->nItemCount;
-
-        lpDest = ReAlloc (hdsa->pData, nSize);
+        lpDest = ReAlloc(hdsa->pData, nSize);
         if (!lpDest)
             return -1;
-
         hdsa->nMaxCount = hdsa->nItemCount;
         hdsa->pData = lpDest;
     }
 
     return nIndex;
 }
-
 
 /**************************************************************************
  * DSA_DeleteAllItems [COMCTL32.327]
@@ -359,7 +356,8 @@ BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
 
     if (!hdsa)
         return FALSE;
-    if (hdsa->pData && (!Free (hdsa->pData)))
+
+    if (hdsa->pData && (!Free(hdsa->pData)))
         return FALSE;
 
     hdsa->nItemCount = 0;
@@ -383,8 +381,7 @@ BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
  * RETURNS
  *     none
  */
-VOID WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc,
-                              LPVOID lParam)
+void WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
 {
     INT i;
 
@@ -395,7 +392,8 @@ VOID WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc,
     if (hdsa->nItemCount <= 0)
         return;
 
-    for (i = 0; i < hdsa->nItemCount; i++) {
+    for (i = 0; i < hdsa->nItemCount; i++)
+    {
         LPVOID lpItem = DSA_GetItemPtr (hdsa, i);
         if ((enumProc)(lpItem, lParam) == 0)
             return;
@@ -403,7 +401,6 @@ VOID WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc,
 
     return;
 }
-
 
 /**************************************************************************
  * DSA_DestroyCallback [COMCTL32.388]
@@ -418,13 +415,12 @@ VOID WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc,
  * RETURNS
  *     none
  */
-void WINAPI DSA_DestroyCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc,
-                                 LPVOID lParam)
+void WINAPI DSA_DestroyCallback(HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
 {
     TRACE("(%p %p %p)\n", hdsa, enumProc, lParam);
 
-    DSA_EnumCallback (hdsa, enumProc, lParam);
-    DSA_Destroy (hdsa);
+    DSA_EnumCallback(hdsa, enumProc, lParam);
+    DSA_Destroy(hdsa);
 }
 
 /**************************************************************************
@@ -449,12 +445,15 @@ HDSA WINAPI DSA_Clone(HDSA hdsa)
         return NULL;
 
     dest = DSA_Create (hdsa->nItemSize, hdsa->nGrow);
+
     if (!dest)
         return NULL;
 
-    for (i = 0; i < hdsa->nItemCount; i++) {
+    for (i = 0; i < hdsa->nItemCount; i++)
+    {
         void *ptr = DSA_GetItemPtr (hdsa, i);
-        if (DSA_InsertItem (dest, DA_LAST, ptr) == -1) {
+        if (DSA_InsertItem (dest, DA_LAST, ptr) == -1)
+        {
             DSA_Destroy (dest);
             return NULL;
         }
@@ -482,6 +481,7 @@ ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 
     return sizeof(*hdsa) + (ULONGLONG)hdsa->nMaxCount*hdsa->nItemSize;
 }
+
 #ifdef __cplusplus
 }
 #endif

@@ -17,7 +17,6 @@ endif()
 list(APPEND SOURCE
     animate.cpp
     button.cpp
-    button.h
     combo.cpp
     comboex.cpp
     comctl32undoc.c

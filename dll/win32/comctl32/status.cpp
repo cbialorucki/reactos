@@ -75,18 +75,15 @@ typedef struct
 static const WCHAR themeClass[] = L"Status";
 
 /* prototype */
-static void
-STATUSBAR_SetPartBounds (STATUS_INFO *infoPtr);
-static LRESULT
-STATUSBAR_NotifyFormat (STATUS_INFO *infoPtr, HWND from, INT cmd);
+static void STATUSBAR_SetPartBounds(STATUS_INFO *infoPtr);
+static LRESULT STATUSBAR_NotifyFormat(STATUS_INFO *infoPtr, HWND from, INT cmd);
 
 static inline LPCSTR debugstr_t(LPCWSTR text, BOOL isW)
 {
   return isW ? debugstr_w(text) : debugstr_a((LPCSTR)text);
 }
 
-static UINT
-STATUSBAR_ComputeHeight(STATUS_INFO *infoPtr)
+static UINT STATUSBAR_ComputeHeight(STATUS_INFO *infoPtr)
 {
     HTHEME theme;
     UINT height;
