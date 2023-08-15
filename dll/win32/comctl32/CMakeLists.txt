@@ -1,5 +1,3 @@
-set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lstdc++")
-
 add_definitions(
     -D__WINESRC__
     -D_WINE
@@ -74,8 +72,7 @@ if(MSVC)
 endif()
 
 set_module_type(comctl32 win32dll UNICODE)
-target_link_libraries(comctl32 uuid wine ${PSEH_LIB})
-target_link_options(comctl32 PUBLIC -lstdc++)
+target_link_libraries(comctl32 uuid cpprt wine ${PSEH_LIB})
 add_delay_importlibs(comctl32 winmm uxtheme)
 add_importlibs(comctl32 user32 gdi32 advapi32 usp10 imm32 msvcrt kernel32 ntdll)
 add_pch(comctl32 precomp.h "${PCH_SKIP_SOURCE}")
