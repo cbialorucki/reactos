@@ -129,7 +129,7 @@ typedef struct
 static const WCHAR themeClass[] = L"Scrollbar";
 
 /* empty SYSTEMTIME const */
-static const SYSTEMTIME st_null = SYSTEMTIME();
+static const SYSTEMTIME st_null;
 /* valid date limits */
 static const SYSTEMTIME max_allowed_date = { /* wYear */ 9999, /* wMonth */ 12, /* wDayOfWeek */ 0, /* wDay */ 31 };
 static const SYSTEMTIME min_allowed_date = { /* wYear */ 1752, /* wMonth */ 9,  /* wDayOfWeek */ 0, /* wDay */ 14 };

@@ -22,13 +22,9 @@
 #include "comctl32.h"
 #include "wine/debug.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 WINE_DEFAULT_DEBUG_CHANNEL(comctl32);
 
-static LRESULT WINAPI COMCTL32_SubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+static LRESULT WINAPI COMCTL32_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 static LPWSTR COMCTL32_wSubclass = NULL;
 HMODULE COMCTL32_hModule = 0;
@@ -116,39 +112,39 @@ static HANDLE CreateComctl32ActCtx(BOOL bV6)
 
 static void RegisterControls(BOOL bV6)
 {
-    ANIMATE_Register ();
-    COMBOEX_Register ();
-    DATETIME_Register ();
-    FLATSB_Register ();
-    HEADER_Register ();
-    HOTKEY_Register ();
-    IPADDRESS_Register ();
-    LISTVIEW_Register ();
-    MONTHCAL_Register ();
-    NATIVEFONT_Register ();
-    PAGER_Register ();
-    PROGRESS_Register ();
-    REBAR_Register ();
-    STATUS_Register ();
-    SYSLINK_Register ();
-    TAB_Register ();
-    TOOLTIPS_Register ();
-    TRACKBAR_Register ();
-    TREEVIEW_Register ();
-    UPDOWN_Register ();
+    ANIMATE_Register();
+    COMBOEX_Register();
+    DATETIME_Register();
+    FLATSB_Register();
+    HEADER_Register();
+    HOTKEY_Register();
+    IPADDRESS_Register();
+    LISTVIEW_Register();
+    MONTHCAL_Register();
+    NATIVEFONT_Register();
+    PAGER_Register();
+    PROGRESS_Register();
+    REBAR_Register();
+    STATUS_Register();
+    SYSLINK_Register();
+    TAB_Register();
+    TOOLTIPS_Register();
+    TRACKBAR_Register();
+    TREEVIEW_Register();
+    UPDOWN_Register();
 
     if (!bV6)
     {
-        TOOLBAR_Register ();
+        TOOLBAR_Register();
     }
     else
     {
-        BUTTON_Register ();
-        COMBO_Register ();
-        COMBOLBOX_Register ();
-        EDIT_Register ();
-        LISTBOX_Register ();
-        STATIC_Register ();
+        BUTTON_Register();
+        COMBO_Register();
+        COMBOLBOX_Register();
+        EDIT_Register();
+        LISTBOX_Register();
+        STATIC_Register();
 
         TOOLBARv6_Register();
     }
@@ -156,41 +152,40 @@ static void RegisterControls(BOOL bV6)
 
 static void UnregisterControls(BOOL bV6)
 {
-    ANIMATE_Unregister ();
-    COMBOEX_Unregister ();
-    DATETIME_Unregister ();
-    FLATSB_Unregister ();
-    HEADER_Unregister ();
-    HOTKEY_Unregister ();
-    IPADDRESS_Unregister ();
-    LISTVIEW_Unregister ();
-    MONTHCAL_Unregister ();
-    NATIVEFONT_Unregister ();
-    PAGER_Unregister ();
-    PROGRESS_Unregister ();
-    REBAR_Unregister ();
-    STATUS_Unregister ();
-    SYSLINK_Unregister ();
-    TAB_Unregister ();
-    TOOLTIPS_Unregister ();
-    TRACKBAR_Unregister ();
-    TREEVIEW_Unregister ();
-    UPDOWN_Unregister ();
+    ANIMATE_Unregister();
+    COMBOEX_Unregister();
+    DATETIME_Unregister();
+    FLATSB_Unregister();
+    HEADER_Unregister();
+    HOTKEY_Unregister();
+    IPADDRESS_Unregister();
+    LISTVIEW_Unregister();
+    MONTHCAL_Unregister();
+    NATIVEFONT_Unregister();
+    PAGER_Unregister();
+    PROGRESS_Unregister();
+    REBAR_Unregister();
+    STATUS_Unregister();
+    SYSLINK_Unregister();
+    TAB_Unregister();
+    TOOLTIPS_Unregister();
+    TRACKBAR_Unregister();
+    TREEVIEW_Unregister();
+    UPDOWN_Unregister();
 
     if (!bV6)
     {
-        TOOLBAR_Unregister ();
+        TOOLBAR_Unregister();
     }
     else
     {
         BUTTON_Unregister();
-        COMBO_Unregister ();
-        COMBOLBOX_Unregister ();
-        EDIT_Unregister ();
-        LISTBOX_Unregister ();
-        STATIC_Unregister ();
-
-        TOOLBARv6_Unregister ();
+        COMBO_Unregister();
+        COMBOLBOX_Unregister();
+        EDIT_Unregister();
+        LISTBOX_Unregister();
+        STATIC_Unregister();
+        TOOLBARv6_Unregister();
     }
 
 }
@@ -254,28 +249,6 @@ BOOLEAN WINAPI RegisterClassNameW(LPCWSTR className)
 
 #endif /* __REACTOS__ */
 
-#ifndef __REACTOS__
-static void unregister_versioned_classes(void)
-{
-#define VERSION "6.0.2600.2982!"
-    static const char *classes[] =
-    {
-        VERSION WC_BUTTONA,
-        VERSION WC_COMBOBOXA,
-        VERSION "ComboLBox",
-        VERSION WC_EDITA,
-        VERSION WC_LISTBOXA,
-        VERSION WC_STATICA,
-    };
-    int i;
-
-    for (i = 0; i < ARRAY_SIZE(classes); i++)
-        UnregisterClassA(classes[i], NULL);
-
-#undef VERSION
-}
-#endif
-
 /***********************************************************************
  * DllMain [Internal]
  *
@@ -297,94 +270,26 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     switch (fdwReason) {
 	case DLL_PROCESS_ATTACH:
-            DisableThreadLibraryCalls(hinstDLL);
+        DisableThreadLibraryCalls(hinstDLL);
+        COMCTL32_hModule = hinstDLL;
 
-            COMCTL32_hModule = hinstDLL;
+        /* add global subclassing atom (used by 'tooltip' and 'updown') */
+        COMCTL32_wSubclass = (LPWSTR)(DWORD_PTR)GlobalAddAtomW (strCC32SubclassInfo);
+        TRACE("Subclassing atom added: %p\n", COMCTL32_wSubclass);
 
-            /* add global subclassing atom (used by 'tooltip' and 'updown') */
-            COMCTL32_wSubclass = (LPWSTR)(DWORD_PTR)GlobalAddAtomW (strCC32SubclassInfo);
-            TRACE("Subclassing atom added: %p\n", COMCTL32_wSubclass);
-
-            /* create local pattern brush */
-            COMCTL32_hPattern55AABitmap = CreateBitmap (8, 8, 1, 1, wPattern55AA);
-            COMCTL32_hPattern55AABrush = CreatePatternBrush (COMCTL32_hPattern55AABitmap);
+        /* create local pattern brush */
+        COMCTL32_hPattern55AABitmap = CreateBitmap (8, 8, 1, 1, wPattern55AA);
+        COMCTL32_hPattern55AABrush = CreatePatternBrush (COMCTL32_hPattern55AABitmap);
 
 	    /* Get all the colors at DLL load */
 	    COMCTL32_RefreshSysColors();
+        InitializeClasses();
 
-#ifndef __REACTOS__
-            /* like comctl32 5.82+ register all the common control classes */
-            ANIMATE_Register ();
-            COMBOEX_Register ();
-            DATETIME_Register ();
-            FLATSB_Register ();
-            HEADER_Register ();
-            HOTKEY_Register ();
-            IPADDRESS_Register ();
-            LISTVIEW_Register ();
-            MONTHCAL_Register ();
-            NATIVEFONT_Register ();
-            PAGER_Register ();
-            PROGRESS_Register ();
-            REBAR_Register ();
-            STATUS_Register ();
-            SYSLINK_Register ();
-            TAB_Register ();
-            TOOLBAR_Register ();
-            TOOLTIPS_Register ();
-            TRACKBAR_Register ();
-            TREEVIEW_Register ();
-            UPDOWN_Register ();
-
-            BUTTON_Register ();
-            COMBO_Register ();
-            COMBOLBOX_Register ();
-            EDIT_Register ();
-            LISTBOX_Register ();
-            STATIC_Register ();
-
-            /* subclass user32 controls */
-            THEMING_Initialize ();
-#else
-            InitializeClasses();
-#endif
-
-            break;
+        break;
 
 	case DLL_PROCESS_DETACH:
             if (lpvReserved) break;
-#ifndef __REACTOS__
-            /* clean up subclassing */
-            THEMING_Uninitialize();
-
-            /* unregister all common control classes */
-            ANIMATE_Unregister ();
-            COMBOEX_Unregister ();
-            DATETIME_Unregister ();
-            FLATSB_Unregister ();
-            HEADER_Unregister ();
-            HOTKEY_Unregister ();
-            IPADDRESS_Unregister ();
-            LISTVIEW_Unregister ();
-            MONTHCAL_Unregister ();
-            NATIVEFONT_Unregister ();
-            PAGER_Unregister ();
-            PROGRESS_Unregister ();
-            REBAR_Unregister ();
-            STATUS_Unregister ();
-            SYSLINK_Unregister ();
-            TAB_Unregister ();
-            TOOLBAR_Unregister ();
-            TOOLTIPS_Unregister ();
-            TRACKBAR_Unregister ();
-            TREEVIEW_Unregister ();
-            UPDOWN_Unregister ();
-
-            unregister_versioned_classes ();
-
-#else
-            UninitializeClasses();
-#endif
+                UninitializeClasses();
             /* delete local pattern brush */
             DeleteObject (COMCTL32_hPattern55AABrush);
             DeleteObject (COMCTL32_hPattern55AABitmap);
@@ -397,7 +302,6 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
-
 
 /***********************************************************************
  * MenuHelp [COMCTL32.2]
@@ -429,9 +333,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
  *     (will be written ...)
  */
 
-VOID WINAPI
-MenuHelp (UINT uMsg, WPARAM wParam, LPARAM lParam, HMENU hMainMenu, HINSTANCE hInst,
-          HWND hwndStatus, UINT* lpwIDs)
+void WINAPI MenuHelp(UINT uMsg, WPARAM wParam, LPARAM lParam, HMENU hMainMenu, HINSTANCE hInst, HWND hwndStatus, UINT* lpwIDs)
 {
     UINT uMenuID = 0;
 
@@ -515,7 +417,7 @@ MenuHelp (UINT uMsg, WPARAM wParam, LPARAM lParam, HMENU hMainMenu, HINSTANCE hI
  *     Each subsequent pair consists of a menu id and control id.
  */
 
-BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPINT lpInfo)
+BOOL WINAPI ShowHideMenuCtl(HWND hwnd, UINT_PTR uFlags, LPINT lpInfo)
 {
     LPINT lpMenuId;
 
@@ -549,12 +451,11 @@ BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPINT lpInfo)
 
         /* show control */
         lpMenuId++;
-        SetWindowPos(GetDlgItem (hwnd, *lpMenuId), 0, 0, 0, 0, 0, SWP_SHOWWINDOW);
+        SetWindowPos(GetDlgItem(hwnd, *lpMenuId), 0, 0, 0, 0, 0, SWP_SHOWWINDOW);
     }
 
     return TRUE;
 }
-
 
 /***********************************************************************
  * GetEffectiveClientRect [COMCTL32.4]
@@ -577,7 +478,7 @@ BOOL WINAPI ShowHideMenuCtl (HWND hwnd, UINT_PTR uFlags, LPINT lpInfo)
  *     (will be written ...)
  */
 
-VOID WINAPI GetEffectiveClientRect (HWND hwnd, LPRECT lpRect, const INT *lpInfo)
+void WINAPI GetEffectiveClientRect(HWND hwnd, LPRECT lpRect, const INT *lpInfo)
 {
     RECT rcCtrl;
     const INT *lpRun;
@@ -625,7 +526,7 @@ VOID WINAPI GetEffectiveClientRect (HWND hwnd, LPRECT lpRect, const INT *lpInfo)
  *     (will be written ...)
  */
 
-void WINAPI DrawStatusTextW (HDC hdc, LPCRECT lprc, LPCWSTR text, UINT style)
+void WINAPI DrawStatusTextW(HDC hdc, LPCRECT lprc, LPCWSTR text, UINT style)
 {
     RECT r = *lprc;
     UINT border = BDR_SUNKENOUTER;
@@ -683,7 +584,7 @@ void WINAPI DrawStatusTextW (HDC hdc, LPCRECT lprc, LPCWSTR text, UINT style)
  *     No return value.
  */
 
-void WINAPI DrawStatusTextA (HDC hdc, LPCRECT lprc, LPCSTR text, UINT style)
+void WINAPI DrawStatusTextA(HDC hdc, LPCRECT lprc, LPCSTR text, UINT style)
 {
     INT len;
     LPWSTR textW = NULL;
@@ -718,7 +619,7 @@ void WINAPI DrawStatusTextA (HDC hdc, LPCRECT lprc, LPCSTR text, UINT style)
  *     Failure: 0
  */
 
-HWND WINAPI CreateStatusWindowA (LONG style, LPCSTR text, HWND parent, UINT wid)
+HWND WINAPI CreateStatusWindowA(LONG style, LPCSTR text, HWND parent, UINT wid)
 {
     return CreateWindowA(STATUSCLASSNAMEA, text, style,
 			   CW_USEDEFAULT, CW_USEDEFAULT,
@@ -743,14 +644,13 @@ HWND WINAPI CreateStatusWindowA (LONG style, LPCSTR text, HWND parent, UINT wid)
  *     Failure: 0
  */
 
-HWND WINAPI CreateStatusWindowW (LONG style, LPCWSTR text, HWND parent, UINT wid)
+HWND WINAPI CreateStatusWindowW(LONG style, LPCWSTR text, HWND parent, UINT wid)
 {
     return CreateWindowW(STATUSCLASSNAMEW, text, style,
-			   CW_USEDEFAULT, CW_USEDEFAULT,
-			   CW_USEDEFAULT, CW_USEDEFAULT,
-			   parent, (HMENU)(DWORD_PTR)wid, 0, 0);
+                         CW_USEDEFAULT, CW_USEDEFAULT,
+                         CW_USEDEFAULT, CW_USEDEFAULT,
+                         parent, (HMENU)(DWORD_PTR)wid, 0, 0);
 }
-
 
 /***********************************************************************
  * CreateUpDownControl [COMCTL32.16]
@@ -776,8 +676,7 @@ HWND WINAPI CreateStatusWindowW (LONG style, LPCWSTR text, HWND parent, UINT wid
  *     Failure: 0
  */
 
-HWND WINAPI CreateUpDownControl (DWORD style, INT x, INT y, INT cx, INT cy, HWND parent, INT id,
-                                 HINSTANCE inst, HWND buddy, INT maxVal, INT minVal, INT curVal)
+HWND WINAPI CreateUpDownControl(DWORD style, INT x, INT y, INT cx, INT cy, HWND parent, INT id, HINSTANCE inst, HWND buddy, INT maxVal, INT minVal, INT curVal)
 {
     HWND hUD = CreateWindowW (UPDOWN_CLASSW, 0, style, x, y, cx, cy, parent, (HMENU)(DWORD_PTR)id, inst, 0);
 
@@ -808,11 +707,9 @@ HWND WINAPI CreateUpDownControl (DWORD style, INT x, INT y, INT cx, INT cy, HWND
  *     the DLL initialization time. See InitCommonContolsEx for details.
  */
 
-VOID WINAPI
-InitCommonControls (void)
+void WINAPI InitCommonControls()
 {
 }
-
 
 /***********************************************************************
  * InitCommonControlsEx [COMCTL32.@]
@@ -838,7 +735,7 @@ InitCommonControls (void)
  *     have a false impression that InitCommonControlsEx actually did something.
  */
 
-BOOL WINAPI InitCommonControlsEx (const INITCOMMONCONTROLSEX *lpInitCtrls)
+BOOL WINAPI InitCommonControlsEx(const INITCOMMONCONTROLSEX *lpInitCtrls)
 {
     if (!lpInitCtrls || lpInitCtrls->dwSize != sizeof(INITCOMMONCONTROLSEX))
         return FALSE;
@@ -846,7 +743,6 @@ BOOL WINAPI InitCommonControlsEx (const INITCOMMONCONTROLSEX *lpInitCtrls)
     TRACE("(0x%08x)\n", lpInitCtrls->dwICC);
     return TRUE;
 }
-
 
 /***********************************************************************
  * CreateToolbarEx [COMCTL32.@]
@@ -920,7 +816,6 @@ HWND WINAPI CreateToolbarEx (HWND hwnd, DWORD style, UINT wID, INT nBitmaps, HIN
 
     return hwndTB;
 }
-
 
 /***********************************************************************
  * CreateMappedBitmap [COMCTL32.8]
@@ -1056,7 +951,6 @@ HBITMAP WINAPI CreateMappedBitmap (HINSTANCE hInstance, INT_PTR idBitmap, UINT w
     return hbm;
 }
 
-
 /***********************************************************************
  * CreateToolbar [COMCTL32.7]
  *
@@ -1080,15 +974,14 @@ HBITMAP WINAPI CreateMappedBitmap (HINSTANCE hInstance, INT_PTR idBitmap, UINT w
  *     Do not use this function anymore. Use CreateToolbarEx instead.
  */
 
-HWND WINAPI CreateToolbar (HWND hwnd, DWORD style, UINT wID, INT nBitmaps,
-	                       HINSTANCE hBMInst, UINT wBMID,
-	                       LPCTBBUTTON lpButtons,INT iNumButtons)
+HWND WINAPI CreateToolbar(HWND hwnd, DWORD style, UINT wID, INT nBitmaps,
+	                                 HINSTANCE hBMInst, UINT wBMID,
+	                                 LPCTBBUTTON lpButtons,INT iNumButtons)
 {
-    return CreateToolbarEx (hwnd, style | CCS_NODIVIDER, wID, nBitmaps,
-			                hBMInst, wBMID, lpButtons, iNumButtons,
-                            0, 0, 0, 0, CCSIZEOF_STRUCT(TBBUTTON, dwData));
+    return CreateToolbarEx(hwnd, style | CCS_NODIVIDER, wID, nBitmaps,
+			               hBMInst, wBMID, lpButtons, iNumButtons,
+                           0, 0, 0, 0, CCSIZEOF_STRUCT(TBBUTTON, dwData));
 }
-
 
 /***********************************************************************
  * DllGetVersion [COMCTL32.@]
@@ -1163,9 +1056,9 @@ HRESULT WINAPI DllInstall(BOOL bInstall, LPCWSTR cmdline)
  *
  */
 
-BOOL WINAPI _TrackMouseEvent (TRACKMOUSEEVENT *ptme)
+BOOL WINAPI _TrackMouseEvent(TRACKMOUSEEVENT *ptme)
 {
-    return TrackMouseEvent (ptme);
+    return TrackMouseEvent(ptme);
 }
 
 /*************************************************************************
@@ -1176,11 +1069,10 @@ BOOL WINAPI _TrackMouseEvent (TRACKMOUSEEVENT *ptme)
  * RETURNS
  *      Language ID in use by the current process.
  */
-LANGID WINAPI GetMUILanguage (VOID)
+LANGID WINAPI GetMUILanguage()
 {
     return COMCTL32_uiLang;
 }
-
 
 /*************************************************************************
  * InitMUILanguage [COMCTL32.@]
@@ -1190,11 +1082,10 @@ LANGID WINAPI GetMUILanguage (VOID)
  * RETURNS
  *      Nothing.
  */
-VOID WINAPI InitMUILanguage (LANGID uiLang)
+VOID WINAPI InitMUILanguage(LANGID uiLang)
 {
    COMCTL32_uiLang = uiLang;
 }
-
 
 /***********************************************************************
  * SetWindowSubclass [COMCTL32.410]
@@ -1217,8 +1108,8 @@ VOID WINAPI InitMUILanguage (LANGID uiLang)
  *     subclasses get called or the original window procedure.
  */
 
-BOOL WINAPI SetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
-                        UINT_PTR uIDSubclass, DWORD_PTR dwRef)
+BOOL WINAPI SetWindowSubclass(HWND hWnd, SUBCLASSPROC pfnSubclass,
+                              UINT_PTR uIDSubclass, DWORD_PTR dwRef)
 {
    LPSUBCLASS_INFO stack;
    LPSUBCLASSPROCS proc;
@@ -1307,8 +1198,8 @@ BOOL WINAPI SetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
  *     Failure: 0
  */
 
-BOOL WINAPI GetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
-                               UINT_PTR uID, DWORD_PTR *pdwRef)
+BOOL WINAPI GetWindowSubclass(HWND hWnd, SUBCLASSPROC pfnSubclass,
+                              UINT_PTR uID, DWORD_PTR *pdwRef)
 {
    const SUBCLASS_INFO *stack;
    const SUBCLASSPROCS *proc;
@@ -1333,7 +1224,6 @@ BOOL WINAPI GetWindowSubclass (HWND hWnd, SUBCLASSPROC pfnSubclass,
 
    return FALSE;
 }
-
 
 /***********************************************************************
  * RemoveWindowSubclass [COMCTL32.412]
@@ -1406,7 +1296,7 @@ BOOL WINAPI RemoveWindowSubclass(HWND hWnd, SUBCLASSPROC pfnSubclass, UINT_PTR u
  * Window procedure for all subclassed windows.
  * Saves the current subclassing stack position to support nested messages
  */
-static LRESULT WINAPI COMCTL32_SubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+static LRESULT WINAPI COMCTL32_SubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
    LPSUBCLASS_INFO stack;
    LPSUBCLASSPROCS proc;
@@ -1457,7 +1347,7 @@ static LRESULT WINAPI COMCTL32_SubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam
  *     Failure: zero
  */
 
-LRESULT WINAPI DefSubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI DefSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LPSUBCLASS_INFO stack;
     LRESULT ret;
@@ -1492,7 +1382,6 @@ LRESULT WINAPI DefSubclassProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
    return ret;
 }
-
 
 /***********************************************************************
  * COMCTL32_CreateToolTip [NOT AN API]
@@ -1534,7 +1423,6 @@ HWND COMCTL32_CreateToolTip(HWND hwndOwner)
     return hwndToolTip;
 }
 
-
 /***********************************************************************
  * COMCTL32_RefreshSysColors [NOT AN API]
  *
@@ -1548,7 +1436,7 @@ HWND COMCTL32_CreateToolTip(HWND hwndOwner)
  *     none
  */
 
-VOID COMCTL32_RefreshSysColors(void)
+void COMCTL32_RefreshSysColors()
 {
     comctl32_color.clrBtnHighlight = GetSysColor(COLOR_BTNHIGHLIGHT);
     comctl32_color.clrBtnShadow = GetSysColor(COLOR_BTNSHADOW);
@@ -1969,6 +1857,3 @@ HRESULT WINAPI LoadIconMetric(HINSTANCE hinst, const WCHAR *name, int size, HICO
 
     return LoadIconWithScaleDown(hinst, name, cx, cy, icon);
 }
-#ifdef __cplusplus
-}
-#endif

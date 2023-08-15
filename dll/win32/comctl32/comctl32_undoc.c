@@ -12,7 +12,7 @@
  *     COMCTL32.DLL (internally).
  */
 #include "config.h"
-#include "wine/port.h"
+//#include "wine/port.h" //Not needed?
 
 #include <stdarg.h>
 #include <string.h>
@@ -335,7 +335,7 @@ static void MRU_SaveChanged ( LPWINEMRULIST mp )
  */
 void WINAPI FreeMRUList (HANDLE hMRUList)
 {
-    LPWINEMRULIST mp = hMRUList;
+    LPWINEMRULIST mp = (LPWINEMRULIST)hMRUList;
     UINT i;
 
     TRACE("(%p)\n", hMRUList);
@@ -376,7 +376,7 @@ void WINAPI FreeMRUList (HANDLE hMRUList)
 INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
                         LPINT lpRegNum)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     INT ret;
     UINT i;
     LPSTR dataA = NULL;
@@ -385,10 +385,10 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
 	return -1;
 
     if(!(mp->extview.fFlags & MRU_BINARY) && !mp->isUnicode) {
-        DWORD len = WideCharToMultiByte(CP_ACP, 0, lpData, -1,
+        DWORD len = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)lpData, -1,
 					NULL, 0, NULL, NULL);
-	dataA = Alloc(len);
-	WideCharToMultiByte(CP_ACP, 0, lpData, -1, dataA, len, NULL, NULL);
+	dataA = (LPSTR)Alloc(len);
+	WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)lpData, -1, dataA, len, NULL, NULL);
     }
 
     for(i=0; i<mp->cursize; i++) {
@@ -398,13 +398,13 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
 	}
 	else {
 	    if(mp->isUnicode) {
-	        if (!mp->extview.u.string_cmpfn(lpData, (LPWSTR)&mp->array[i]->datastart))
+	        if (!mp->extview.u.string_cmpfn((LPCWSTR)lpData, (LPWSTR)&mp->array[i]->datastart))
 		    break;
 	    } else {
 	        DWORD len = WideCharToMultiByte(CP_ACP, 0,
 						(LPWSTR)&mp->array[i]->datastart, -1,
 						NULL, 0, NULL, NULL);
-		LPSTR itemA = Alloc(len);
+		LPSTR itemA = (LPSTR)Alloc(len);
 		INT cmp;
 		WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&mp->array[i]->datastart, -1,
 				    itemA, len, NULL, NULL);
@@ -449,7 +449,7 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
  */
 INT WINAPI AddMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData)
 {
-    LPWINEMRULIST mp = hList;
+    LPWINEMRULIST mp = (LPWINEMRULIST)hList;
     LPWINEMRUITEM witem;
     INT i, replace;
 
@@ -476,10 +476,10 @@ INT WINAPI AddMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData)
 	}
 
         /* Allocate space for new item and move in the data */
-        mp->array[replace] = witem = Alloc(cbData + sizeof(WINEMRUITEM));
+        mp->array[replace] = witem = (LPWINEMRUITEM)Alloc(cbData + sizeof(WINEMRUITEM));
         witem->itemFlag |= WMRUIF_CHANGED;
         witem->size = cbData;
-        memcpy( &witem->datastart, lpData, cbData);
+        memcpy(&witem->datastart, lpData, cbData);
 
         /* now rotate MRU list */
         for(i=mp->cursize-1; i>=1; i--)
@@ -566,7 +566,7 @@ INT WINAPI AddMRUStringA(HANDLE hList, LPCSTR lpszString)
     }
 
     len = MultiByteToWideChar(CP_ACP, 0, lpszString, -1, NULL, 0) * sizeof(WCHAR);
-    stringW = Alloc(len);
+    stringW = (LPWSTR)Alloc(len);
     if (!stringW)
         return -1;
 
@@ -623,7 +623,7 @@ INT WINAPI FindMRUStringW (HANDLE hList, LPCWSTR lpszString, LPINT lpRegNum)
 INT WINAPI FindMRUStringA (HANDLE hList, LPCSTR lpszString, LPINT lpRegNum)
 {
     DWORD len = MultiByteToWideChar(CP_ACP, 0, lpszString, -1, NULL, 0);
-    LPWSTR stringW = Alloc(len * sizeof(WCHAR));
+    LPWSTR stringW = (LPWSTR)Alloc(len * sizeof(WCHAR));
     INT ret;
 
     MultiByteToWideChar(CP_ACP, 0, lpszString, -1, stringW, len);
@@ -647,12 +647,12 @@ static HANDLE create_mru_list(LPWINEMRULIST mp)
     /* get space to save indices that will turn into names
      * but in order of most to least recently used
      */
-    mp->realMRU = Alloc((mp->extview.uMax + 2) * sizeof(WCHAR));
+    mp->realMRU = (LPWSTR)Alloc((mp->extview.uMax + 2) * sizeof(WCHAR));
 
     /* get space to save pointers to actual data in order of
      * 'a' to 'z' (0 to n).
      */
-    mp->array = Alloc(mp->extview.uMax * sizeof(LPVOID));
+    mp->array = (LPWINEMRUITEM*)Alloc(mp->extview.uMax * sizeof(LPVOID));
 
     /* open the sub key */
     if ((err = RegCreateKeyExW( mp->extview.hKey, mp->extview.lpszSubKey,
@@ -696,7 +696,7 @@ static HANDLE create_mru_list(LPWINEMRULIST mp)
 		/* not present - what to do ??? */
 		ERR("Key %s not found 1\n", debugstr_w(realname));
 	    }
-	    mp->array[i] = witem = Alloc(datasize + sizeof(WINEMRUITEM));
+	    mp->array[i] = witem = (LPWINEMRUITEM)Alloc(datasize + sizeof(WINEMRUITEM));
 	    witem->size = datasize;
 	    if(RegQueryValueExW( newkey, realname, 0, &type,
 				 &witem->datastart, &datasize)) {
@@ -730,9 +730,9 @@ HANDLE WINAPI CreateMRUListLazyW (const MRUINFOW *infoW, DWORD dwParam2,
     if (!infoW->hKey || IsBadStringPtrW(infoW->lpszSubKey, -1))
 	return NULL;
 
-    mp = Alloc(sizeof(WINEMRULIST));
+    mp = (LPWINEMRULIST)Alloc(sizeof(WINEMRULIST));
     memcpy(&mp->extview, infoW, sizeof(MRUINFOW));
-    mp->extview.lpszSubKey = Alloc((strlenW(infoW->lpszSubKey) + 1) * sizeof(WCHAR));
+    mp->extview.lpszSubKey = (LPWSTR)Alloc((strlenW(infoW->lpszSubKey) + 1) * sizeof(WCHAR));
     strcpyW(mp->extview.lpszSubKey, infoW->lpszSubKey);
     mp->isUnicode = TRUE;
 
@@ -764,10 +764,10 @@ HANDLE WINAPI CreateMRUListLazyA (const MRUINFOA *lpcml, DWORD dwParam2,
     if (!lpcml->hKey || IsBadStringPtrA(lpcml->lpszSubKey, -1))
 	return 0;
 
-    mp = Alloc(sizeof(WINEMRULIST));
+    mp = (LPWINEMRULIST)Alloc(sizeof(WINEMRULIST));
     memcpy(&mp->extview, lpcml, sizeof(MRUINFOA));
     len = MultiByteToWideChar(CP_ACP, 0, lpcml->lpszSubKey, -1, NULL, 0);
-    mp->extview.lpszSubKey = Alloc(len * sizeof(WCHAR));
+    mp->extview.lpszSubKey = (LPWSTR)Alloc(len * sizeof(WCHAR));
     MultiByteToWideChar(CP_ACP, 0, lpcml->lpszSubKey, -1,
 			mp->extview.lpszSubKey, len);
     mp->isUnicode = FALSE;
@@ -822,13 +822,13 @@ HANDLE WINAPI CreateMRUListA (const MRUINFOA *lpcml)
 INT WINAPI EnumMRUListW (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
                          DWORD nBufferSize)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     const WINEMRUITEM *witem;
     INT desired, datasize;
 
     if (!mp) return -1;
     if ((nItemPos < 0) || !lpBuffer) return mp->cursize;
-    if (nItemPos >= mp->cursize) return -1;
+    if ((DWORD)nItemPos >= mp->cursize) return -1;
     desired = mp->realMRU[nItemPos];
     desired -= 'a';
     TRACE("nItemPos=%d, desired=%d\n", nItemPos, desired);
@@ -848,14 +848,14 @@ INT WINAPI EnumMRUListW (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
 INT WINAPI EnumMRUListA (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
                          DWORD nBufferSize)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     LPWINEMRUITEM witem;
     INT desired, datasize;
     DWORD lenA;
 
     if (!mp) return -1;
     if ((nItemPos < 0) || !lpBuffer) return mp->cursize;
-    if (nItemPos >= mp->cursize) return -1;
+    if ((DWORD)nItemPos >= mp->cursize) return -1;
     desired = mp->realMRU[nItemPos];
     desired -= 'a';
     TRACE("nItemPos=%d, desired=%d\n", nItemPos, desired);
@@ -867,8 +867,7 @@ INT WINAPI EnumMRUListA (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
         lenA = WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&witem->datastart, -1,
 				   NULL, 0, NULL, NULL);
 	datasize = min( lenA, nBufferSize );
-	WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&witem->datastart, -1,
-			    lpBuffer, datasize, NULL, NULL);
+	WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&witem->datastart, -1, (LPSTR)lpBuffer, datasize, NULL, NULL);
         ((char *)lpBuffer)[ datasize - 1 ] = '\0';
         datasize = lenA - 1;
     }
@@ -983,7 +982,7 @@ BOOL Str_SetPtrAtoW (LPWSTR *lppDest, LPCSTR lpSrc)
 
     if (lpSrc) {
 	INT len = MultiByteToWideChar(CP_ACP,0,lpSrc,-1,NULL,0);
-	LPWSTR ptr = ReAlloc (*lppDest, len*sizeof(WCHAR));
+	LPWSTR ptr = (LPWSTR)ReAlloc(*lppDest, len*sizeof(WCHAR));
 
 	if (!ptr)
 	    return FALSE;
@@ -1021,7 +1020,7 @@ BOOL Str_SetPtrWtoA (LPSTR *lppDest, LPCWSTR lpSrc)
 
     if (lpSrc) {
         INT len = WideCharToMultiByte(CP_ACP,0,lpSrc,-1,NULL,0,NULL,FALSE);
-        LPSTR ptr = ReAlloc (*lppDest, len*sizeof(CHAR));
+        LPSTR ptr = (LPSTR)ReAlloc(*lppDest, len*sizeof(CHAR));
 
         if (!ptr)
             return FALSE;

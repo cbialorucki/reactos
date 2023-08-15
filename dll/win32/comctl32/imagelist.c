@@ -9,7 +9,6 @@
  *    - Add support for ILS_GLOW, ILS_SHADOW
  *    - Thread-safe locking
  */
-
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -124,16 +123,12 @@ typedef struct
     HWND	hwnd;
     HIMAGELIST	himl;
     HIMAGELIST	himlNoCursor;
-    /* position of the drag image relative to the window */
-    INT		x;
+    INT		x;                /* position of the drag image relative to the window */
     INT		y;
-    /* offset of the hotspot relative to the origin of the image */
-    INT		dxHotspot;
+    INT		dxHotspot;        /* offset of the hotspot relative to the origin of the image */
     INT		dyHotspot;
-    /* is the drag image visible */
-    BOOL	bShow;
-    /* saved background */
-    HBITMAP	hbmBg;
+    BOOL	bShow;            /* is the drag image visible */
+    HBITMAP	hbmBg;            /* saved background */
 } INTERNALDRAG;
 
 static INTERNALDRAG InternalDrag = { 0, 0, 0, 0, 0, 0, 0, FALSE, 0 };
@@ -3647,11 +3642,9 @@ static HRESULT WINAPI ImageListImpl_Merge(IImageList2 *iface, int i1,
 
     TRACE("(%p)->(%d %p %d %d %d %s %p)\n", iface, i1, punk2, i2, dx, dy, debugstr_guid(riid), ppv);
 
-#ifdef __REACTOS__
     /* Make sure that the second image list uses the same implementation with the first */
     if (!is_valid2((HIMAGELIST)punk2))
         return E_FAIL;
-#endif
 
     /* TODO: Add test for IID_ImageList2 too */
     if (FAILED(IUnknown_QueryInterface(punk2, &IID_IImageList,
@@ -4049,9 +4042,6 @@ static HRESULT ImageListImpl_CreateInstance(const IUnknown *pUnkOuter, REFIID ii
     return ret;
 }
 
-
-
-#ifdef __REACTOS__
 //The big bad reactos image list hack!
 #undef ImageList_Add
 #undef ImageList_ReplaceIcon
@@ -4359,5 +4349,3 @@ ImageList_DrawIndirect (IMAGELISTDRAWPARAMS *pimldp)
 
     return (piml->lpVtbl->Draw(piml, pimldp) == S_OK) ? TRUE : FALSE;
 }
-
-#endif
