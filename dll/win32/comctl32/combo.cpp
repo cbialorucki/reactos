@@ -2156,9 +2156,7 @@ void COMBO_Register(void)
     RegisterClassW(&wndClass);
 }
 
-#ifdef __REACTOS__
 void COMBO_Unregister(void)
 {
     UnregisterClassW(WC_COMBOBOXW, NULL);
 }
-#endif

@@ -28,10 +28,6 @@
 #include "comctl32.h"
 #include "wine/debug.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 WINE_DEFAULT_DEBUG_CHANNEL(dpa);
 
 typedef struct _DPA
@@ -68,7 +64,7 @@ typedef struct _STREAMDATA
  * NOTES
  *     No more information available yet!
  */
-HRESULT WINAPI DPA_LoadStream (HDPA *phDpa, PFNDPASTREAM loadProc, IStream *pStream, LPVOID pData)
+extern "C" HRESULT WINAPI DPA_LoadStream(HDPA *phDpa, PFNDPASTREAM loadProc, IStream *pStream, LPVOID pData)
 {
     HRESULT errCode;
     LARGE_INTEGER position;
@@ -166,8 +162,8 @@ HRESULT WINAPI DPA_LoadStream (HDPA *phDpa, PFNDPASTREAM loadProc, IStream *pStr
  * NOTES
  *     No more information available yet!
  */
-HRESULT WINAPI DPA_SaveStream (HDPA hDpa, PFNDPASTREAM saveProc,
-                               IStream *pStream, LPVOID pData)
+extern "C" HRESULT WINAPI DPA_SaveStream(HDPA hDpa, PFNDPASTREAM saveProc,
+                                         IStream *pStream, LPVOID pData)
 {
     LARGE_INTEGER position;
     ULARGE_INTEGER initial_pos, curr_pos;
@@ -246,14 +242,13 @@ HRESULT WINAPI DPA_SaveStream (HDPA hDpa, PFNDPASTREAM saveProc,
  *
  * RETURNS
  *     Success: TRUE
- *     Failure: FALSE 
+ *     Failure: FALSE
  *
  * NOTES
  *     No more information available yet!
  */
-BOOL WINAPI DPA_Merge (HDPA hdpa1, HDPA hdpa2, DWORD dwFlags,
-                       PFNDPACOMPARE pfnCompare, PFNDPAMERGE pfnMerge,
-                       LPARAM lParam)
+extern "C" BOOL WINAPI DPA_Merge(HDPA hdpa1, HDPA hdpa2, DWORD dwFlags,
+                                 PFNDPACOMPARE pfnCompare, PFNDPAMERGE pfnMerge, LPARAM lParam)
 {
     INT nCount;
     LPVOID *pWork1, *pWork2;
@@ -382,7 +377,7 @@ BOOL WINAPI DPA_Merge (HDPA hdpa1, HDPA hdpa2, DWORD dwFlags,
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DPA_Destroy (HDPA hdpa)
+extern "C" BOOL WINAPI DPA_Destroy(HDPA hdpa)
 {
     TRACE("(%p)\n", hdpa);
 
@@ -409,7 +404,7 @@ BOOL WINAPI DPA_Destroy (HDPA hdpa)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DPA_Grow (HDPA hdpa, INT nGrow)
+extern "C" BOOL WINAPI DPA_Grow(HDPA hdpa, INT nGrow)
 {
     INT items;
     TRACE("(%p %d)\n", hdpa, nGrow);
@@ -456,7 +451,7 @@ BOOL WINAPI DPA_Grow (HDPA hdpa, INT nGrow)
  *     - If 'hdpa' is a NULL-Pointer, the original implementation crashes,
  *       this implementation just returns NULL.
  */
-HDPA WINAPI DPA_Clone (const HDPA hdpa, HDPA hdpaNew)
+extern "C" HDPA WINAPI DPA_Clone(const HDPA hdpa, HDPA hdpaNew)
 {
     INT nNewItems, nSize;
     HDPA hdpaTemp;
@@ -512,7 +507,7 @@ HDPA WINAPI DPA_Clone (const HDPA hdpa, HDPA hdpaNew)
  *     Success: pointer
  *     Failure: NULL
  */
-LPVOID WINAPI DPA_GetPtr (HDPA hdpa, INT nIndex)
+extern "C" LPVOID WINAPI DPA_GetPtr(HDPA hdpa, INT nIndex)
 {
     TRACE("(%p %d)\n", hdpa, nIndex);
 
@@ -546,7 +541,7 @@ LPVOID WINAPI DPA_GetPtr (HDPA hdpa, INT nIndex)
  *     Success: index of the specified pointer
  *     Failure: -1
  */
-INT WINAPI DPA_GetPtrIndex (HDPA hdpa, LPCVOID p)
+extern "C" INT WINAPI DPA_GetPtrIndex(HDPA hdpa, LPCVOID p)
 {
     INT i;
 
@@ -560,7 +555,6 @@ INT WINAPI DPA_GetPtrIndex (HDPA hdpa, LPCVOID p)
 
     return -1;
 }
-
 
 /**************************************************************************
  * DPA_InsertPtr [COMCTL32.334]
@@ -576,7 +570,7 @@ INT WINAPI DPA_GetPtrIndex (HDPA hdpa, LPCVOID p)
  *     Success: index of the inserted pointer
  *     Failure: -1
  */
-INT WINAPI DPA_InsertPtr (HDPA hdpa, INT i, LPVOID p)
+extern "C" INT WINAPI DPA_InsertPtr (HDPA hdpa, INT i, LPVOID p)
 {
     TRACE("(%p %d %p)\n", hdpa, i, p);
 
@@ -587,11 +581,11 @@ INT WINAPI DPA_InsertPtr (HDPA hdpa, INT i, LPVOID p)
 
     /* create empty spot at the end */
     if (!DPA_SetPtr(hdpa, hdpa->nItemCount, 0)) return -1;
-    
+
     if (i != hdpa->nItemCount - 1)
-        memmove (hdpa->ptrs + i + 1, hdpa->ptrs + i, 
+        memmove (hdpa->ptrs + i + 1, hdpa->ptrs + i,
                  (hdpa->nItemCount - i - 1) * sizeof(LPVOID));
-    
+
     hdpa->ptrs[i] = p;
     return i;
 }
@@ -611,7 +605,7 @@ INT WINAPI DPA_InsertPtr (HDPA hdpa, INT i, LPVOID p)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DPA_SetPtr (HDPA hdpa, INT i, LPVOID p)
+extern "C" BOOL WINAPI DPA_SetPtr(HDPA hdpa, INT i, LPVOID p)
 {
     LPVOID *lpTemp;
 
@@ -661,7 +655,7 @@ BOOL WINAPI DPA_SetPtr (HDPA hdpa, INT i, LPVOID p)
  *     Success: deleted pointer
  *     Failure: NULL
  */
-LPVOID WINAPI DPA_DeletePtr (HDPA hdpa, INT i)
+extern "C" LPVOID WINAPI DPA_DeletePtr(HDPA hdpa, INT i)
 {
     LPVOID *lpDest, *lpSrc, lpTemp = NULL;
     INT  nSize;
@@ -713,7 +707,7 @@ LPVOID WINAPI DPA_DeletePtr (HDPA hdpa, INT i)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DPA_DeleteAllPtrs (HDPA hdpa)
+extern "C" BOOL WINAPI DPA_DeleteAllPtrs(HDPA hdpa)
 {
     TRACE("(%p)\n", hdpa);
 
@@ -746,8 +740,8 @@ BOOL WINAPI DPA_DeleteAllPtrs (HDPA hdpa)
  * RETURNS
  *     NONE
  */
-static VOID DPA_QuickSort (LPVOID *lpPtrs, INT l, INT r,
-                           PFNDPACOMPARE pfnCompare, LPARAM lParam)
+static void DPA_QuickSort(LPVOID *lpPtrs, INT l, INT r,
+                              PFNDPACOMPARE pfnCompare, LPARAM lParam)
 {
     INT m;
     LPVOID t;
@@ -795,7 +789,7 @@ static VOID DPA_QuickSort (LPVOID *lpPtrs, INT l, INT r,
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DPA_Sort(HDPA hdpa, PFNDPACOMPARE pfnCompare, LPARAM lParam)
+extern "C" BOOL WINAPI DPA_Sort(HDPA hdpa, PFNDPACOMPARE pfnCompare, LPARAM lParam)
 {
     if (!hdpa || !pfnCompare)
         return FALSE;
@@ -808,7 +802,6 @@ BOOL WINAPI DPA_Sort(HDPA hdpa, PFNDPACOMPARE pfnCompare, LPARAM lParam)
 
     return TRUE;
 }
-
 
 /**************************************************************************
  * DPA_Search [COMCTL32.339]
@@ -827,7 +820,7 @@ BOOL WINAPI DPA_Sort(HDPA hdpa, PFNDPACOMPARE pfnCompare, LPARAM lParam)
  *     Success: index of the pointer in the array.
  *     Failure: -1
  */
-INT WINAPI DPA_Search(HDPA hdpa, LPVOID pFind, INT nStart,
+extern "C" INT WINAPI DPA_Search(HDPA hdpa, LPVOID pFind, INT nStart,
                       PFNDPACOMPARE pfnCompare, LPARAM lParam, UINT uOptions)
 {
     if (!hdpa || !pfnCompare || !pFind)
@@ -894,7 +887,7 @@ INT WINAPI DPA_Search(HDPA hdpa, LPVOID pFind, INT nStart,
  *     The DPA_ functions can be used to create and manipulate arrays of
  *     pointers.
  */
-HDPA WINAPI DPA_CreateEx(INT nGrow, HANDLE hHeap)
+extern "C" HDPA WINAPI DPA_CreateEx(INT nGrow, HANDLE hHeap)
 {
     HDPA hdpa;
 
@@ -933,7 +926,7 @@ HDPA WINAPI DPA_CreateEx(INT nGrow, HANDLE hHeap)
  *     The DPA_ functions can be used to create and manipulate arrays of
  *     pointers.
  */
-HDPA WINAPI DPA_Create(INT nGrow)
+extern "C" HDPA WINAPI DPA_Create(INT nGrow)
 {
     return DPA_CreateEx(nGrow, 0);
 }
@@ -951,8 +944,8 @@ HDPA WINAPI DPA_Create(INT nGrow)
  * RETURNS
  *     none
  */
-void WINAPI DPA_EnumCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc,
-                             LPVOID lParam)
+extern "C" void WINAPI DPA_EnumCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc,
+                                        LPVOID lParam)
 {
     INT i;
 
@@ -987,7 +980,7 @@ void WINAPI DPA_EnumCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc,
  * RETURNS
  *     none
  */
-void WINAPI DPA_DestroyCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc, LPVOID lParam)
+extern "C" void WINAPI DPA_DestroyCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc, LPVOID lParam)
 {
     TRACE("(%p %p %p)\n", hdpa, enumProc, lParam);
 
@@ -1006,7 +999,7 @@ void WINAPI DPA_DestroyCallback(HDPA hdpa, PFNDPAENUMCALLBACK enumProc, LPVOID l
  * RETURNS
  *     Size in bytes
  */
-ULONGLONG WINAPI DPA_GetSize(HDPA hdpa)
+extern "C" ULONGLONG WINAPI DPA_GetSize(HDPA hdpa)
 {
     TRACE("(%p)\n", hdpa);
 
@@ -1015,7 +1008,3 @@ ULONGLONG WINAPI DPA_GetSize(HDPA hdpa)
 
     return sizeof(DPA) + hdpa->nMaxCount*sizeof(PVOID);
 }
-
-#ifdef __cplusplus
-}
-#endif
