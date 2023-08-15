@@ -23,6 +23,10 @@
 
 #include "wine/debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
 /*************************************************************************
@@ -893,3 +897,6 @@ BOOL WINAPI IntlStrEqWorkerW(BOOL bCase, LPCWSTR lpszStr, LPCWSTR lpszComp,
 
   return iRet == CSTR_EQUAL;
 }
+#ifdef __cplusplus
+}
+#endif

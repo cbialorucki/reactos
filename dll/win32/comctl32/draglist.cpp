@@ -83,7 +83,8 @@ static void DragList_EndDrag(HWND hwnd, DRAGLISTDATA * data)
  * Handles certain messages to enable dragging for the ListBox and forwards
  * the rest to the ListBox.
  */
-static LRESULT CALLBACK DragList_SubclassWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+static LRESULT CALLBACK
+DragList_SubclassWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
     DRAGLISTDATA * data = (DRAGLISTDATA*)dwRefData;
     switch (uMsg)
@@ -176,7 +177,7 @@ static LRESULT CALLBACK DragList_SubclassWindowProc(HWND hwnd, UINT uMsg, WPARAM
  *      Success: Non-zero
  *      Failure: Zero
  */
-BOOL WINAPI MakeDragList(HWND hwndLB)
+BOOL WINAPI MakeDragList (HWND hwndLB)
 {
     DRAGLISTDATA *data = (DRAGLISTDATA*)Alloc(sizeof(DRAGLISTDATA));
 
@@ -196,7 +197,7 @@ BOOL WINAPI MakeDragList(HWND hwndLB)
  * RETURNS
  *      Nothing.
  */
-void WINAPI DrawInsert(HWND hwndParent, HWND hwndLB, INT nItem)
+VOID WINAPI DrawInsert (HWND hwndParent, HWND hwndLB, INT nItem)
 {
     RECT rcItem, rcListBox, rcDragIcon;
     HDC hdc;
@@ -261,7 +262,7 @@ void WINAPI DrawInsert(HWND hwndParent, HWND hwndLB, INT nItem)
  * RETURNS
  *      The ListBox item ID if pt is over a list item or -1 otherwise.
  */
-INT WINAPI LBItemFromPt(HWND hwndLB, POINT pt, BOOL bAutoScroll)
+INT WINAPI LBItemFromPt (HWND hwndLB, POINT pt, BOOL bAutoScroll)
 {
     RECT rcClient;
     INT nIndex;

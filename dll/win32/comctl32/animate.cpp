@@ -787,10 +787,10 @@ static BOOL ANIMATE_Create(HWND hWnd, const CREATESTRUCTW *lpcs)
         if (!fnIC.hModule)
             return FALSE;
 
-        fnIC.fnICOpen = (void*)GetProcAddress(fnIC.hModule, "ICOpen");
-        fnIC.fnICClose = (void*)GetProcAddress(fnIC.hModule, "ICClose");
-        fnIC.fnICSendMessage = (void*)GetProcAddress(fnIC.hModule, "ICSendMessage");
-        fnIC.fnICDecompress = (void*)GetProcAddress(fnIC.hModule, "ICDecompress");
+        fnIC.fnICOpen = reinterpret_cast<HIC(WINAPI *)(DWORD, DWORD, UINT)>(GetProcAddress(fnIC.hModule, "ICOpen"));
+        fnIC.fnICClose = reinterpret_cast<LRESULT(WINAPI *)(HIC)>(GetProcAddress(fnIC.hModule, "ICClose"));
+        fnIC.fnICSendMessage = reinterpret_cast<LRESULT(WINAPI *)(HIC, UINT, DWORD_PTR, DWORD_PTR)>(GetProcAddress(fnIC.hModule, "ICSendMessage"));
+        fnIC.fnICDecompress = reinterpret_cast<DWORD(WINAPIV *)(HIC, DWORD, LPBITMAPINFOHEADER, LPVOID, LPBITMAPINFOHEADER, LPVOID)>(GetProcAddress(fnIC.hModule, "ICDecompress"));
     }
 
     /* allocate memory for info structure */

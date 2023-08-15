@@ -7,6 +7,10 @@
 #include <windef.h>
 #include <reactos/debug.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef PVOID PREADERMODEINFO;
 
 HWND WINAPI CreatePage(DWORD dwInitParam, HWND hWndParent)
@@ -30,3 +34,6 @@ VOID WINAPI SHGetProcessDword(DWORD dwUnknown1, DWORD dwUnknown2)
 {
     UNIMPLEMENTED;
 }
+#ifdef __cplusplus
+}
+#endif

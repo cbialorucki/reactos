@@ -58,6 +58,10 @@ WINE_DEFAULT_DEBUG_CHANNEL(edit);
 
 #define ID_CB_LISTBOX 1000
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum
 {
 	END_0 = 0,			/* line ends with terminating '\0' character */
@@ -5050,3 +5054,6 @@ void EDIT_Unregister(void)
 {
     UnregisterClassW(WC_EDITW, NULL);
 }
+#ifdef __cplusplus
+}
+#endif

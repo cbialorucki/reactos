@@ -20,6 +20,10 @@
 #include "commctrl.h"
 #include "windowsx.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // This is really ComCtl32 v5.82, the last one not supporting SxS
 #undef  COMCTL32_VERSION // Undefines what the PSDK gave to us
 #define COMCTL32_VERSION        5
@@ -274,5 +278,7 @@ extern void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6) DECLSPEC_HIDDEN
 extern void THEMING_Uninitialize(void) DECLSPEC_HIDDEN;
 extern LRESULT THEMING_CallOriginalClass(HWND, UINT, WPARAM, LPARAM) DECLSPEC_HIDDEN;
 extern void THEMING_SetSubclassData(HWND, ULONG_PTR) DECLSPEC_HIDDEN;
-
+#ifdef __cplusplus
+}
+#endif
 #endif  /* __WINE_COMCTL32_H */

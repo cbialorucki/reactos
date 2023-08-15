@@ -117,7 +117,8 @@ typedef struct
  * Defines and global variables
  */
 
-static const WCHAR PropSheetInfoStr[] = L"PropertySheetInfo";
+static const WCHAR PropSheetInfoStr[] =
+    {'P','r','o','p','e','r','t','y','S','h','e','e','t','I','n','f','o',0 };
 
 #define PSP_INTERNAL_UNICODE 0x80000000
 
@@ -130,7 +131,7 @@ static const WCHAR PropSheetInfoStr[] = L"PropertySheetInfo";
 /* Wizard metrics specified in DLUs */
 #define WIZARD_PADDING 7
 #define WIZARD_HEADER_HEIGHT 36
-
+                         	
 /******************************************************************************
  * Prototypes
  */

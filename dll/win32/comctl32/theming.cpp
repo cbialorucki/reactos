@@ -15,6 +15,10 @@
 #include "uxtheme.h"
 #include "wine/debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 WINE_DEFAULT_DEBUG_CHANNEL(theming);
 
 typedef LRESULT (CALLBACK* THEMING_SUBCLASSPROC)(HWND, UINT, WPARAM, LPARAM, ULONG_PTR);
@@ -165,3 +169,6 @@ void THEMING_SetSubclassData (HWND wnd, ULONG_PTR refData)
 {
     SetPropW (wnd, (LPCWSTR)MAKEINTATOM(atRefDataProp), (HANDLE)refData);
 }
+#ifdef __cplusplus
+}
+#endif

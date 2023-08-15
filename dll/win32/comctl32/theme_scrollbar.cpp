@@ -24,6 +24,10 @@
 /* Minimum size of the rectangle between the arrows */
 #define SCROLL_MIN_RECT  4
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum SCROLL_HITTEST
 {
     SCROLL_NOWHERE,      /* Outside the scroll bar */
@@ -569,3 +573,6 @@ LRESULT CALLBACK THEMING_ScrollbarSubclassProc (HWND hwnd, UINT msg,
 
     return 0;
 }
+#ifdef __cplusplus
+}
+#endif

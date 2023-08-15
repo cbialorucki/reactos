@@ -17,6 +17,10 @@
 #include "winuser.h"
 #include "wine/debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
 static DWORD	smoothscroll = 2;
@@ -116,3 +120,6 @@ BOOL WINAPI SmoothScrollWindow( const SMOOTHSCROLLSTRUCT *smooth ) {
 	   flags & 0xffff
        );
 }
+#ifdef __cplusplus
+}
+#endif

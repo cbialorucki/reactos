@@ -102,7 +102,7 @@ static void taskdialog_get_text_extent(const struct taskdialog_template_desc *de
 {
     RECT rect = { 0, 0, (LONG)(desc->dialog_width - DIALOG_SPACING * 2), 0}; /* padding left and right of the control */
     const WCHAR *textW = NULL;
-    static WCHAR nulW;
+    static WCHAR nulW = NULL;
     unsigned int length;
     HFONT oldfont;
     HDC hdc;
@@ -140,7 +140,7 @@ static void taskdialog_get_text_extent(const struct taskdialog_template_desc *de
 static unsigned int taskdialog_add_control(struct taskdialog_template_desc *desc, WORD id, const WCHAR *ctlclass,
         HINSTANCE hInstance, const WCHAR *text, DWORD style, short x, short y, short cx, short cy)
 {
-    struct taskdialog_control *control = Alloc(sizeof(*control));
+    struct taskdialog_control *control = (taskdialog_control*)Alloc(sizeof(*control));
     unsigned int size, class_size, text_size;
     DLGITEMTEMPLATE *DialogItemTemplate;
     static WCHAR nulW;
@@ -264,7 +264,7 @@ static unsigned int taskdialog_add_buttons(struct taskdialog_template_desc *desc
     if (taskconfig->cButtons && taskconfig->pButtons)
         buttons_size += taskconfig->cButtons;
 
-    if (!(buttons = Alloc(buttons_size * sizeof(*buttons))))
+    if (!(buttons = (taskdialog_button_desc*)Alloc(buttons_size * sizeof(*buttons))))
         return 0;
 
     /* Custom buttons */
@@ -523,7 +523,7 @@ static INT_PTR CALLBACK taskdialog_proc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
     TRACE("hwnd=%p msg=0x%04x wparam=%lx lparam=%lx\n", hwnd, msg, wParam, lParam);
 
     if (msg != WM_INITDIALOG)
-        dialog_info = GetPropW(hwnd, taskdialog_info_propnameW);
+        dialog_info = (taskdialog_info*)GetPropW(hwnd, taskdialog_info_propnameW);
 
     switch (msg)
     {
