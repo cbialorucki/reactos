@@ -31,6 +31,10 @@
 
 WINE_DEFAULT_DEBUG_CHANNEL(imagelist);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_OVERLAYIMAGE 15
 
 #ifdef __REACTOS__
@@ -4360,4 +4364,7 @@ ImageList_DrawIndirect (IMAGELISTDRAWPARAMS *pimldp)
     return (piml->lpVtbl->Draw(piml, pimldp) == S_OK) ? TRUE : FALSE;
 }
 
+#endif
+#ifdef __cplusplus
+}
 #endif

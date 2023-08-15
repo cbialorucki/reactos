@@ -37,6 +37,10 @@
 
 #include "wine/debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
 static const WCHAR strMRUList[] = L"MRUList";
@@ -1170,3 +1174,6 @@ LRESULT WINAPI SendNotifyEx (HWND hwndTo, HWND hwndFrom, UINT uCode,
 
     return DoNotify (&notify, uCode, lpHdr);
 }
+#ifdef __cplusplus
+}
+#endif

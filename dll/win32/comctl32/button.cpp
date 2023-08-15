@@ -47,11 +47,7 @@
 
 #define OEMRESOURCE
 
-#include "windef.h"
-#include "winbase.h"
-#include "wingdi.h"
-#include "winuser.h"
-#include "uxtheme.h"
+#include "button.h"
 #include "vssym32.h"
 #include "wine/debug.h"
 #include "wine/heap.h"
@@ -60,138 +56,18 @@
 
 WINE_DEFAULT_DEBUG_CHANNEL(button);
 
-/* undocumented flags */
-#define BUTTON_NSTATES         0x0F
-#define BUTTON_BTNPRESSED      0x40
-#define BUTTON_UNKNOWN2        0x20
-#define BUTTON_UNKNOWN3        0x10
-#define BUTTON_BMCLICK         0x100
-
-#define BUTTON_NOTIFY_PARENT(hWnd, code) \
-    do { /* Notify parent which has created this button control */ \
-        TRACE("notification " #code " sent to hwnd=%p\n", GetParent(hWnd)); \
-        SendMessageW(GetParent(hWnd), WM_COMMAND, \
-                     MAKEWPARAM(GetWindowLongPtrW((hWnd),GWLP_ID), (code)), \
-                     (LPARAM)(hWnd)); \
-    } while(0)
-
-typedef struct _BUTTON_INFO
-{
-    HWND        hwnd;
-    LONG        state;
-    HFONT       font;
-    union
-    {
-        HICON   icon;
-        HBITMAP bitmap;
-        HANDLE  image;
-    } u;
-
-    DWORD ui_state;
-    RECT rcTextMargin;
-    BUTTON_IMAGELIST imlData;
-} BUTTON_INFO;
-
-static UINT BUTTON_CalcLabelRect( const BUTTON_INFO *infoPtr, HDC hdc, RECT *rc );
-static void PB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action );
-static void CB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action );
-static void GB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action );
-static void UB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action );
-static void OB_Paint( const BUTTON_INFO *infoPtr, HDC hDC, UINT action );
-static void BUTTON_CheckAutoRadioButton( HWND hwnd );
-
-#define MAX_BTN_TYPE  16
-
-static const WORD maxCheckState[MAX_BTN_TYPE] =
-{
-    BST_UNCHECKED,      /* BS_PUSHBUTTON */
-    BST_UNCHECKED,      /* BS_DEFPUSHBUTTON */
-    BST_CHECKED,        /* BS_CHECKBOX */
-    BST_CHECKED,        /* BS_AUTOCHECKBOX */
-    BST_CHECKED,        /* BS_RADIOBUTTON */
-    BST_INDETERMINATE,  /* BS_3STATE */
-    BST_INDETERMINATE,  /* BS_AUTO3STATE */
-    BST_UNCHECKED,      /* BS_GROUPBOX */
-    BST_UNCHECKED,      /* BS_USERBUTTON */
-    BST_CHECKED,        /* BS_AUTORADIOBUTTON */
-    BST_UNCHECKED,      /* BS_PUSHBOX */
-    BST_UNCHECKED,      /* BS_OWNERDRAW */
-    BST_UNCHECKED,      /* BS_SPLITBUTTON */
-    BST_UNCHECKED,      /* BS_DEFSPLITBUTTON */
-    BST_UNCHECKED,      /* BS_COMMANDLINK */
-    BST_UNCHECKED       /* BS_DEFCOMMANDLINK */
-};
-
-/* These are indices into a states array to determine the theme state for a given theme part. */
-typedef enum
-{
-    STATE_NORMAL,
-    STATE_DISABLED,
-    STATE_HOT,
-    STATE_PRESSED,
-    STATE_DEFAULTED
-} ButtonState;
-
-typedef void (*pfPaint)( const BUTTON_INFO *infoPtr, HDC hdc, UINT action );
-
-static const pfPaint btnPaintFunc[MAX_BTN_TYPE] =
-{
-    PB_Paint,    /* BS_PUSHBUTTON */
-    PB_Paint,    /* BS_DEFPUSHBUTTON */
-    CB_Paint,    /* BS_CHECKBOX */
-    CB_Paint,    /* BS_AUTOCHECKBOX */
-    CB_Paint,    /* BS_RADIOBUTTON */
-    CB_Paint,    /* BS_3STATE */
-    CB_Paint,    /* BS_AUTO3STATE */
-    GB_Paint,    /* BS_GROUPBOX */
-    UB_Paint,    /* BS_USERBUTTON */
-    CB_Paint,    /* BS_AUTORADIOBUTTON */
-    NULL,        /* BS_PUSHBOX */
-    OB_Paint,    /* BS_OWNERDRAW */
-    PB_Paint,    /* BS_SPLITBUTTON */
-    PB_Paint,    /* BS_DEFSPLITBUTTON */
-    PB_Paint,    /* BS_COMMANDLINK */
-    PB_Paint     /* BS_DEFCOMMANDLINK */
-};
-
-typedef void (*pfThemedPaint)( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
-
-static void PB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
-static void CB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
-static void GB_ThemedPaint( HTHEME theme, const BUTTON_INFO *infoPtr, HDC hdc, ButtonState drawState, UINT dtflags, BOOL focused, LPARAM prfFlag);
-
-static const pfThemedPaint btnThemedPaintFunc[MAX_BTN_TYPE] =
-{
-    PB_ThemedPaint, /* BS_PUSHBUTTON */
-    PB_ThemedPaint, /* BS_DEFPUSHBUTTON */
-    CB_ThemedPaint, /* BS_CHECKBOX */
-    CB_ThemedPaint, /* BS_AUTOCHECKBOX */
-    CB_ThemedPaint, /* BS_RADIOBUTTON */
-    CB_ThemedPaint, /* BS_3STATE */
-    CB_ThemedPaint, /* BS_AUTO3STATE */
-    GB_ThemedPaint, /* BS_GROUPBOX */
-    NULL,           /* BS_USERBUTTON */
-    CB_ThemedPaint, /* BS_AUTORADIOBUTTON */
-    NULL,           /* BS_PUSHBOX */
-    NULL,           /* BS_OWNERDRAW */
-    NULL,           /* BS_SPLITBUTTON */
-    NULL,           /* BS_DEFSPLITBUTTON */
-    NULL,           /* BS_COMMANDLINK */
-    NULL,           /* BS_DEFCOMMANDLINK */
-};
-
 static inline UINT get_button_type( LONG window_style )
 {
     return (window_style & BS_TYPEMASK);
 }
 
 /* retrieve the button text; returned buffer must be freed by caller */
-static inline WCHAR *get_button_text( const BUTTON_INFO *infoPtr )
+static inline LPTSTR get_button_text( const BUTTON_INFO *infoPtr )
 {
-    INT len = GetWindowTextLengthW( infoPtr->hwnd );
-    WCHAR *buffer = (WCHAR*)heap_alloc((len + 1) * sizeof(WCHAR));
+    INT len = GetWindowTextLengthW(infoPtr->hwnd) + 1;
+    LPTSTR buffer = new TCHAR[len];
     if (buffer)
-        GetWindowTextW( infoPtr->hwnd, buffer, len + 1 );
+        GetWindowTextW(infoPtr->hwnd, buffer, len);
     return buffer;
 }
 
