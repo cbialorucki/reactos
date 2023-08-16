@@ -24,10 +24,6 @@
 #include "comctl32.h"
 #include "wine/debug.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 WINE_DEFAULT_DEBUG_CHANNEL(dsa);
 
 struct _DSA
@@ -57,7 +53,7 @@ struct _DSA
  *     fixed-size memory blocks. These arrays can store any kind of data
  *     (e.g. strings and icons).
  */
-HDSA WINAPI DSA_Create(INT nSize, INT nGrow)
+extern "C" HDSA WINAPI DSA_Create(INT nSize, INT nGrow)
 {
     HDSA hdsa;
 
@@ -89,7 +85,7 @@ HDSA WINAPI DSA_Create(INT nSize, INT nGrow)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DSA_Destroy(HDSA hdsa)
+extern "C" BOOL WINAPI DSA_Destroy(HDSA hdsa)
 {
     TRACE("(%p)\n", hdsa);
 
@@ -116,7 +112,7 @@ BOOL WINAPI DSA_Destroy(HDSA hdsa)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DSA_GetItem (HDSA hdsa, INT nIndex, LPVOID pDest)
+extern "C" BOOL WINAPI DSA_GetItem (HDSA hdsa, INT nIndex, LPVOID pDest)
 {
     LPVOID pSrc;
 
@@ -147,7 +143,7 @@ BOOL WINAPI DSA_GetItem (HDSA hdsa, INT nIndex, LPVOID pDest)
  *     Success: pointer to an item
  *     Failure: NULL
  */
-LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
+extern "C" LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
 {
     LPVOID pSrc;
 
@@ -181,7 +177,7 @@ LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
+extern "C" BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
 {
     INT  nSize, nNewItems;
     LPVOID pDest, lpTemp;
@@ -238,7 +234,7 @@ BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
  *     Success: position of the new item
  *     Failure: -1
  */
-INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
+extern "C" INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
 {
     INT   nNewItems, nSize;
     LPVOID  lpTemp, lpDest;
@@ -300,7 +296,7 @@ INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
  *     Success: number of the deleted element
  *     Failure: -1
  */
-INT WINAPI DSA_DeleteItem (HDSA hdsa, INT nIndex)
+extern "C" INT WINAPI DSA_DeleteItem (HDSA hdsa, INT nIndex)
 {
     LPVOID lpDest,lpSrc;
     INT  nSize;
@@ -350,7 +346,7 @@ INT WINAPI DSA_DeleteItem (HDSA hdsa, INT nIndex)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
+extern "C" BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
 {
     TRACE("(%p)\n", hdsa);
 
@@ -367,7 +363,6 @@ BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
     return TRUE;
 }
 
-
 /**************************************************************************
  * DSA_EnumCallback [COMCTL32.387]
  *
@@ -381,7 +376,7 @@ BOOL WINAPI DSA_DeleteAllItems (HDSA hdsa)
  * RETURNS
  *     none
  */
-void WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
+extern "C" void WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
 {
     INT i;
 
@@ -415,7 +410,7 @@ void WINAPI DSA_EnumCallback (HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lPa
  * RETURNS
  *     none
  */
-void WINAPI DSA_DestroyCallback(HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
+extern "C" void WINAPI DSA_DestroyCallback(HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID lParam)
 {
     TRACE("(%p %p %p)\n", hdsa, enumProc, lParam);
 
@@ -434,7 +429,7 @@ void WINAPI DSA_DestroyCallback(HDSA hdsa, PFNDSAENUMCALLBACK enumProc, LPVOID l
  * RETURNS
  *     Cloned dsa
  */
-HDSA WINAPI DSA_Clone(HDSA hdsa)
+extern "C" HDSA WINAPI DSA_Clone(HDSA hdsa)
 {
     HDSA dest;
     INT i;
@@ -473,7 +468,7 @@ HDSA WINAPI DSA_Clone(HDSA hdsa)
  * RETURNS
  *     Size
  */
-ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
+extern "C" ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 {
     TRACE("(%p)\n", hdsa);
 
@@ -481,7 +476,3 @@ ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 
     return sizeof(*hdsa) + (ULONGLONG)hdsa->nMaxCount*hdsa->nItemSize;
 }
-
-#ifdef __cplusplus
-}
-#endif

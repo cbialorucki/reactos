@@ -12,7 +12,7 @@
  *     COMCTL32.DLL (internally).
  */
 #include "config.h"
-#include "wine/port.h"
+//#include "wine/port.h"
 
 #include <stdarg.h>
 #include <string.h>
@@ -37,10 +37,6 @@
 
 #include "wine/debug.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
 static const WCHAR strMRUList[] = L"MRUList";
@@ -57,9 +53,9 @@ static const WCHAR strMRUList[] = L"MRUList";
  *     Success: pointer to allocated memory block
  *     Failure: NULL
  */
-LPVOID WINAPI Alloc (DWORD dwSize)
+extern "C" LPVOID WINAPI Alloc(DWORD dwSize)
 {
-    return LocalAlloc( LMEM_ZEROINIT, dwSize );
+    return LocalAlloc(LMEM_ZEROINIT, dwSize);
 }
 
 
@@ -81,14 +77,13 @@ LPVOID WINAPI Alloc (DWORD dwSize)
  *     If lpSrc is a NULL-pointer, then ReAlloc allocates a memory
  *     block like Alloc.
  */
-LPVOID WINAPI ReAlloc (LPVOID lpSrc, DWORD dwSize)
+extern "C" LPVOID WINAPI ReAlloc (LPVOID lpSrc, DWORD dwSize)
 {
     if (lpSrc)
         return LocalReAlloc( lpSrc, dwSize, LMEM_ZEROINIT | LMEM_MOVEABLE );
     else
         return LocalAlloc( LMEM_ZEROINIT, dwSize);
 }
-
 
 /**************************************************************************
  * Free [COMCTL32.73]
@@ -102,11 +97,10 @@ LPVOID WINAPI ReAlloc (LPVOID lpSrc, DWORD dwSize)
  *     Success: TRUE
  *     Failure: FALSE
  */
-BOOL WINAPI Free (LPVOID lpMem)
+extern "C" BOOL WINAPI Free (LPVOID lpMem)
 {
     return !LocalFree( lpMem );
 }
-
 
 /**************************************************************************
  * GetSize [COMCTL32.74]
@@ -121,11 +115,10 @@ BOOL WINAPI Free (LPVOID lpMem)
  *     Success: size of the specified memory block
  *     Failure: 0
  */
-DWORD WINAPI GetSize (LPVOID lpMem)
+extern "C" DWORD WINAPI GetSize (LPVOID lpMem)
 {
     return LocalSize( lpMem );
 }
-
 
 /**************************************************************************
  * MRU-Functions  {COMCTL32}
@@ -147,7 +140,7 @@ DWORD WINAPI GetSize (LPVOID lpMem)
  * Items are re-ordered by changing the order of the values in the MRUList
  * value. When a new item is added, it becomes the new value of the oldest
  * identifier, and that identifier is moved to the front of the MRUList value.
- * 
+ *
  * Wine stores MRU-lists in the same registry format as Windows, so when
  * switching between the builtin and native comctl32.dll no problems or
  * incompatibilities should occur.
@@ -337,9 +330,9 @@ static void MRU_SaveChanged ( LPWINEMRULIST mp )
  * RETURNS
  *     Nothing.
  */
-void WINAPI FreeMRUList (HANDLE hMRUList)
+extern "C" void WINAPI FreeMRUList(HANDLE hMRUList)
 {
-    LPWINEMRULIST mp = hMRUList;
+    LPWINEMRULIST mp = (LPWINEMRULIST)hMRUList;
     UINT i;
 
     TRACE("(%p)\n", hMRUList);
@@ -360,7 +353,6 @@ void WINAPI FreeMRUList (HANDLE hMRUList)
     Free(mp);
 }
 
-
 /**************************************************************************
  *                  FindMRUData [COMCTL32.169]
  *
@@ -377,10 +369,10 @@ void WINAPI FreeMRUList (HANDLE hMRUList)
  * RETURNS
  *    Position in list 0 -> MRU.  -1 if item not found.
  */
-INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
-                        LPINT lpRegNum)
+extern "C" INT WINAPI FindMRUData(HANDLE hList, LPCVOID lpData, DWORD cbData,
+                                  LPINT lpRegNum)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     INT ret;
     UINT i;
     LPSTR dataA = NULL;
@@ -389,10 +381,10 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
 	return -1;
 
     if(!(mp->extview.fFlags & MRU_BINARY) && !mp->isUnicode) {
-        DWORD len = WideCharToMultiByte(CP_ACP, 0, lpData, -1,
+        DWORD len = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)lpData, -1,
 					NULL, 0, NULL, NULL);
-	dataA = Alloc(len);
-	WideCharToMultiByte(CP_ACP, 0, lpData, -1, dataA, len, NULL, NULL);
+	dataA = (LPSTR)Alloc(len);
+	WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)lpData, -1, dataA, len, NULL, NULL);
     }
 
     for(i=0; i<mp->cursize; i++) {
@@ -402,13 +394,13 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
 	}
 	else {
 	    if(mp->isUnicode) {
-	        if (!mp->extview.u.string_cmpfn(lpData, (LPWSTR)&mp->array[i]->datastart))
+	        if (!mp->extview.u.string_cmpfn((LPCWSTR)lpData, (LPWSTR)&mp->array[i]->datastart))
 		    break;
 	    } else {
 	        DWORD len = WideCharToMultiByte(CP_ACP, 0,
 						(LPWSTR)&mp->array[i]->datastart, -1,
 						NULL, 0, NULL, NULL);
-		LPSTR itemA = Alloc(len);
+		LPSTR itemA = (LPSTR)Alloc(len);
 		INT cmp;
 		WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&mp->array[i]->datastart, -1,
 				    itemA, len, NULL, NULL);
@@ -451,9 +443,9 @@ INT WINAPI FindMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData,
  *     No. corresponding to registry name where value is stored 'a' -> 0 etc.
  *     -1 on error.
  */
-INT WINAPI AddMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData)
+extern "C" INT WINAPI AddMRUData(HANDLE hList, LPCVOID lpData, DWORD cbData)
 {
-    LPWINEMRULIST mp = hList;
+    LPWINEMRULIST mp = (LPWINEMRULIST)hList;
     LPWINEMRUITEM witem;
     INT i, replace;
 
@@ -480,7 +472,7 @@ INT WINAPI AddMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData)
 	}
 
         /* Allocate space for new item and move in the data */
-        mp->array[replace] = witem = Alloc(cbData + sizeof(WINEMRUITEM));
+        mp->array[replace] = witem = (LPWINEMRUITEM)Alloc(cbData + sizeof(WINEMRUITEM));
         witem->itemFlag |= WMRUIF_CHANGED;
         witem->size = cbData;
         memcpy( &witem->datastart, lpData, cbData);
@@ -530,7 +522,7 @@ INT WINAPI AddMRUData (HANDLE hList, LPCVOID lpData, DWORD cbData)
  *  -If this function returns 0 you should check the last error value to
  *   ensure the call really succeeded.
  */
-INT WINAPI AddMRUStringW(HANDLE hList, LPCWSTR lpszString)
+extern "C" INT WINAPI AddMRUStringW(HANDLE hList, LPCWSTR lpszString)
 {
     TRACE("(%p,%s)\n", hList, debugstr_w(lpszString));
 
@@ -552,7 +544,7 @@ INT WINAPI AddMRUStringW(HANDLE hList, LPCWSTR lpszString)
  *
  * See AddMRUStringW.
  */
-INT WINAPI AddMRUStringA(HANDLE hList, LPCSTR lpszString)
+extern "C" INT WINAPI AddMRUStringA(HANDLE hList, LPCSTR lpszString)
 {
     DWORD len;
     LPWSTR stringW;
@@ -570,7 +562,7 @@ INT WINAPI AddMRUStringA(HANDLE hList, LPCSTR lpszString)
     }
 
     len = MultiByteToWideChar(CP_ACP, 0, lpszString, -1, NULL, 0) * sizeof(WCHAR);
-    stringW = Alloc(len);
+    stringW = (LPWSTR)Alloc(len);
     if (!stringW)
         return -1;
 
@@ -592,7 +584,7 @@ INT WINAPI AddMRUStringA(HANDLE hList, LPCSTR lpszString)
  * RETURNS
  *    TRUE if successful, FALSE if nItemPos is out of range.
  */
-BOOL WINAPI DelMRUString(HANDLE hList, INT nItemPos)
+extern "C" BOOL WINAPI DelMRUString(HANDLE hList, INT nItemPos)
 {
     FIXME("(%p, %d): stub\n", hList, nItemPos);
     return TRUE;
@@ -603,7 +595,7 @@ BOOL WINAPI DelMRUString(HANDLE hList, INT nItemPos)
  *
  * See FindMRUStringA.
  */
-INT WINAPI FindMRUStringW (HANDLE hList, LPCWSTR lpszString, LPINT lpRegNum)
+extern "C" INT WINAPI FindMRUStringW (HANDLE hList, LPCWSTR lpszString, LPINT lpRegNum)
 {
   return FindMRUData(hList, lpszString,
                      (lstrlenW(lpszString) + 1) * sizeof(WCHAR), lpRegNum);
@@ -624,10 +616,10 @@ INT WINAPI FindMRUStringW (HANDLE hList, LPCWSTR lpszString, LPINT lpRegNum)
  * RETURNS
  *    Position in list 0 -> MRU.  -1 if item not found.
  */
-INT WINAPI FindMRUStringA (HANDLE hList, LPCSTR lpszString, LPINT lpRegNum)
+extern "C" INT WINAPI FindMRUStringA (HANDLE hList, LPCSTR lpszString, LPINT lpRegNum)
 {
     DWORD len = MultiByteToWideChar(CP_ACP, 0, lpszString, -1, NULL, 0);
-    LPWSTR stringW = Alloc(len * sizeof(WCHAR));
+    LPWSTR stringW = (LPWSTR)Alloc(len * sizeof(WCHAR));
     INT ret;
 
     MultiByteToWideChar(CP_ACP, 0, lpszString, -1, stringW, len);
@@ -651,12 +643,12 @@ static HANDLE create_mru_list(LPWINEMRULIST mp)
     /* get space to save indices that will turn into names
      * but in order of most to least recently used
      */
-    mp->realMRU = Alloc((mp->extview.uMax + 2) * sizeof(WCHAR));
+    mp->realMRU = (LPWSTR)Alloc((mp->extview.uMax + 2) * sizeof(WCHAR));
 
     /* get space to save pointers to actual data in order of
      * 'a' to 'z' (0 to n).
      */
-    mp->array = Alloc(mp->extview.uMax * sizeof(LPVOID));
+    mp->array = (LPWINEMRUITEM*)Alloc(mp->extview.uMax * sizeof(LPVOID));
 
     /* open the sub key */
     if ((err = RegCreateKeyExW( mp->extview.hKey, mp->extview.lpszSubKey,
@@ -700,7 +692,7 @@ static HANDLE create_mru_list(LPWINEMRULIST mp)
 		/* not present - what to do ??? */
 		ERR("Key %s not found 1\n", debugstr_w(realname));
 	    }
-	    mp->array[i] = witem = Alloc(datasize + sizeof(WINEMRUITEM));
+	    mp->array[i] = witem = (LPWINEMRUITEM)Alloc(datasize + sizeof(WINEMRUITEM));
 	    witem->size = datasize;
 	    if(RegQueryValueExW( newkey, realname, 0, &type,
 				 &witem->datastart, &datasize)) {
@@ -725,7 +717,7 @@ static HANDLE create_mru_list(LPWINEMRULIST mp)
  *
  * See CreateMRUListLazyA.
  */
-HANDLE WINAPI CreateMRUListLazyW (const MRUINFOW *infoW, DWORD dwParam2,
+extern "C" HANDLE WINAPI CreateMRUListLazyW (const MRUINFOW *infoW, DWORD dwParam2,
                                   DWORD dwParam3, DWORD dwParam4)
 {
     LPWINEMRULIST mp;
@@ -734,9 +726,9 @@ HANDLE WINAPI CreateMRUListLazyW (const MRUINFOW *infoW, DWORD dwParam2,
     if (!infoW->hKey || IsBadStringPtrW(infoW->lpszSubKey, -1))
 	return NULL;
 
-    mp = Alloc(sizeof(WINEMRULIST));
+    mp = (LPWINEMRULIST)Alloc(sizeof(WINEMRULIST));
     memcpy(&mp->extview, infoW, sizeof(MRUINFOW));
-    mp->extview.lpszSubKey = Alloc((strlenW(infoW->lpszSubKey) + 1) * sizeof(WCHAR));
+    mp->extview.lpszSubKey = (LPWSTR)Alloc((strlenW(infoW->lpszSubKey) + 1) * sizeof(WCHAR));
     strcpyW(mp->extview.lpszSubKey, infoW->lpszSubKey);
     mp->isUnicode = TRUE;
 
@@ -757,7 +749,7 @@ HANDLE WINAPI CreateMRUListLazyW (const MRUINFOW *infoW, DWORD dwParam2,
  * RETURNS
  *     Handle to MRU list.
  */
-HANDLE WINAPI CreateMRUListLazyA (const MRUINFOA *lpcml, DWORD dwParam2,
+extern "C" HANDLE WINAPI CreateMRUListLazyA (const MRUINFOA *lpcml, DWORD dwParam2,
                                   DWORD dwParam3, DWORD dwParam4)
 {
     LPWINEMRULIST mp;
@@ -768,10 +760,10 @@ HANDLE WINAPI CreateMRUListLazyA (const MRUINFOA *lpcml, DWORD dwParam2,
     if (!lpcml->hKey || IsBadStringPtrA(lpcml->lpszSubKey, -1))
 	return 0;
 
-    mp = Alloc(sizeof(WINEMRULIST));
+    mp = (LPWINEMRULIST)Alloc(sizeof(WINEMRULIST));
     memcpy(&mp->extview, lpcml, sizeof(MRUINFOA));
     len = MultiByteToWideChar(CP_ACP, 0, lpcml->lpszSubKey, -1, NULL, 0);
-    mp->extview.lpszSubKey = Alloc(len * sizeof(WCHAR));
+    mp->extview.lpszSubKey = (LPWSTR)Alloc(len * sizeof(WCHAR));
     MultiByteToWideChar(CP_ACP, 0, lpcml->lpszSubKey, -1,
 			mp->extview.lpszSubKey, len);
     mp->isUnicode = FALSE;
@@ -783,7 +775,7 @@ HANDLE WINAPI CreateMRUListLazyA (const MRUINFOA *lpcml, DWORD dwParam2,
  *
  * See CreateMRUListA.
  */
-HANDLE WINAPI CreateMRUListW (const MRUINFOW *infoW)
+extern "C" HANDLE WINAPI CreateMRUListW(const MRUINFOW *infoW)
 {
     return CreateMRUListLazyW(infoW, 0, 0, 0);
 }
@@ -799,11 +791,10 @@ HANDLE WINAPI CreateMRUListW (const MRUINFOW *infoW)
  * RETURNS
  *     Handle to MRU list.
  */
-HANDLE WINAPI CreateMRUListA (const MRUINFOA *lpcml)
+extern "C" HANDLE WINAPI CreateMRUListA (const MRUINFOA *lpcml)
 {
      return CreateMRUListLazyA (lpcml, 0, 0, 0);
 }
-
 
 /**************************************************************************
  *                EnumMRUListW [COMCTL32.403]
@@ -823,16 +814,16 @@ HANDLE WINAPI CreateMRUListA (const MRUINFOA *lpcml)
  *    If lpBuffer == NULL or nItemPos is -ve return value is no. of items in
  *    the list.
  */
-INT WINAPI EnumMRUListW (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
+extern "C" INT WINAPI EnumMRUListW (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
                          DWORD nBufferSize)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     const WINEMRUITEM *witem;
     INT desired, datasize;
 
     if (!mp) return -1;
     if ((nItemPos < 0) || !lpBuffer) return mp->cursize;
-    if (nItemPos >= mp->cursize) return -1;
+    if ((DWORD)nItemPos >= mp->cursize) return -1;
     desired = mp->realMRU[nItemPos];
     desired -= 'a';
     TRACE("nItemPos=%d, desired=%d\n", nItemPos, desired);
@@ -849,17 +840,17 @@ INT WINAPI EnumMRUListW (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
  *
  * See EnumMRUListW.
  */
-INT WINAPI EnumMRUListA (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
-                         DWORD nBufferSize)
+extern "C" INT WINAPI EnumMRUListA(HANDLE hList, INT nItemPos, LPVOID lpBuffer,
+                                   DWORD nBufferSize)
 {
-    const WINEMRULIST *mp = hList;
+    const WINEMRULIST *mp = (WINEMRULIST*)hList;
     LPWINEMRUITEM witem;
     INT desired, datasize;
     DWORD lenA;
 
     if (!mp) return -1;
     if ((nItemPos < 0) || !lpBuffer) return mp->cursize;
-    if (nItemPos >= mp->cursize) return -1;
+    if ((DWORD)nItemPos >= mp->cursize) return -1;
     desired = mp->realMRU[nItemPos];
     desired -= 'a';
     TRACE("nItemPos=%d, desired=%d\n", nItemPos, desired);
@@ -872,7 +863,7 @@ INT WINAPI EnumMRUListA (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
 				   NULL, 0, NULL, NULL);
 	datasize = min( lenA, nBufferSize );
 	WideCharToMultiByte(CP_ACP, 0, (LPWSTR)&witem->datastart, -1,
-			    lpBuffer, datasize, NULL, NULL);
+			    (LPSTR)lpBuffer, datasize, NULL, NULL);
         ((char *)lpBuffer)[ datasize - 1 ] = '\0';
         datasize = lenA - 1;
     }
@@ -895,7 +886,7 @@ INT WINAPI EnumMRUListA (HANDLE hList, INT nItemPos, LPVOID lpBuffer,
  *     Length, in bytes, of the converted string.
  */
 
-INT Str_GetPtrWtoA (LPCWSTR lpSrc, LPSTR lpDest, INT nMaxLen)
+extern "C" INT Str_GetPtrWtoA(LPCWSTR lpSrc, LPSTR lpDest, INT nMaxLen)
 {
     INT len;
 
@@ -936,7 +927,7 @@ INT Str_GetPtrWtoA (LPCWSTR lpSrc, LPSTR lpDest, INT nMaxLen)
  *     Length, in characters, of the converted string.
  */
 
-INT Str_GetPtrAtoW (LPCSTR lpSrc, LPWSTR lpDest, INT nMaxLen)
+extern "C" INT Str_GetPtrAtoW(LPCSTR lpSrc, LPWSTR lpDest, INT nMaxLen)
 {
     INT len;
 
@@ -963,7 +954,6 @@ INT Str_GetPtrAtoW (LPCSTR lpSrc, LPWSTR lpDest, INT nMaxLen)
     return len;
 }
 
-
 /**************************************************************************
  * Str_SetPtrAtoW [internal]
  *
@@ -981,13 +971,13 @@ INT Str_GetPtrAtoW (LPCSTR lpSrc, LPWSTR lpDest, INT nMaxLen)
  *     TRUE: conversion successful
  *     FALSE: error
  */
-BOOL Str_SetPtrAtoW (LPWSTR *lppDest, LPCSTR lpSrc)
+extern "C" BOOL Str_SetPtrAtoW(LPWSTR *lppDest, LPCSTR lpSrc)
 {
     TRACE("(%p %s)\n", lppDest, lpSrc);
 
     if (lpSrc) {
 	INT len = MultiByteToWideChar(CP_ACP,0,lpSrc,-1,NULL,0);
-	LPWSTR ptr = ReAlloc (*lppDest, len*sizeof(WCHAR));
+	LPWSTR ptr = (LPWSTR)ReAlloc(*lppDest, len*sizeof(WCHAR));
 
 	if (!ptr)
 	    return FALSE;
@@ -1019,13 +1009,13 @@ BOOL Str_SetPtrAtoW (LPWSTR *lppDest, LPCSTR lpSrc)
  *     TRUE: conversion successful
  *     FALSE: error
  */
-BOOL Str_SetPtrWtoA (LPSTR *lppDest, LPCWSTR lpSrc)
+extern "C" BOOL Str_SetPtrWtoA(LPSTR *lppDest, LPCWSTR lpSrc)
 {
     TRACE("(%p %s)\n", lppDest, debugstr_w(lpSrc));
 
     if (lpSrc) {
         INT len = WideCharToMultiByte(CP_ACP,0,lpSrc,-1,NULL,0,NULL,FALSE);
-        LPSTR ptr = ReAlloc (*lppDest, len*sizeof(CHAR));
+        LPSTR ptr = (LPSTR)ReAlloc(*lppDest, len*sizeof(CHAR));
 
         if (!ptr)
             return FALSE;
@@ -1040,7 +1030,6 @@ BOOL Str_SetPtrWtoA (LPSTR *lppDest, LPCWSTR lpSrc)
     return TRUE;
 }
 
-
 /**************************************************************************
  * Notification functions
  */
@@ -1054,7 +1043,6 @@ typedef struct tagNOTIFYDATA
     DWORD  dwParam5;
     DWORD  dwParam6;
 } NOTIFYDATA, *LPNOTIFYDATA;
-
 
 /**************************************************************************
  * DoNotify [Internal]
@@ -1112,7 +1100,7 @@ static LRESULT DoNotify (const NOTIFYDATA *lpNotify, UINT uCode, LPNMHDR lpHdr)
  *     message is taken from the NMHDR structure.
  *     If hwndFrom is not -1 then lpHdr can be NULL.
  */
-LRESULT WINAPI SendNotify (HWND hwndTo, HWND hwndFrom, UINT uCode, LPNMHDR lpHdr)
+extern "C" LRESULT WINAPI SendNotify(HWND hwndTo, HWND hwndFrom, UINT uCode, LPNMHDR lpHdr)
 {
     NOTIFYDATA notify;
 
@@ -1126,7 +1114,6 @@ LRESULT WINAPI SendNotify (HWND hwndTo, HWND hwndFrom, UINT uCode, LPNMHDR lpHdr
 
     return DoNotify (&notify, uCode, lpHdr);
 }
-
 
 /**************************************************************************
  * SendNotifyEx [COMCTL32.342]
@@ -1149,8 +1136,8 @@ LRESULT WINAPI SendNotify (HWND hwndTo, HWND hwndFrom, UINT uCode, LPNMHDR lpHdr
  *     message is taken from the NMHDR structure.
  *     If hwndFrom is not -1 then lpHdr can be NULL.
  */
-LRESULT WINAPI SendNotifyEx (HWND hwndTo, HWND hwndFrom, UINT uCode,
-                             LPNMHDR lpHdr, DWORD dwParam5)
+extern "C" LRESULT WINAPI SendNotifyEx(HWND hwndTo, HWND hwndFrom, UINT uCode,
+                                       LPNMHDR lpHdr, DWORD dwParam5)
 {
     NOTIFYDATA notify;
     HWND hwndNotify;
@@ -1174,6 +1161,3 @@ LRESULT WINAPI SendNotifyEx (HWND hwndTo, HWND hwndFrom, UINT uCode,
 
     return DoNotify (&notify, uCode, lpHdr);
 }
-#ifdef __cplusplus
-}
-#endif

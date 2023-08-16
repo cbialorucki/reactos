@@ -19,7 +19,7 @@ list(APPEND SOURCE
     button.cpp
     combo.cpp
     comboex.cpp
-    comctl32undoc.c
+    comctl32undoc.cpp
     comctl32.cpp
     datetime.cpp
     dpa.cpp
