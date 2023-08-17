@@ -87,3 +87,4 @@ typedef struct
 #define ICON_WIDTH  16
 
 #define MAX_TEXT_SIZE_A 80 /* maximum retrieving text size by ANSI message */
+#define TTS_CLOSE_BUTTON = 0x80 /* Undocumented style flag for showing or hiding the close button. */

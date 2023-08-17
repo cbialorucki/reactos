@@ -138,9 +138,9 @@ static void taskdialog_get_text_extent(const struct taskdialog_template_desc *de
 }
 
 static unsigned int taskdialog_add_control(struct taskdialog_template_desc *desc, WORD id, const WCHAR *ctlclass,
-        HINSTANCE hInstance, const WCHAR *text, DWORD style, short x, short y, short cx, short cy)
+                                           HINSTANCE hInstance, const WCHAR *text, DWORD style, short x, short y, short cx, short cy)
 {
-    struct taskdialog_control *control = (taskdialog_control*)Alloc(sizeof(*control));
+    struct taskdialog_control *control = new taskdialog_control();
     unsigned int size, class_size, text_size;
     DLGITEMTEMPLATE *DialogItemTemplate;
     static WCHAR nulW;
@@ -194,7 +194,7 @@ static unsigned int taskdialog_add_static_label(struct taskdialog_template_desc 
 
     desc->dialog_height += DIALOG_SPACING;
     size = taskdialog_add_control(desc, id, WC_STATICW, desc->taskconfig->hInstance, str, 0, DIALOG_SPACING,
-            desc->dialog_height, sz.cx, sz.cy);
+                                  desc->dialog_height, sz.cx, sz.cy);
     desc->dialog_height += sz.cy + DIALOG_SPACING;
     return size;
 }
@@ -210,7 +210,7 @@ static unsigned int taskdialog_add_content(struct taskdialog_template_desc *desc
 }
 
 static void taskdialog_init_button(struct taskdialog_button_desc *button, struct taskdialog_template_desc *desc,
-        int id, const WCHAR *text, BOOL custom_button)
+                                   int id, const WCHAR *text, BOOL custom_button)
 {
     SIZE sz;
 
@@ -227,7 +227,7 @@ static void taskdialog_init_button(struct taskdialog_button_desc *button, struct
 }
 
 static void taskdialog_init_common_buttons(struct taskdialog_template_desc *desc, struct taskdialog_button_desc *buttons,
-    unsigned int *button_count)
+                                           unsigned int *button_count)
 {
     DWORD flags = desc->taskconfig->dwCommonButtons;
 
@@ -388,7 +388,6 @@ static unsigned int taskdialog_get_reference_rect(const struct taskdialog_templa
 
     pixels_to_dialogunits(desc, &ret->left, &ret->top);
     pixels_to_dialogunits(desc, &ret->right, &ret->bottom);
-
     pixels_to_dialogunits(desc, &info.rcWork.left, &info.rcWork.top);
     pixels_to_dialogunits(desc, &info.rcWork.right, &info.rcWork.bottom);
     return info.rcWork.right - info.rcWork.left;
@@ -589,14 +588,13 @@ HRESULT WINAPI TaskDialogIndirect(const TASKDIALOGCONFIG *taskconfig, int *butto
  * TaskDialog [COMCTL32.@]
  */
 HRESULT WINAPI TaskDialog(HWND owner, HINSTANCE hinst, const WCHAR *title, const WCHAR *main_instruction,
-    const WCHAR *content, TASKDIALOG_COMMON_BUTTON_FLAGS common_buttons, const WCHAR *icon, int *button)
+                          const WCHAR *content, TASKDIALOG_COMMON_BUTTON_FLAGS common_buttons, const WCHAR *icon, int *button)
 {
-    TASKDIALOGCONFIG taskconfig;
+    TASKDIALOGCONFIG taskconfig = {0};
 
     TRACE("%p, %p, %s, %s, %s, %#x, %s, %p\n", owner, hinst, debugstr_w(title), debugstr_w(main_instruction),
         debugstr_w(content), common_buttons, debugstr_w(icon), button);
 
-    memset(&taskconfig, 0, sizeof(taskconfig));
     taskconfig.cbSize = sizeof(taskconfig);
     taskconfig.hwndParent = owner;
     taskconfig.hInstance = hinst;
@@ -605,5 +603,6 @@ HRESULT WINAPI TaskDialog(HWND owner, HINSTANCE hinst, const WCHAR *title, const
     taskconfig.u.pszMainIcon = icon;
     taskconfig.pszMainInstruction = main_instruction;
     taskconfig.pszContent = content;
+
     return TaskDialogIndirect(&taskconfig, button, NULL, NULL);
 }

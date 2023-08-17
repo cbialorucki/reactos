@@ -3892,8 +3892,7 @@ static inline void TOOLBAR_MoveFixupIndex(INT* pIndex, INT nIndex, INT nMoveInde
 }
 
 
-static LRESULT
-TOOLBAR_MoveButton (TOOLBAR_INFO *infoPtr, INT Id, INT nMoveIndex)
+static LRESULT TOOLBAR_MoveButton(TOOLBAR_INFO *infoPtr, INT Id, INT nMoveIndex)
 {
     INT nIndex;
     INT nCount;
@@ -3941,9 +3940,7 @@ TOOLBAR_MoveButton (TOOLBAR_INFO *infoPtr, INT Id, INT nMoveIndex)
     return TRUE;
 }
 
-
-static LRESULT
-TOOLBAR_PressButton (const TOOLBAR_INFO *infoPtr, INT Id, BOOL fPress)
+static LRESULT TOOLBAR_PressButton (const TOOLBAR_INFO *infoPtr, INT Id, BOOL fPress)
 {
     TBUTTON_INFO *btnPtr;
     INT nIndex;
@@ -3969,8 +3966,7 @@ TOOLBAR_PressButton (const TOOLBAR_INFO *infoPtr, INT Id, BOOL fPress)
 
 /* FIXME: there might still be some confusion her between number of buttons
  * and number of bitmaps */
-static LRESULT
-TOOLBAR_ReplaceBitmap (TOOLBAR_INFO *infoPtr, const TBREPLACEBITMAP *lpReplace)
+static LRESULT TOOLBAR_ReplaceBitmap (TOOLBAR_INFO *infoPtr, const TBREPLACEBITMAP *lpReplace)
 {
     HBITMAP hBitmap;
     int i = 0, nOldButtons = 0, pos = 0;
@@ -4044,10 +4040,8 @@ TOOLBAR_ReplaceBitmap (TOOLBAR_INFO *infoPtr, const TBREPLACEBITMAP *lpReplace)
     return TRUE;
 }
 
-
 /* helper for TOOLBAR_SaveRestoreW */
-static BOOL
-TOOLBAR_Save(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *params)
+static BOOL TOOLBAR_Save(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *params)
 {
     NMTBSAVE save;
     INT ret, i;
@@ -4188,7 +4182,7 @@ TOOLBAR_Restore(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *lpSave)
                     nmtbr.tbButton.idCommand = (int)*nmtbr.pCurrent;
 
                 nmtbr.pCurrent++;
-                
+
                 TOOLBAR_SendNotify(&nmtbr.hdr, infoPtr, TBN_RESTORE);
 
                 /* All returned ptrs and -1 are ignored */
@@ -4254,7 +4248,6 @@ TOOLBAR_Restore(TOOLBAR_INFO *infoPtr, const TBSAVEPARAMSW *lpSave)
     return ret;
 }
 
-
 static LRESULT
 TOOLBAR_SaveRestoreW (TOOLBAR_INFO *infoPtr, WPARAM wParam, const TBSAVEPARAMSW *lpSave)
 {
@@ -4265,7 +4258,6 @@ TOOLBAR_SaveRestoreW (TOOLBAR_INFO *infoPtr, WPARAM wParam, const TBSAVEPARAMSW 
     else
         return TOOLBAR_Restore(infoPtr, lpSave);
 }
-
 
 static LRESULT
 TOOLBAR_SaveRestoreA (TOOLBAR_INFO *infoPtr, WPARAM wParam, const TBSAVEPARAMSA *lpSave)
@@ -4299,7 +4291,6 @@ exit:
     return result;
 }
 
-
 static LRESULT
 TOOLBAR_SetAnchorHighlight (TOOLBAR_INFO *infoPtr, BOOL bAnchor)
 {
@@ -4310,10 +4301,8 @@ TOOLBAR_SetAnchorHighlight (TOOLBAR_INFO *infoPtr, BOOL bAnchor)
     infoPtr->bAnchor = bAnchor;
 
     /* Native does not remove the hot effect from an already hot button */
-
     return (LRESULT)bOldAnchor;
 }
-
 
 static LRESULT
 TOOLBAR_SetBitmapSize (TOOLBAR_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
@@ -4440,13 +4429,8 @@ TOOLBAR_SetButtonSize (TOOLBAR_INFO *infoPtr, LPARAM lParam)
     if (cx == 0) cx = 24;
     if (cy == 0) cy = 22;
 
-#ifdef __REACTOS__
     cx = max(cx, infoPtr->szPadding.cx + infoPtr->nBitmapWidth + infoPtr->themeMargins.cxLeftWidth + infoPtr->themeMargins.cxRightWidth);
     cy = max(cy, infoPtr->szPadding.cy + infoPtr->nBitmapHeight + infoPtr->themeMargins.cyTopHeight + infoPtr->themeMargins.cyBottomHeight);
-#else
-    cx = max(cx, infoPtr->szPadding.cx + infoPtr->nBitmapWidth);
-    cy = max(cy, infoPtr->szPadding.cy + infoPtr->nBitmapHeight);
-#endif
 
     if (cx != infoPtr->nButtonWidth || cy != infoPtr->nButtonHeight ||
         top != infoPtr->iTopMargin)
@@ -4784,7 +4768,6 @@ TOOLBAR_SetMaxTextRows (TOOLBAR_INFO *infoPtr, INT nMaxRows)
     return TRUE;
 }
 
-#ifdef __REACTOS__
 static LRESULT
 TOOLBAR_SetMetrics(TOOLBAR_INFO *infoPtr, TBMETRICS *pMetrics)
 {
@@ -4821,14 +4804,13 @@ TOOLBAR_SetMetrics(TOOLBAR_INFO *infoPtr, TBMETRICS *pMetrics)
 
     return TRUE;
 }
-#endif
 
 /* MSDN gives slightly wrong info on padding.
  * 1. It is not only used on buttons with the BTNS_AUTOSIZE style
  * 2. It is not used to create a blank area between the edge of the button
  *    and the text or image if TBSTYLE_LIST is set. It is used to control
- *    the gap between the image and text. 
- * 3. It is not applied to both sides. If TBSTYLE_LIST is set it is used 
+ *    the gap between the image and text.
+ * 3. It is not applied to both sides. If TBSTYLE_LIST is set it is used
  *    to control the bottom and right borders [with the border being
  *    szPadding.cx - (GetSystemMetrics(SM_CXEDGE)+1)], otherwise the padding
  *    is shared evenly on both sides of the button.
@@ -5111,7 +5093,6 @@ TOOLBAR_SetVersion (TOOLBAR_INFO *infoPtr, INT iVersion)
 {
     INT iOldVersion = infoPtr->iVersion;
 
-#ifdef __REACTOS__
     /* The v6 control doesn't support changing its version */
     if (iOldVersion == 6)
         return iOldVersion;
@@ -5119,7 +5100,6 @@ TOOLBAR_SetVersion (TOOLBAR_INFO *infoPtr, INT iVersion)
     /* And a control that is not v6 can't be set to be a v6 one */
     if (iVersion >= 6)
         return -1;
-#endif
 
     infoPtr->iVersion = iVersion;
 

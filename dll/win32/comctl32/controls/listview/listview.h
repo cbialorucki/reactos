@@ -304,25 +304,17 @@ typedef struct tagLISTVIEW_INFO
   TRACE("hwndSelf=%p, rcList=%s\n", iP->hwndSelf, wine_dbgstr_rect(&iP->rcList)); \
 } while(0)
 
+#define SCROLL_LEFT   0x1
+#define SCROLL_RIGHT  0x2
+#define SCROLL_UP     0x4
+#define SCROLL_DOWN   0x8
+
 static const WCHAR themeClass[] = L"ListView";
 
-static BOOL LISTVIEW_GetItemT(const LISTVIEW_INFO *, LPLVITEMW, BOOL);
-static void LISTVIEW_GetItemBox(const LISTVIEW_INFO *, INT, LPRECT);
-static void LISTVIEW_GetItemOrigin(const LISTVIEW_INFO *, INT, LPPOINT);
-static BOOL LISTVIEW_GetItemPosition(const LISTVIEW_INFO *, INT, LPPOINT);
-static BOOL LISTVIEW_GetItemRect(const LISTVIEW_INFO *, INT, LPRECT);
-static void LISTVIEW_GetOrigin(const LISTVIEW_INFO *, LPPOINT);
-static BOOL LISTVIEW_GetViewRect(const LISTVIEW_INFO *, LPRECT);
-static void LISTVIEW_UpdateSize(LISTVIEW_INFO *);
-static LRESULT LISTVIEW_Command(LISTVIEW_INFO *, WPARAM, LPARAM);
-static INT LISTVIEW_GetStringWidthT(const LISTVIEW_INFO *, LPCWSTR, BOOL);
-static BOOL LISTVIEW_KeySelection(LISTVIEW_INFO *, INT, BOOL);
-static UINT LISTVIEW_GetItemState(const LISTVIEW_INFO *, INT, UINT);
-static BOOL LISTVIEW_SetItemState(LISTVIEW_INFO *, INT, const LVITEMW *);
-static LRESULT LISTVIEW_VScroll(LISTVIEW_INFO *, INT, INT);
-static LRESULT LISTVIEW_HScroll(LISTVIEW_INFO *, INT, INT);
-static BOOL LISTVIEW_EnsureVisible(LISTVIEW_INFO *, INT, BOOL);
-static HIMAGELIST LISTVIEW_SetImageList(LISTVIEW_INFO *, INT, HIMAGELIST);
-static INT LISTVIEW_HitTest(const LISTVIEW_INFO *, LPLVHITTESTINFO, BOOL, BOOL);
-static BOOL LISTVIEW_EndEditLabelT(LISTVIEW_INFO *, BOOL, BOOL);
-static BOOL LISTVIEW_Scroll(LISTVIEW_INFO *, INT, INT);
+/* Functions */
+BOOL LISTVIEW_GetItemT(const LISTVIEW_INFO *, LPLVITEMW, BOOL);
+void LISTVIEW_GetItemOrigin(const LISTVIEW_INFO *, INT, LPPOINT);
+void LISTVIEW_GetItemBox(const LISTVIEW_INFO *, INT, LPRECT);
+void LISTVIEW_GetOrigin(const LISTVIEW_INFO *, LPPOINT);
+UINT LISTVIEW_GetItemState(const LISTVIEW_INFO *, INT, UINT);
+BOOL LISTVIEW_SetItemState(LISTVIEW_INFO *, INT, const LVITEMW *);

@@ -1076,13 +1076,10 @@ PAGER_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
 }
 
-
-VOID
-PAGER_Register (void)
+void PAGER_Register()
 {
-    WNDCLASSW wndClass;
+    WNDCLASSW wndClass = {0};
 
-    ZeroMemory (&wndClass, sizeof(WNDCLASSW));
     wndClass.style         = CS_GLOBALCLASS;
     wndClass.lpfnWndProc   = PAGER_WindowProc;
     wndClass.cbClsExtra    = 0;
@@ -1091,12 +1088,10 @@ PAGER_Register (void)
     wndClass.hbrBackground = (HBRUSH)(COLOR_BTNFACE+1);
     wndClass.lpszClassName = WC_PAGESCROLLERW;
 
-    RegisterClassW (&wndClass);
+    RegisterClassW(&wndClass);
 }
 
-
-VOID
-PAGER_Unregister (void)
+void PAGER_Unregister()
 {
-    UnregisterClassW (WC_PAGESCROLLERW, NULL);
+    UnregisterClassW(WC_PAGESCROLLERW, NULL);
 }

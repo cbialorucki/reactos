@@ -58,7 +58,6 @@ extern "C" LPVOID WINAPI Alloc(DWORD dwSize)
     return LocalAlloc(LMEM_ZEROINIT, dwSize);
 }
 
-
 /**************************************************************************
  * ReAlloc [COMCTL32.72]
  *
@@ -80,9 +79,9 @@ extern "C" LPVOID WINAPI Alloc(DWORD dwSize)
 extern "C" LPVOID WINAPI ReAlloc (LPVOID lpSrc, DWORD dwSize)
 {
     if (lpSrc)
-        return LocalReAlloc( lpSrc, dwSize, LMEM_ZEROINIT | LMEM_MOVEABLE );
+        return LocalReAlloc(lpSrc, dwSize, LMEM_ZEROINIT | LMEM_MOVEABLE );
     else
-        return LocalAlloc( LMEM_ZEROINIT, dwSize);
+        return LocalAlloc(LMEM_ZEROINIT, dwSize);
 }
 
 /**************************************************************************
@@ -97,9 +96,9 @@ extern "C" LPVOID WINAPI ReAlloc (LPVOID lpSrc, DWORD dwSize)
  *     Success: TRUE
  *     Failure: FALSE
  */
-extern "C" BOOL WINAPI Free (LPVOID lpMem)
+extern "C" BOOL WINAPI Free(LPVOID lpMem)
 {
-    return !LocalFree( lpMem );
+    return !LocalFree(lpMem);
 }
 
 /**************************************************************************
@@ -115,9 +114,9 @@ extern "C" BOOL WINAPI Free (LPVOID lpMem)
  *     Success: size of the specified memory block
  *     Failure: 0
  */
-extern "C" DWORD WINAPI GetSize (LPVOID lpMem)
+extern "C" DWORD WINAPI GetSize(LPVOID lpMem)
 {
-    return LocalSize( lpMem );
+    return LocalSize(lpMem);
 }
 
 /**************************************************************************

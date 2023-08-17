@@ -34,6 +34,7 @@ list(APPEND SOURCE
     controls/ipaddress/ipaddress.cpp
     controls/listbox/listbox.cpp
     controls/listview/listview.cpp
+    controls/listview/utils.cpp
     controls/monthcal/monthcal.cpp
     controls/nativefont/nativefont.cpp
     controls/pager/pager.cpp
