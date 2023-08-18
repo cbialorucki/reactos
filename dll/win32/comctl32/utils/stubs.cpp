@@ -7,33 +7,26 @@
 #include <windef.h>
 #include <reactos/debug.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef PVOID PREADERMODEINFO;
 
-HWND WINAPI CreatePage(DWORD dwInitParam, HWND hWndParent)
+extern "C" HWND WINAPI CreatePage(DWORD dwInitParam, HWND hWndParent)
 {
     UNIMPLEMENTED;
     return NULL;
 }
 
-HWND WINAPI CreateProxyPage(DWORD dwUnknown1, DWORD dwUnknown2)
+extern "C" HWND WINAPI CreateProxyPage(DWORD dwUnknown1, DWORD dwUnknown2)
 {
     UNIMPLEMENTED;
     return NULL;
 }
 
-VOID WINAPI DoReaderMode(PREADERMODEINFO prmi)
+extern "C" void WINAPI DoReaderMode(PREADERMODEINFO prmi)
 {
     UNIMPLEMENTED;
 }
 
-VOID WINAPI SHGetProcessDword(DWORD dwUnknown1, DWORD dwUnknown2)
+extern "C" void WINAPI SHGetProcessDword(DWORD dwUnknown1, DWORD dwUnknown2)
 {
     UNIMPLEMENTED;
 }
-#ifdef __cplusplus
-}
-#endif

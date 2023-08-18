@@ -4,6 +4,7 @@
  * PURPOSE:     "Theming - Initialization" (figure out how to name this professionally)
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
+/* THIS IS REMOVED IN NEWER WINE SYNCS. */
 
 #include <stdarg.h>
 
@@ -15,23 +16,18 @@
 #include "uxtheme.h"
 #include "wine/debug.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 WINE_DEFAULT_DEBUG_CHANNEL(theming);
 
 typedef LRESULT (CALLBACK* THEMING_SUBCLASSPROC)(HWND, UINT, WPARAM, LPARAM, ULONG_PTR);
 
-extern LRESULT CALLBACK THEMING_ScrollbarSubclassProc (HWND, UINT, WPARAM, LPARAM, ULONG_PTR) DECLSPEC_HIDDEN;
+extern "C" LRESULT CALLBACK THEMING_ScrollbarSubclassProc(HWND, UINT, WPARAM, LPARAM, ULONG_PTR) DECLSPEC_HIDDEN;
 
 static const struct ThemingSubclass
 {
     const WCHAR* className;
     THEMING_SUBCLASSPROC subclassProc;
 } subclasses[] = {
-    /* Note: list must be sorted by class name */
-    {WC_SCROLLBARW,        THEMING_ScrollbarSubclassProc}
+    {WC_SCROLLBARW, THEMING_ScrollbarSubclassProc}
 };
 
 #define NUM_SUBCLASSES        (ARRAY_SIZE(subclasses))
@@ -40,12 +36,6 @@ static WNDPROC originalProcs[NUM_SUBCLASSES];
 static ATOM atRefDataProp;
 static ATOM atSubclassProp;
 
-/* Generate a number of subclass window procs.
- * With a single proc alone, we can't really reliably find out the superclass,
- * so have one for each subclass. The subclass number is also stored in a prop
- * since it's needed by THEMING_CallOriginalClass(). Then, the subclass
- * proc and ref data are fetched and the proc called.
- */
 #define MAKE_SUBCLASS_PROC(N)                                               \
 static LRESULT CALLBACK subclass_proc ## N (HWND wnd, UINT msg,             \
                                             WPARAM wParam, LPARAM lParam)   \
@@ -67,13 +57,7 @@ static const WNDPROC subclassProcs[NUM_SUBCLASSES] = {
     subclass_proc0,
 };
 
-/***********************************************************************
- * THEMING_Initialize
- *
- * Register classes for standard controls that will shadow the system
- * classes.
- */
-void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6)
+extern "C" void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6)
 {
     unsigned int i;
     static const WCHAR subclassPropName[] = L"CC32ThemingSubCl";
@@ -131,16 +115,11 @@ void THEMING_Initialize(HANDLE hActCtx5, HANDLE hActCtx6)
     }
 }
 
-/***********************************************************************
- * THEMING_Uninitialize
- *
- * Unregister shadow classes for standard controls.
- */
-void THEMING_Uninitialize (void)
+extern "C" void THEMING_Uninitialize (void)
 {
     unsigned int i;
 
-    if (!atSubclassProp) return;  /* not initialized */
+    if (!atSubclassProp) return;
 
     for (i = 0; i < NUM_SUBCLASSES; i++)
     {
@@ -148,27 +127,14 @@ void THEMING_Uninitialize (void)
     }
 }
 
-/***********************************************************************
- * THEMING_CallOriginalClass
- *
- * Determines the original window proc and calls it.
- */
-LRESULT THEMING_CallOriginalClass (HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
+extern "C" LRESULT THEMING_CallOriginalClass (HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     INT_PTR subclass = (INT_PTR)GetPropW (wnd, (LPCWSTR)MAKEINTATOM(atSubclassProp));
     WNDPROC oldProc = originalProcs[subclass];
     return CallWindowProcW (oldProc, wnd, msg, wParam, lParam);
 }
 
-/***********************************************************************
- * THEMING_SetSubclassData
- *
- * Update the "refData" value of the subclassed window.
- */
-void THEMING_SetSubclassData (HWND wnd, ULONG_PTR refData)
+extern "C" void THEMING_SetSubclassData(HWND wnd, ULONG_PTR refData)
 {
     SetPropW (wnd, (LPCWSTR)MAKEINTATOM(atRefDataProp), (HANDLE)refData);
 }
-#ifdef __cplusplus
-}
-#endif

@@ -4,7 +4,7 @@
  * PURPOSE:     Themed Scrollbar control
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
-
+/* THIS IS REMOVED IN NEWER WINE SYNCS. */
 #include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>

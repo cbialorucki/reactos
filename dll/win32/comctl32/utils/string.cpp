@@ -4,7 +4,7 @@
  * PURPOSE:     String functions
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
-
+/* THIS FILE IS CUT DOWN SIGNIFICANTLY IN NEWER WINES */
 #include "config.h"
 //#include "wine/port.h" //Not needed?
 

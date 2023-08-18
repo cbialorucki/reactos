@@ -4,7 +4,7 @@
  * PURPOSE:     Main DLL entry point
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
-
+/* Requires wine sync */
 #include <stdarg.h>
 #include <string.h>
 #include <stdlib.h>

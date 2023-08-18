@@ -5,21 +5,9 @@
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 /* NOTES:
- *  This is a stub.
- *
- * 	From the Microsoft docs:
- *	"If flat scroll bars haven't been initialized for the
- *	window, the flat scroll bar APIs will defer to the corresponding
- *	standard APIs.  This allows the developer to turn flat scroll
- *	bars on and off without having to write conditional code."
- *
- *	So, if we just call the standard functions until we implement
- *	the flat scroll bar functions, flat scroll bars will show up and
- *	behave properly, as though they had simply not been setup to
- *	have flat properties.
- *
- *	Susan <sfarley@codeweavers.com>
- */
+ * This is a stub. It redirects flat scroll bar calls to
+ * normal scroll bars.
+*/
 
 #include <stdarg.h>
 #include <string.h>
@@ -33,18 +21,16 @@
 
 WINE_DEFAULT_DEBUG_CHANNEL(commctrl);
 
-/***********************************************************************
- *		InitializeFlatSB (COMCTL32.@)
- *
+/**
+ * @brief
  * Initializes flat scroll bars for the specified window.
  *
- * RETURNS
- *     Success: Non-zero
- *     Failure: Zero
+ * @param[in] hwnd
+ * The window handle used to initialize the scroll bars.
  *
- * NOTES
- *     Subclasses specified window so that flat scroll bars may be drawn
- *     and used.
+ * @return
+ * TRUE if successful.
+ * FALSE if failed.
  */
 BOOL WINAPI InitializeFlatSB(HWND hwnd)
 {
@@ -52,19 +38,17 @@ BOOL WINAPI InitializeFlatSB(HWND hwnd)
     return TRUE;
 }
 
-/***********************************************************************
- *		UninitializeFlatSB (COMCTL32.@)
- *
+/**
+ * @brief
  * Uninitializes flat scroll bars for the specified window.
  *
- * RETURNS
- *	E_FAIL		if one of the scroll bars is currently in use
- *	S_FALSE		if InitializeFlatSB() was never called on this hwnd
- *	S_OK		otherwise
+ * @param[in] hwnd
+ * The window handle used to uninitialize the scroll bars.
  *
- * NOTES
- *     Removes any subclassing on the specified window so that regular
- *     scroll bars are drawn and used.
+ * @return
+ * E_FAIL if the scroll bar is in use.
+ * S_FALSE if the scroll bar was never initialized.
+ * S_OK if successful.
  */
 HRESULT WINAPI UninitializeFlatSB(HWND hwnd)
 {
@@ -232,5 +216,5 @@ void FLATSB_Register()
 
 void FLATSB_Unregister ()
 {
-    UnregisterClassW (FLATSB_CLASSW, NULL);
+    UnregisterClassW(FLATSB_CLASSW, NULL);
 }

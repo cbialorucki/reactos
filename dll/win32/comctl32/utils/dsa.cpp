@@ -5,13 +5,7 @@
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
 /* NOTES
- *     These functions were involuntarily documented by Microsoft in 2002 as
- *     the outcome of an anti-trust suit brought by various U.S. governments.
- *     As a result the specifications on MSDN are inaccurate, incomplete
- *     and misleading. A much more complete (unofficial) documentation is
- *     available at:
- *
- *     http://members.ozemail.com.au/~geoffch/samples/win32/shell/comctl32
+ *     Wine synced on 17 August 2023.
  */
 
 #include <stdarg.h>
@@ -72,7 +66,6 @@ extern "C" HDSA WINAPI DSA_Create(INT nSize, INT nGrow)
     return hdsa;
 }
 
-
 /**************************************************************************
  * DSA_Destroy [COMCTL32.321]
  *
@@ -112,7 +105,7 @@ extern "C" BOOL WINAPI DSA_Destroy(HDSA hdsa)
  *     Success: TRUE
  *     Failure: FALSE
  */
-extern "C" BOOL WINAPI DSA_GetItem (HDSA hdsa, INT nIndex, LPVOID pDest)
+extern "C" BOOL WINAPI DSA_GetItem(HDSA hdsa, INT nIndex, LPVOID pDest)
 {
     LPVOID pSrc;
 
@@ -162,7 +155,6 @@ extern "C" LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
     return pSrc;
 }
 
-
 /**************************************************************************
  * DSA_SetItem [COMCTL32.325]
  *
@@ -177,7 +169,7 @@ extern "C" LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
  *     Success: TRUE
  *     Failure: FALSE
  */
-extern "C" BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
+extern "C" BOOL WINAPI DSA_SetItem(HDSA hdsa, INT nIndex, LPVOID pSrc)
 {
     INT  nSize, nNewItems;
     LPVOID pDest, lpTemp;
@@ -201,7 +193,7 @@ extern "C" BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
             nNewItems = hdsa->nGrow * ((((nIndex + 1) - 1) / hdsa->nGrow) + 1);
             nSize = hdsa->nItemSize * nNewItems;
 
-            lpTemp = ReAlloc (hdsa->pData, nSize);
+            lpTemp = ReAlloc(hdsa->pData, nSize);
             if (!lpTemp)
                 return FALSE;
 
@@ -218,7 +210,6 @@ extern "C" BOOL WINAPI DSA_SetItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
 
     return TRUE;
 }
-
 
 /**************************************************************************
  * DSA_InsertItem [COMCTL32.324]
@@ -299,7 +290,7 @@ extern "C" INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
 extern "C" INT WINAPI DSA_DeleteItem (HDSA hdsa, INT nIndex)
 {
     LPVOID lpDest,lpSrc;
-    INT  nSize;
+    INT nSize;
 
     TRACE("(%p %d)\n", hdsa, nIndex);
 
@@ -446,10 +437,10 @@ extern "C" HDSA WINAPI DSA_Clone(HDSA hdsa)
 
     for (i = 0; i < hdsa->nItemCount; i++)
     {
-        void *ptr = DSA_GetItemPtr (hdsa, i);
-        if (DSA_InsertItem (dest, DA_LAST, ptr) == -1)
+        void *ptr = DSA_GetItemPtr(hdsa, i);
+        if (DSA_InsertItem(dest, DA_LAST, ptr) == -1)
         {
-            DSA_Destroy (dest);
+            DSA_Destroy(dest);
             return NULL;
         }
     }
@@ -472,7 +463,8 @@ extern "C" ULONGLONG WINAPI DSA_GetSize(HDSA hdsa)
 {
     TRACE("(%p)\n", hdsa);
 
-    if (!hdsa) return 0;
+    if (!hdsa)
+        return 0;
 
     return sizeof(*hdsa) + (ULONGLONG)hdsa->nMaxCount*hdsa->nItemSize;
 }

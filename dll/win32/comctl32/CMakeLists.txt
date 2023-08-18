@@ -48,13 +48,13 @@ list(APPEND SOURCE
     controls/syslink/syslink.cpp
     controls/tab/tab.cpp
     controls/taskdialog/taskdialog.cpp
-    utils/theme_scrollbar.cpp
-    utils/theming.cpp
     controls/toolbar/toolbar.cpp
     controls/tooltips/tooltips.cpp
     controls/trackbar/trackbar.cpp
     controls/treeview/treeview.cpp
-    controls/updown/updown.cpp)
+    controls/updown/updown.cpp
+    utils/theme_scrollbar.cpp
+    utils/theming.cpp)
 
 list(APPEND PCH_SKIP_SOURCE
     utils/stubs.cpp)
