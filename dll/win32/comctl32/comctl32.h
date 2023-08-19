@@ -74,11 +74,16 @@ extern HBRUSH  COMCTL32_hPattern55AABrush DECLSPEC_HIDDEN;
 
 #define IDT_CHECK        401
 
+/* Command Link arrow */
+#define IDB_CMDLINK      402
+
+
 /* Cursors */
 #define IDC_MOVEBUTTON                  102
 #define IDC_COPY                        104
 #define IDC_DIVIDER                     106
 #define IDC_DIVIDEROPEN                 107
+
 
 /* DragList resources */
 #define IDI_DRAGARROW                   501
@@ -99,9 +104,9 @@ extern HBRUSH  COMCTL32_hPattern55AABrush DECLSPEC_HIDDEN;
 #define IDS_BUTTON_CANCEL 3004
 #define IDS_BUTTON_CLOSE  3005
 
-#ifndef __REACTOS__
-#define WM_SYSTIMER     0x0118
-#endif
+/* Task dialog expando control default text */
+#define IDS_TD_EXPANDED   3020
+#define IDS_TD_COLLAPSED  3021
 
 enum combobox_state_flags
 {
@@ -119,7 +124,7 @@ enum combobox_state_flags
     CBF_HOT          = 0x0800,
     CBF_NOEDITNOTIFY = 0x1000,
     CBF_NOLBSELECT   = 0x2000, /* do not change current selection */
-    CBF_BEENFOCUSED  = 0x4000, /* has it ever had focus */
+    CBF_BEENFOCUSED  = 0x4000, /* has it ever had focus           */
     CBF_EUI          = 0x8000,
 };
 
@@ -169,6 +174,7 @@ extern COMCTL32_SysColor  comctl32_color DECLSPEC_HIDDEN;
 
 /* Internal function */
 HWND COMCTL32_CreateToolTip (HWND) DECLSPEC_HIDDEN;
+void COMCTL32_DrawStatusText(HDC hdc, LPCRECT lprc, LPCWSTR text, UINT style, BOOL draw_background) DECLSPEC_HIDDEN;
 VOID COMCTL32_RefreshSysColors(void) DECLSPEC_HIDDEN;
 void COMCTL32_DrawInsertMark(HDC hDC, const RECT *lpRect, COLORREF clrInsertMark, BOOL bHorizontal) DECLSPEC_HIDDEN;
 void COMCTL32_EnsureBitmapSize(HBITMAP *pBitmap, int cxMinWidth, int cyMinHeight, COLORREF crBackground) DECLSPEC_HIDDEN;
@@ -196,6 +202,7 @@ typedef struct
    SUBCLASSPROCS *SubclassProcs;
    SUBCLASSPROCS *stackpos;
    WNDPROC origproc;
+   int is_unicode;
    int running;
 } SUBCLASS_INFO, *LPSUBCLASS_INFO;
 

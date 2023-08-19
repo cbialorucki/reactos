@@ -19,7 +19,7 @@ list(APPEND SOURCE
     controls/button/button.cpp
     controls/combo/combo.cpp
     controls/comboex/comboex.cpp
-    utils/comctl32_undoc.cpp
+
     comctl32.cpp
     controls/datetime/datetime.cpp
     utils/debug.cpp
