@@ -822,6 +822,15 @@ HTHEME WINAPI OpenThemeDataEx(HWND hwnd, LPCWSTR pszClassList, DWORD flags)
 }
 
 /***********************************************************************
+ *      OpenThemeDataForDpi                                 (UXTHEME.@)
+ */
+HTHEME WINAPI OpenThemeDataForDpi(HWND hwnd, LPCWSTR class_list, UINT dpi)
+{
+    // Ignore DPI for now....
+    return OpenThemeData(hwnd, class_list);
+}
+
+/***********************************************************************
  *      OpenThemeDataFromFile                               (UXTHEME.16)
  */
 HTHEME WINAPI OpenThemeDataFromFile(HTHEMEFILE hThemeFile, HWND hwnd, LPCWSTR pszClassList, DWORD flags)

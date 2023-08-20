@@ -28,7 +28,6 @@
 WINE_DEFAULT_DEBUG_CHANNEL(monthcal);
 
 /* FIXME: Inspect */
-#define MCS_NOSELCHANGEONNAV 0x0100
 
 #define MC_SEL_LBUTUP	    1	/* Left button released */
 #define MC_SEL_LBUTDOWN	    2	/* Left button pressed in calendar */

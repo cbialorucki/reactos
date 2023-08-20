@@ -4,6 +4,7 @@
  * PURPOSE:     Date and time picker control
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
+/* Wine synced on 19 August 2023. */
 /* TODO:
  *    -- DTS_APPCANPARSE
  *    -- DTS_SHORTDATECENTURYFORMAT
@@ -14,10 +15,110 @@
  *    -- FORMATCALLBACK
  */
 
-#include "datetime.h"
+#include <math.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <limits.h>
 
-static DWORD
-DATETIME_GetSystemTime (const DATETIME_INFO *infoPtr, SYSTEMTIME *systime)
+#include "windef.h"
+#include "winbase.h"
+#include "wingdi.h"
+#include "winuser.h"
+#include "winnls.h"
+#include "commctrl.h"
+#include "comctl32.h"
+#include "uxtheme.h"
+#include "vsstyle.h"
+#include "wine/debug.h"
+
+WINE_DEFAULT_DEBUG_CHANNEL(datetime);
+
+typedef struct
+{
+    HWND hwndSelf;
+    HWND hMonthCal;
+    HWND hwndNotify;
+    HWND hUpdown;
+    DWORD dwStyle;
+    SYSTEMTIME date;
+    BOOL dateValid;
+    HWND hwndCheckbut;
+    RECT rcClient; /* rect around the edge of the window */
+    RECT rcDraw; /* rect inside of the border */
+    RECT checkbox;  /* checkbox allowing the control to be enabled/disabled */
+    RECT calbutton; /* button that toggles the dropdown of the monthcal control */
+    BOOL bCalDepressed; /* TRUE = cal button is depressed */
+    BOOL bCalHot; /* TRUE if calendar button is hovered */
+    BOOL bDropdownEnabled;
+    int  select;
+    WCHAR charsEntered[4];
+    int nCharsEntered;
+    HFONT hFont;
+    int nrFieldsAllocated;
+    int nrFields;
+    int haveFocus;
+    int *fieldspec;
+    RECT *fieldRect;
+    int  *buflen;
+    WCHAR textbuf[256];
+    POINT monthcal_pos;
+    int pendingUpdown;
+} DATETIME_INFO, *LPDATETIME_INFO;
+
+/* this list of defines is closely related to `allowedformatchars' defined
+ * in datetime.c; the high nibble indicates the `base type' of the format
+ * specifier.
+ * Do not change without first reading DATETIME_UseFormat.
+ *
+ */
+
+#define DT_END_FORMAT      0
+#define ONEDIGITDAY   	0x01
+#define TWODIGITDAY   	0x02
+#define THREECHARDAY  	0x03
+#define FULLDAY         0x04
+#define ONEDIGIT12HOUR  0x11
+#define TWODIGIT12HOUR  0x12
+#define ONEDIGIT24HOUR  0x21
+#define TWODIGIT24HOUR  0x22
+#define ONEDIGITMINUTE  0x31
+#define TWODIGITMINUTE  0x32
+#define ONEDIGITMONTH   0x41
+#define TWODIGITMONTH   0x42
+#define THREECHARMONTH  0x43
+#define FULLMONTH       0x44
+#define ONEDIGITSECOND  0x51
+#define TWODIGITSECOND  0x52
+#define ONELETTERAMPM   0x61
+#define TWOLETTERAMPM   0x62
+#define ONEDIGITYEAR    0x71
+#define TWODIGITYEAR    0x72
+#define INVALIDFULLYEAR 0x73      /* FIXME - yyy is not valid - we'll treat it as yyyy */
+#define FULLYEAR        0x74
+#define FORMATCALLBACK  0x81      /* -> maximum of 0x80 callbacks possible */
+#define FORMATCALLMASK  0x80
+#define DT_STRING 	0x0100
+
+#define DTHT_DATEFIELD  0xff      /* for hit-testing */
+
+#define DTHT_NONE       0x1000
+#define DTHT_CHECKBOX   0x2000  /* these should end at '00' , to make */
+#define DTHT_MCPOPUP    0x3000  /* & DTHT_DATEFIELD 0 when DATETIME_KeyDown */
+#define DTHT_GOTFOCUS   0x4000  /* tests for date-fields */
+#define DTHT_NODATEMASK 0xf000  /* to mask check and drop down from others */
+
+static BOOL DATETIME_SendSimpleNotify (const DATETIME_INFO *infoPtr, UINT code);
+static BOOL DATETIME_SendDateTimeChangeNotify (const DATETIME_INFO *infoPtr);
+static const WCHAR allowedformatchars[] = L"dhHmMstyX";
+static const int maxrepetition [] = {4,2,2,2,4,2,2,4,-1};
+static const WCHAR *themeClass = WC_SCROLLBARW;
+
+/* valid date limits */
+static const SYSTEMTIME max_allowed_date = { .wYear = 9999, .wMonth = 12, .wDayOfWeek = 0, .wDay = 31 };
+static const SYSTEMTIME min_allowed_date = { .wYear = 1752, .wMonth = 9, .wDayOfWeek = 0, .wDay = 14 };
+
+static DWORD DATETIME_GetSystemTime(const DATETIME_INFO *infoPtr, SYSTEMTIME *systime)
 {
     if (!systime) return GDT_NONE;
 
@@ -68,8 +169,7 @@ static BOOL DATETIME_IsDateInValidRange(const DATETIME_INFO *infoPtr, const SYST
     return TRUE;
 }
 
-static BOOL
-DATETIME_SetSystemTime (DATETIME_INFO *infoPtr, DWORD flag, const SYSTEMTIME *systime)
+static BOOL DATETIME_SetSystemTime (DATETIME_INFO *infoPtr, DWORD flag, const SYSTEMTIME *systime)
 {
     if (!systime) return FALSE;
 
@@ -123,8 +223,7 @@ DATETIME_SetSystemTime (DATETIME_INFO *infoPtr, DWORD flag, const SYSTEMTIME *sy
  * Therefore, 'string' ends up as '<show seconds>tring'.
  *
  */
-static void
-DATETIME_UseFormat (DATETIME_INFO *infoPtr, LPCWSTR formattxt)
+static void DATETIME_UseFormat (DATETIME_INFO *infoPtr, LPCWSTR formattxt)
 {
     unsigned int i;
     int j, k, len;
@@ -195,9 +294,7 @@ DATETIME_UseFormat (DATETIME_INFO *infoPtr, LPCWSTR formattxt)
     if (infoPtr->fieldspec[*nrFields] != 0) (*nrFields)++;
 }
 
-
-static BOOL
-DATETIME_SetFormatW (DATETIME_INFO *infoPtr, LPCWSTR format)
+static BOOL DATETIME_SetFormatW (DATETIME_INFO *infoPtr, LPCWSTR format)
 {
     WCHAR format_buf[80];
 
@@ -222,9 +319,7 @@ DATETIME_SetFormatW (DATETIME_INFO *infoPtr, LPCWSTR format)
     return TRUE;
 }
 
-
-static BOOL
-DATETIME_SetFormatA (DATETIME_INFO *infoPtr, LPCSTR lpszFormat)
+static BOOL DATETIME_SetFormatA (DATETIME_INFO *infoPtr, LPCSTR lpszFormat)
 {
     if (lpszFormat) {
 	BOOL retval;
@@ -240,9 +335,7 @@ DATETIME_SetFormatA (DATETIME_INFO *infoPtr, LPCSTR lpszFormat)
 
 }
 
-
-static void
-DATETIME_ReturnTxt (const DATETIME_INFO *infoPtr, int count, LPWSTR result, int resultSize)
+static void DATETIME_ReturnTxt(const DATETIME_INFO *infoPtr, int count, LPWSTR result, int resultSize)
 {
     SYSTEMTIME date = infoPtr->date;
     int spec;
@@ -268,7 +361,6 @@ DATETIME_ReturnTxt (const DATETIME_INFO *infoPtr, int count, LPWSTR result, int 
 	TRACE ("arg%d=%x->[%s]\n", count, infoPtr->fieldspec[count], debugstr_w(result));
 	return;
     }
-
 
     switch (spec) {
 	case DT_END_FORMAT:
@@ -374,8 +466,7 @@ static int wrap(int val, int delta, int minVal, int maxVal)
     return val;
 }
 
-static void
-DATETIME_IncreaseField (DATETIME_INFO *infoPtr, int number, int delta)
+static void DATETIME_IncreaseField(DATETIME_INFO *infoPtr, int number, int delta)
 {
     SYSTEMTIME *date = &infoPtr->date;
     SYSTEMTIME range[2];
@@ -477,7 +568,7 @@ DATETIME_IncreaseField (DATETIME_INFO *infoPtr, int number, int delta)
     }
 }
 
-static int DATETIME_GetFieldWidth (const DATETIME_INFO *infoPtr, HDC hdc, int count)
+static int DATETIME_GetFieldWidth(const DATETIME_INFO *infoPtr, HDC hdc, int count)
 {
     /* fields are a fixed width, determined by the largest possible string */
     /* presumably, these widths should be language dependent */
@@ -588,9 +679,11 @@ static int DATETIME_GetFieldWidth (const DATETIME_INFO *infoPtr, HDC hdc, int co
     return size.cx;
 }
 
-static void 
-DATETIME_Refresh (DATETIME_INFO *infoPtr, HDC hdc)
+static void DATETIME_Refresh (DATETIME_INFO *infoPtr, HDC hdc)
 {
+    HTHEME theme;
+    int state;
+
     TRACE("\n");
 
     if (infoPtr->dateValid) {
@@ -600,10 +693,10 @@ DATETIME_Refresh (DATETIME_INFO *infoPtr, HDC hdc)
         SIZE size;
         COLORREF oldTextColor;
         HFONT oldFont = (HFONT)SelectObject(hdc, infoPtr->hFont);
-        INT oldBkMode = SetBkMode(hdc, TRANSPARENT);
+        INT oldBkMode = SetBkMode (hdc, TRANSPARENT);
         WCHAR txt[80];
 
-        DATETIME_ReturnTxt (infoPtr, 0, txt, ARRAY_SIZE(txt));
+        DATETIME_ReturnTxt(infoPtr, 0, txt, ARRAY_SIZE(txt));
         GetTextExtentPoint32W (hdc, txt, lstrlenW(txt), &size);
         rcDraw->bottom = size.cy + 2;
 
@@ -654,16 +747,32 @@ DATETIME_Refresh (DATETIME_INFO *infoPtr, HDC hdc)
         SelectObject (hdc, oldFont);
     }
 
-    if (!(infoPtr->dwStyle & DTS_UPDOWN)) {
+    if (infoPtr->dwStyle & DTS_UPDOWN)
+        return;
+
+    theme = GetWindowTheme(infoPtr->hwndSelf);
+    if (theme)
+    {
+        if (infoPtr->dwStyle & WS_DISABLED)
+            state = ABS_DOWNDISABLED;
+        else if (infoPtr->bCalDepressed)
+            state = ABS_DOWNPRESSED;
+        else if (infoPtr->bCalHot)
+            state = ABS_DOWNHOT;
+        else
+            state = ABS_DOWNNORMAL;
+
+        DrawThemeBackground(theme, hdc, SBP_ARROWBTN, state, &infoPtr->calbutton, NULL);
+    }
+    else
+    {
         DrawFrameControl(hdc, &infoPtr->calbutton, DFC_SCROLL,
                          DFCS_SCROLLDOWN | (infoPtr->bCalDepressed ? DFCS_PUSHED : 0) |
                          (infoPtr->dwStyle & WS_DISABLED ? DFCS_INACTIVE : 0) );
     }
 }
 
-
-static INT
-DATETIME_HitTest (const DATETIME_INFO *infoPtr, POINT pt)
+static INT DATETIME_HitTest(const DATETIME_INFO *infoPtr, POINT pt)
 {
     int i;
 
@@ -690,8 +799,7 @@ static int DATETIME_GetPrevDateField(const DATETIME_INFO *infoPtr, int i)
     return -1;
 }
 
-static void
-DATETIME_ApplySelectedField (DATETIME_INFO *infoPtr)
+static void DATETIME_ApplySelectedField(DATETIME_INFO *infoPtr)
 {
     int fieldNum = infoPtr->select & DTHT_DATEFIELD;
     int i, val = 0;
@@ -789,8 +897,7 @@ DATETIME_ApplySelectedField (DATETIME_INFO *infoPtr)
         DATETIME_SendDateTimeChangeNotify (infoPtr);
 }
 
-static void
-DATETIME_SetSelectedField (DATETIME_INFO *infoPtr, int select)
+static void DATETIME_SetSelectedField (DATETIME_INFO *infoPtr, int select)
 {
     DATETIME_ApplySelectedField(infoPtr);
 
@@ -798,36 +905,35 @@ DATETIME_SetSelectedField (DATETIME_INFO *infoPtr, int select)
     infoPtr->nCharsEntered = 0;
 }
 
-static LRESULT
-DATETIME_LButtonDown (DATETIME_INFO *infoPtr, INT x, INT y)
+static LRESULT DATETIME_LButtonDown(DATETIME_INFO *infoPtr, INT x, INT y)
 {
     POINT pt;
-    int newInt;
+    int new1;
 
     pt.x = x;
     pt.y = y;
-    newInt = DATETIME_HitTest(infoPtr, pt);
+    new1 = DATETIME_HitTest (infoPtr, pt);
 
     SetFocus(infoPtr->hwndSelf);
 
-    if (!(newInt & DTHT_NODATEMASK) || (newInt == DTHT_NONE))
+    if (!(new1 & DTHT_NODATEMASK) || (new1 == DTHT_NONE))
     {
-        if (newInt == DTHT_NONE)
-            newInt = infoPtr->nrFields - 1;
+        if (new1 == DTHT_NONE)
+            new1 = infoPtr->nrFields - 1;
         else
         {
             /* hitting string part moves selection to next date field to left */
-            if (infoPtr->fieldspec[newInt] & DT_STRING)
+            if (infoPtr->fieldspec[new1] & DT_STRING)
             {
-                newInt = DATETIME_GetPrevDateField(infoPtr, newInt);
-                if (newInt == -1) return 0;
+                new1 = DATETIME_GetPrevDateField(infoPtr, new1);
+                if (new1 == -1) return 0;
             }
             /* never select full day of week */
-            if (infoPtr->fieldspec[newInt] == FULLDAY) return 0;
+            if (infoPtr->fieldspec[new1] == FULLDAY) return 0;
         }
     }
 
-    DATETIME_SetSelectedField(infoPtr, newInt);
+    DATETIME_SetSelectedField(infoPtr, new1);
 
     if (infoPtr->select == DTHT_MCPOPUP) {
         RECT rcMonthCal;
@@ -877,8 +983,7 @@ DATETIME_LButtonDown (DATETIME_INFO *infoPtr, INT x, INT y)
     return 0;
 }
 
-static LRESULT
-DATETIME_LButtonUp (DATETIME_INFO *infoPtr)
+static LRESULT DATETIME_LButtonUp (DATETIME_INFO *infoPtr)
 {
     if(infoPtr->bCalDepressed) {
         infoPtr->bCalDepressed = FALSE;
@@ -888,9 +993,7 @@ DATETIME_LButtonUp (DATETIME_INFO *infoPtr)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_Paint (DATETIME_INFO *infoPtr, HDC hdc)
+static LRESULT DATETIME_Paint (DATETIME_INFO *infoPtr, HDC hdc)
 {
     if (!hdc) {
 	PAINTSTRUCT ps;
@@ -907,22 +1010,18 @@ DATETIME_Paint (DATETIME_INFO *infoPtr, HDC hdc)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_Button_Command (DATETIME_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
+static LRESULT DATETIME_Button_Command(DATETIME_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
 {
     if( HIWORD(wParam) == BN_CLICKED) {
         DWORD state = SendMessageW((HWND)lParam, BM_GETCHECK, 0, 0);
         infoPtr->dateValid = (state == BST_CHECKED);
         InvalidateRect(infoPtr->hwndSelf, NULL, TRUE);
+        DATETIME_SendDateTimeChangeNotify(infoPtr);
     }
     return 0;
 }
-          
-        
-        
-static LRESULT
-DATETIME_Command (DATETIME_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
+
+static LRESULT DATETIME_Command(DATETIME_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
 {
     TRACE("hwndbutton = %p\n", infoPtr->hwndCheckbut);
     if(infoPtr->hwndCheckbut == (HWND)lParam)
@@ -930,9 +1029,7 @@ DATETIME_Command (DATETIME_INFO *infoPtr, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_Enable (DATETIME_INFO *infoPtr, BOOL bEnable)
+static LRESULT DATETIME_Enable (DATETIME_INFO *infoPtr, BOOL bEnable)
 {
     TRACE("%p %s\n", infoPtr, bEnable ? "TRUE" : "FALSE");
     if (bEnable)
@@ -945,9 +1042,7 @@ DATETIME_Enable (DATETIME_INFO *infoPtr, BOOL bEnable)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_EraseBackground (const DATETIME_INFO *infoPtr, HDC hdc)
+static LRESULT DATETIME_EraseBackground(const DATETIME_INFO *infoPtr, HDC hdc)
 {
     HBRUSH hBrush, hSolidBrush = NULL;
     RECT   rc;
@@ -972,9 +1067,7 @@ DATETIME_EraseBackground (const DATETIME_INFO *infoPtr, HDC hdc)
     return -1;
 }
 
-
-static LRESULT
-DATETIME_Notify (DATETIME_INFO *infoPtr, const NMHDR *lpnmh)
+static LRESULT DATETIME_Notify (DATETIME_INFO *infoPtr, const NMHDR *lpnmh)
 {
     TRACE ("Got notification %x from %p\n", lpnmh->code, lpnmh->hwndFrom);
     TRACE ("info: %p %p %p\n", infoPtr->hwndSelf, infoPtr->hMonthCal, infoPtr->hUpdown);
@@ -983,7 +1076,7 @@ DATETIME_Notify (DATETIME_INFO *infoPtr, const NMHDR *lpnmh)
         ShowWindow(infoPtr->hMonthCal, SW_HIDE);
         infoPtr->dateValid = TRUE;
         SendMessageW (infoPtr->hMonthCal, MCM_GETCURSEL, 0, (LPARAM)&infoPtr->date);
-        TRACE("got from calendar %04d/%02d/%02d day of week %d\n", 
+        TRACE("got from calendar %04d/%02d/%02d day of week %d\n",
         infoPtr->date.wYear, infoPtr->date.wMonth, infoPtr->date.wDay, infoPtr->date.wDayOfWeek);
         SendMessageW (infoPtr->hwndCheckbut, BM_SETCHECK, BST_CHECKED, 0);
         InvalidateRect(infoPtr->hwndSelf, NULL, TRUE);
@@ -998,13 +1091,11 @@ DATETIME_Notify (DATETIME_INFO *infoPtr, const NMHDR *lpnmh)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_KeyDown (DATETIME_INFO *infoPtr, DWORD vkCode)
+static LRESULT DATETIME_KeyDown (DATETIME_INFO *infoPtr, DWORD vkCode)
 {
     int fieldNum = infoPtr->select & DTHT_DATEFIELD;
     int wrap = 0;
-    int newInt;
+    int new1;
 
     if (!(infoPtr->haveFocus)) return 0;
     if ((fieldNum==0) && (infoPtr->select)) return 0;
@@ -1037,29 +1128,29 @@ DATETIME_KeyDown (DATETIME_INFO *infoPtr, DWORD vkCode)
 	    DATETIME_SendDateTimeChangeNotify (infoPtr);
 	    break;
 	case VK_LEFT:
-	    newInt = infoPtr->select;
+	    new1 = infoPtr->select;
 	    do {
-		if (newInt == 0) {
-		    newInt = newInt - 1;
+		if (new1 == 0) {
+		    new1 = new1 - 1;
 		    wrap++;
 		} else {
-		    newInt--;
+		    new1--;
 		}
-	    } while ((infoPtr->fieldspec[newInt] & DT_STRING) && (wrap<2));
-	    if (newInt != infoPtr->select)
-	        DATETIME_SetSelectedField(infoPtr, newInt);
+	    } while ((infoPtr->fieldspec[new1] & DT_STRING) && (wrap<2));
+	    if (new1 != infoPtr->select)
+	        DATETIME_SetSelectedField(infoPtr, new1);
 	    break;
 	case VK_RIGHT:
-	    newInt = infoPtr->select;
+	    new1 = infoPtr->select;
 	    do {
-		newInt++;
-		if (newInt==infoPtr->nrFields) {
-		    newInt = 0;
+		new1++;
+		if (new1==infoPtr->nrFields) {
+		    new1 = 0;
 		    wrap++;
 		}
-	    } while ((infoPtr->fieldspec[newInt] & DT_STRING) && (wrap<2));
-	    if (newInt != infoPtr->select)
-	        DATETIME_SetSelectedField(infoPtr, newInt);
+	    } while ((infoPtr->fieldspec[new1] & DT_STRING) && (wrap<2));
+	    if (new1 != infoPtr->select)
+	        DATETIME_SetSelectedField(infoPtr, new1);
 	    break;
     }
 
@@ -1068,8 +1159,7 @@ DATETIME_KeyDown (DATETIME_INFO *infoPtr, DWORD vkCode)
     return 0;
 }
 
-static LRESULT
-DATETIME_Char (DATETIME_INFO *infoPtr, WPARAM vkCode)
+static LRESULT DATETIME_Char (DATETIME_INFO *infoPtr, WPARAM vkCode)
 {
     int fieldNum, fieldSpec;
 
@@ -1108,9 +1198,7 @@ DATETIME_Char (DATETIME_INFO *infoPtr, WPARAM vkCode)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_VScroll (DATETIME_INFO *infoPtr, WORD wScroll)
+static LRESULT DATETIME_VScroll(DATETIME_INFO *infoPtr, WORD wScroll)
 {
     int fieldNum = infoPtr->select & DTHT_DATEFIELD;
 
@@ -1132,16 +1220,14 @@ DATETIME_VScroll (DATETIME_INFO *infoPtr, WORD wScroll)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_KillFocus (DATETIME_INFO *infoPtr, HWND lostFocus)
+static LRESULT DATETIME_KillFocus(DATETIME_INFO *infoPtr, HWND lostFocus)
 {
     TRACE("lost focus to %p\n", lostFocus);
 
     if (infoPtr->haveFocus) {
 	DATETIME_SendSimpleNotify (infoPtr, NM_KILLFOCUS);
 	infoPtr->haveFocus = 0;
-        DATETIME_SetSelectedField (infoPtr, -1);
+        DATETIME_SetSelectedField(infoPtr, -1);
     }
 
     InvalidateRect (infoPtr->hwndSelf, NULL, TRUE);
@@ -1149,9 +1235,7 @@ DATETIME_KillFocus (DATETIME_INFO *infoPtr, HWND lostFocus)
     return 0;
 }
 
-
-static LRESULT
-DATETIME_NCCreate (HWND hwnd, const CREATESTRUCTW *lpcs)
+static LRESULT DATETIME_NCCreate(HWND hwnd, const CREATESTRUCTW *lpcs)
 {
     DWORD dwExStyle = GetWindowLongW(hwnd, GWL_EXSTYLE);
     /* force control to have client edge */
@@ -1161,9 +1245,87 @@ DATETIME_NCCreate (HWND hwnd, const CREATESTRUCTW *lpcs)
     return 1;
 }
 
+static LRESULT DATETIME_NCPaint(HWND hwnd, HRGN region)
+{
+    INT cxEdge, cyEdge;
+    HRGN clipRgn;
+    HTHEME theme;
+    LONG exStyle;
+    RECT r;
+    HDC dc;
 
-static LRESULT
-DATETIME_SetFocus (DATETIME_INFO *infoPtr, HWND lostFocus)
+    theme = OpenThemeDataForDpi(NULL, WC_EDITW, 96); //GetDpiForWindow(hwnd));
+    if (!theme)
+        return DefWindowProcW(hwnd, WM_NCPAINT, (WPARAM)region, 0);
+
+    exStyle = GetWindowLongW(hwnd, GWL_EXSTYLE);
+    if (!(exStyle & WS_EX_CLIENTEDGE))
+    {
+        CloseThemeData(theme);
+        return DefWindowProcW(hwnd, WM_NCPAINT, (WPARAM)region, 0);
+    }
+
+    cxEdge = GetSystemMetrics(SM_CXEDGE);
+    cyEdge = GetSystemMetrics(SM_CYEDGE);
+    GetWindowRect(hwnd, &r);
+
+    /* New clipping region passed to default proc to exclude border */
+    clipRgn = CreateRectRgn(r.left + cxEdge, r.top + cyEdge, r.right - cxEdge, r.bottom - cyEdge);
+    if (region != (HRGN)1)
+        CombineRgn(clipRgn, clipRgn, region, RGN_AND);
+    OffsetRect(&r, -r.left, -r.top);
+
+    dc = GetDCEx(hwnd, region, DCX_WINDOW | DCX_INTERSECTRGN);
+    if (IsThemeBackgroundPartiallyTransparent(theme, 0, 0))
+        DrawThemeParentBackground(hwnd, dc, &r);
+    DrawThemeBackground(theme, dc, 0, 0, &r, 0);
+    ReleaseDC(hwnd, dc);
+    CloseThemeData(theme);
+
+    /* Call default proc to get the scrollbars etc. also painted */
+    DefWindowProcW(hwnd, WM_NCPAINT, (WPARAM)clipRgn, 0);
+    DeleteObject(clipRgn);
+    return 0;
+}
+
+static LRESULT DATETIME_MouseMove(DATETIME_INFO *infoPtr, LONG x, LONG y)
+{
+    TRACKMOUSEEVENT event;
+    POINT point;
+    BOOL hot;
+
+    point.x = x;
+    point.y = y;
+    hot = PtInRect(&infoPtr->calbutton, point);
+    if (hot != infoPtr->bCalHot)
+    {
+        infoPtr->bCalHot = hot;
+        RedrawWindow(infoPtr->hwndSelf, &infoPtr->calbutton, 0, RDW_INVALIDATE | RDW_UPDATENOW);
+    }
+
+    if (!hot)
+        return 0;
+
+    event.cbSize = sizeof(TRACKMOUSEEVENT);
+    event.dwFlags = TME_QUERY;
+    if (!TrackMouseEvent(&event) || event.hwndTrack != infoPtr->hwndSelf || !(event.dwFlags & TME_LEAVE))
+    {
+        event.hwndTrack = infoPtr->hwndSelf;
+        event.dwFlags = TME_LEAVE;
+        TrackMouseEvent(&event);
+    }
+
+    return 0;
+}
+
+static LRESULT DATETIME_MouseLeave(DATETIME_INFO *infoPtr)
+{
+    infoPtr->bCalHot = FALSE;
+    RedrawWindow(infoPtr->hwndSelf, &infoPtr->calbutton, 0, RDW_INVALIDATE | RDW_UPDATENOW);
+    return 0;
+}
+
+static LRESULT DATETIME_SetFocus(DATETIME_INFO *infoPtr, HWND lostFocus)
 {
     TRACE("got focus from %p\n", lostFocus);
 
@@ -1190,9 +1352,7 @@ DATETIME_SetFocus (DATETIME_INFO *infoPtr, HWND lostFocus)
     return 0;
 }
 
-
-static BOOL
-DATETIME_SendDateTimeChangeNotify (const DATETIME_INFO *infoPtr)
+static BOOL DATETIME_SendDateTimeChangeNotify(const DATETIME_INFO *infoPtr)
 {
     NMDATETIMECHANGE dtdtc;
 
@@ -1207,9 +1367,7 @@ DATETIME_SendDateTimeChangeNotify (const DATETIME_INFO *infoPtr)
                                 dtdtc.nmhdr.idFrom, (LPARAM)&dtdtc);
 }
 
-
-static BOOL
-DATETIME_SendSimpleNotify (const DATETIME_INFO *infoPtr, UINT code)
+static BOOL DATETIME_SendSimpleNotify(const DATETIME_INFO *infoPtr, UINT code)
 {
     NMHDR nmhdr;
 
@@ -1222,17 +1380,16 @@ DATETIME_SendSimpleNotify (const DATETIME_INFO *infoPtr, UINT code)
                                 nmhdr.idFrom, (LPARAM)&nmhdr);
 }
 
-static LRESULT
-DATETIME_Size (DATETIME_INFO *infoPtr, INT width, INT height)
+static LRESULT DATETIME_Size (DATETIME_INFO *infoPtr, INT width, INT height)
 {
     /* set size */
     infoPtr->rcClient.bottom = height;
     infoPtr->rcClient.right = width;
 
-    TRACE("Height=%d, Width=%d\n", infoPtr->rcClient.bottom, infoPtr->rcClient.right);
+    TRACE("Height %ld, Width %ld\n", infoPtr->rcClient.bottom, infoPtr->rcClient.right);
 
     infoPtr->rcDraw = infoPtr->rcClient;
-    
+
     if (infoPtr->dwStyle & DTS_UPDOWN) {
         SetWindowPos(infoPtr->hUpdown, NULL,
             infoPtr->rcClient.right-14, 0,
@@ -1260,11 +1417,9 @@ DATETIME_Size (DATETIME_INFO *infoPtr, INT width, INT height)
     return 0;
 }
 
-static LRESULT
-DATETIME_StyleChanging(DATETIME_INFO *infoPtr, WPARAM wStyleType, STYLESTRUCT *lpss)
+static LRESULT DATETIME_StyleChanging(DATETIME_INFO *infoPtr, WPARAM wStyleType, STYLESTRUCT *lpss)
 {
-    TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
-          wStyleType, lpss->styleOld, lpss->styleNew);
+    TRACE("styletype %Ix, styleOld %#lx, styleNew %#lx\n", wStyleType, lpss->styleOld, lpss->styleNew);
 
     /* block DTS_SHOWNONE change */
     if ((lpss->styleNew ^ lpss->styleOld) & DTS_SHOWNONE)
@@ -1280,8 +1435,7 @@ DATETIME_StyleChanging(DATETIME_INFO *infoPtr, WPARAM wStyleType, STYLESTRUCT *l
 
 static LRESULT DATETIME_StyleChanged(DATETIME_INFO *infoPtr, WPARAM wStyleType, const STYLESTRUCT *lpss)
 {
-    TRACE("(styletype=%lx, styleOld=0x%08x, styleNew=0x%08x)\n",
-          wStyleType, lpss->styleOld, lpss->styleNew);
+    TRACE("styletype %Ix, styleOld %#lx, styleNew %#lx\n", wStyleType, lpss->styleOld, lpss->styleNew);
 
     if ((int)wStyleType != GWL_STYLE) return 0;
 
@@ -1289,7 +1443,7 @@ static LRESULT DATETIME_StyleChanged(DATETIME_INFO *infoPtr, WPARAM wStyleType, 
 
     if ( !(lpss->styleOld & DTS_SHOWNONE) && (lpss->styleNew & DTS_SHOWNONE) ) {
         infoPtr->hwndCheckbut = CreateWindowExW (0, WC_BUTTONW, 0, WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
-         					 2, 2, 13, 13, infoPtr->hwndSelf, 0,
+         					 2, 2, 13, 13, infoPtr->hwndSelf, 0, 
 						(HINSTANCE)GetWindowLongPtrW (infoPtr->hwndSelf, GWLP_HINSTANCE), 0);
         SendMessageW (infoPtr->hwndCheckbut, BM_SETCHECK, infoPtr->dateValid ? 1 : 0, 0);
     }
@@ -1298,14 +1452,23 @@ static LRESULT DATETIME_StyleChanged(DATETIME_INFO *infoPtr, WPARAM wStyleType, 
         infoPtr->hwndCheckbut = 0;
     }
     if ( !(lpss->styleOld & DTS_UPDOWN) && (lpss->styleNew & DTS_UPDOWN) ) {
-	infoPtr->hUpdown = CreateUpDownControl (WS_CHILD | WS_BORDER | WS_VISIBLE, 120, 1, 20, 20,
+	infoPtr->hUpdown = CreateUpDownControl (WS_CHILD | WS_BORDER | WS_VISIBLE, 120, 1, 20, 20, 
 						infoPtr->hwndSelf, 1, 0, 0, UD_MAXVAL, UD_MINVAL, 0);
     }
     if ( (lpss->styleOld & DTS_UPDOWN) && !(lpss->styleNew & DTS_UPDOWN) ) {
 	DestroyWindow(infoPtr->hUpdown);
 	infoPtr->hUpdown = 0;
     }
+    return 0;
+}
 
+static LRESULT DATETIME_ThemeChanged (DATETIME_INFO *infoPtr)
+{
+    HTHEME theme;
+
+    theme = GetWindowTheme(infoPtr->hwndSelf);
+    CloseThemeData(theme);
+    OpenThemeData(infoPtr->hwndSelf, themeClass);
     InvalidateRect(infoPtr->hwndSelf, NULL, TRUE);
     return 0;
 }
@@ -1357,7 +1520,7 @@ static BOOL DATETIME_GetIdealSize(DATETIME_INFO *infoPtr, SIZE *size)
     size->cx += 12;
     size->cy += 4;
 
-    TRACE("cx=%d cy=%d\n", size->cx, size->cy);
+    TRACE("cx %ld, cy %ld\n", size->cx, size->cy);
     return TRUE;
 }
 
@@ -1369,11 +1532,10 @@ DATETIME_SetFont (DATETIME_INFO *infoPtr, HFONT font, BOOL repaint)
     return 0;
 }
 
-
 static LRESULT
 DATETIME_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
 {
-    DATETIME_INFO *infoPtr = (DATETIME_INFO*)Alloc(sizeof(DATETIME_INFO));
+    DATETIME_INFO *infoPtr = (DATETIME_INFO*)Alloc (sizeof(DATETIME_INFO));
     STYLESTRUCT ss = { 0, (DWORD)lpcs->style };
 
     if (!infoPtr) return -1;
@@ -1388,6 +1550,7 @@ DATETIME_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
     infoPtr->hwndNotify = lpcs->hwndParent;
     infoPtr->select = -1; /* initially, nothing is selected */
     infoPtr->bDropdownEnabled = TRUE;
+    infoPtr->bCalHot = FALSE;
 
     DATETIME_StyleChanged(infoPtr, GWL_STYLE, &ss);
     DATETIME_SetFormatW (infoPtr, 0);
@@ -1402,19 +1565,26 @@ DATETIME_Create (HWND hwnd, const CREATESTRUCTW *lpcs)
     infoPtr->hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 
     SetWindowLongPtrW (hwnd, 0, (DWORD_PTR)infoPtr);
+    OpenThemeData(hwnd, themeClass);
 
     return 0;
 }
 
-static LRESULT DATETIME_Destroy (DATETIME_INFO *infoPtr)
+static LRESULT
+DATETIME_Destroy (DATETIME_INFO *infoPtr)
 {
+    HTHEME theme;
+
+    theme = GetWindowTheme(infoPtr->hwndSelf);
+    CloseThemeData(theme);
+
     if (infoPtr->hwndCheckbut)
 	DestroyWindow(infoPtr->hwndCheckbut);
     if (infoPtr->hUpdown)
 	DestroyWindow(infoPtr->hUpdown);
     if (infoPtr->hMonthCal)
         DestroyWindow(infoPtr->hMonthCal);
-    SetWindowLongPtrW(infoPtr->hwndSelf, 0, 0); /* clear infoPtr */
+    SetWindowLongPtrW( infoPtr->hwndSelf, 0, 0 ); /* clear infoPtr */
     Free (infoPtr->buflen);
     Free (infoPtr->fieldRect);
     Free (infoPtr->fieldspec);
@@ -1461,7 +1631,7 @@ DATETIME_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     DATETIME_INFO *infoPtr = ((DATETIME_INFO *)GetWindowLongPtrW (hwnd, 0));
 
-    TRACE ("%x, %lx, %lx\n", uMsg, wParam, lParam);
+    TRACE("%x, %Ix, %Ix\n", uMsg, wParam, lParam);
 
     if (!infoPtr && (uMsg != WM_CREATE) && (uMsg != WM_NCCREATE))
 	return DefWindowProcW( hwnd, uMsg, wParam, lParam );
@@ -1532,6 +1702,15 @@ DATETIME_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_NCCREATE:
         return DATETIME_NCCreate (hwnd, (LPCREATESTRUCTW)lParam);
 
+    case WM_NCPAINT:
+        return DATETIME_NCPaint(hwnd, (HRGN)wParam);
+
+    case WM_MOUSEMOVE:
+        return DATETIME_MouseMove(infoPtr, (SHORT)LOWORD(lParam), (SHORT)HIWORD(lParam));
+
+    case WM_MOUSELEAVE:
+        return DATETIME_MouseLeave(infoPtr);
+
     case WM_SETFOCUS:
         return DATETIME_SetFocus (infoPtr, (HWND)wParam);
 
@@ -1562,6 +1741,9 @@ DATETIME_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_STYLECHANGED:
         return DATETIME_StyleChanged(infoPtr, wParam, (LPSTYLESTRUCT)lParam);
 
+    case WM_THEMECHANGED:
+        return DATETIME_ThemeChanged(infoPtr);
+
     case WM_SETFONT:
         return DATETIME_SetFont(infoPtr, (HFONT)wParam, (BOOL)lParam);
 
@@ -1578,20 +1760,16 @@ DATETIME_WindowProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         return CB_ERR;
 
     default:
-	if ((uMsg >= WM_USER) && (uMsg < WM_APP) && !COMCTL32_IsReflectedMessage(uMsg))
-		ERR("unknown msg %04x wp=%08lx lp=%08lx\n",
-		     uMsg, wParam, lParam);
-	return DefWindowProcW (hwnd, uMsg, wParam, lParam);
+        if ((uMsg >= WM_USER) && (uMsg < WM_APP) && !COMCTL32_IsReflectedMessage(uMsg))
+            ERR("unknown msg %04x, wp %Ix, lp %Ix\n", uMsg, wParam, lParam);
+        return DefWindowProcW (hwnd, uMsg, wParam, lParam);
     }
 }
 
-
-void
-DATETIME_Register (void)
+void DATETIME_Register ()
 {
-    WNDCLASSW wndClass;
+    WNDCLASSW wndClass = {0};
 
-    ZeroMemory (&wndClass, sizeof(WNDCLASSW));
     wndClass.style         = CS_GLOBALCLASS;
     wndClass.lpfnWndProc   = DATETIME_WindowProc;
     wndClass.cbClsExtra    = 0;
@@ -1603,9 +1781,7 @@ DATETIME_Register (void)
     RegisterClassW (&wndClass);
 }
 
-
-void
-DATETIME_Unregister (void)
+void DATETIME_Unregister ()
 {
     UnregisterClassW (DATETIMEPICK_CLASSW, NULL);
 }

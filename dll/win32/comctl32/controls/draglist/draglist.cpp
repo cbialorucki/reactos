@@ -4,6 +4,7 @@
  * PURPOSE:     Drag list control
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
+/* Wine synced on 19 August 2023 */
 
 #include <stdarg.h>
 
@@ -268,8 +269,7 @@ INT WINAPI LBItemFromPt (HWND hwndLB, POINT pt, BOOL bAutoScroll)
     INT nIndex;
     DWORD dwScrollTime;
 
-    TRACE("(%p %d x %d %s)\n",
-           hwndLB, pt.x, pt.y, bAutoScroll ? "TRUE" : "FALSE");
+    TRACE("%p, %ld x %ld, %s\n", hwndLB, pt.x, pt.y, bAutoScroll ? "TRUE" : "FALSE");
 
     ScreenToClient (hwndLB, &pt);
     GetClientRect (hwndLB, &rcClient);

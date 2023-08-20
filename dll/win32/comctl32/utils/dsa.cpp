@@ -169,7 +169,7 @@ extern "C" LPVOID WINAPI DSA_GetItemPtr (HDSA hdsa, INT nIndex)
  *     Success: TRUE
  *     Failure: FALSE
  */
-extern "C" BOOL WINAPI DSA_SetItem(HDSA hdsa, INT nIndex, LPVOID pSrc)
+extern "C" WINCOMMCTRLAPI BOOL WINAPI DSA_SetItem(HDSA hdsa, int nIndex, const void *pSrc)
 {
     INT  nSize, nNewItems;
     LPVOID pDest, lpTemp;
@@ -225,7 +225,7 @@ extern "C" BOOL WINAPI DSA_SetItem(HDSA hdsa, INT nIndex, LPVOID pSrc)
  *     Success: position of the new item
  *     Failure: -1
  */
-extern "C" INT WINAPI DSA_InsertItem (HDSA hdsa, INT nIndex, LPVOID pSrc)
+extern "C" WINCOMMCTRLAPI int WINAPI DSA_InsertItem(HDSA hdsa, int nIndex, const void *pSrc)
 {
     INT   nNewItems, nSize;
     LPVOID  lpTemp, lpDest;

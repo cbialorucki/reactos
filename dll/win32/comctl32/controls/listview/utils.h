@@ -4,6 +4,9 @@
  * PURPOSE:     Listview control utilities
  * COPYRIGHT:   Copyright 2023 Carl Bialorucki <cbialo2@outlook.com>
  */
+
+#define LVFI_SUBSTRING 0x0004
+
 /* Text functions */
 BOOL is_text(LPCWSTR text);
 int textlenT(LPCWSTR text, BOOL isW);
