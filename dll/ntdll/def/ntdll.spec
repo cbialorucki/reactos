@@ -682,7 +682,7 @@
 @ stdcall RtlCompareMemoryUlong(ptr long long)
 @ stdcall RtlCompareString(ptr ptr long)
 @ stdcall RtlCompareUnicodeString (ptr ptr long)
-@ stub -version=0x600+ RtlCompareUnicodeStrings
+@ stdcall -version=0x600+ RtlCompareUnicodeStrings(wstr long wstr long long)
 @ stub -version=0x600+ -arch=x86_64 RtlCompleteProcessCloning
 @ stdcall RtlCompressBuffer(long ptr long ptr long long ptr ptr)
 @ stdcall RtlComputeCrc32(long ptr long)
@@ -917,7 +917,7 @@
 @ stub -version=0x600+ RtlIdnToAscii
 @ stub -version=0x600+ RtlIdnToNameprepUnicode
 @ stub -version=0x600+ RtlIdnToUnicode
-@ stdcall RtlImageDirectoryEntryToData(long long long ptr)
+@ stdcall RtlImageDirectoryEntryToData(ptr long long ptr)
 @ stdcall RtlImageNtHeader(long)
 @ stdcall RtlImageNtHeaderEx(long ptr double ptr)
 @ stdcall RtlImageRvaToSection(ptr long long)
