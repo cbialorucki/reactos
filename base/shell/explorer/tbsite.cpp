@@ -459,7 +459,7 @@ public:
         /* Enumerate all bands */
         while (SUCCEEDED(m_BandSite->EnumBands(uBand, &dwBandID)))
         {
-            if (SUCCEEDED(m_BandSite->GetBandObject(dwBandID, IID_PPV_ARG(IPersist, &pBand))))
+            if (dwBandID && SUCCEEDED(m_BandSite->GetBandObject(dwBandID, IID_PPV_ARG(IPersist, &pBand))))
             {
                 if (SUCCEEDED(pBand->GetClassID(&BandCLSID)))
                 {
@@ -662,9 +662,6 @@ public:
         hRet = m_Inner->QueryInterface(IID_PPV_ARG(IDeskBarClient, &pDbc));
         if (FAILED_UNEXPECTEDLY(hRet))
             return hRet;
-
-
-
 
         /* Crete the rebar in the tray */
         hRet = pDbc->SetDeskBarSite(tray);
