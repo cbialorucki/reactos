@@ -21,7 +21,7 @@
 
 /*
  * PROJECT:         ReactOS Program Manager
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            base/shell/progman/progman.h
  * PURPOSE:         ProgMan header
  * PROGRAMMERS:     Ulrich Schmid

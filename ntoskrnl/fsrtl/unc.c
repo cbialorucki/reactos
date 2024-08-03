@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/fsrtl/unc.c
  * PURPOSE:         Manages UNC support routines for file system drivers.
  * PROGRAMMERS:     Pierre Schweitzer (pierre@reactos.org)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS system libraries
  * FILE:        lib/sdk/crt/mbstring/mbccpy.c
  * PURPOSE:     Copies a multi byte character

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * FILE:            ntoskrnl/ke/profobj.c
  * PURPOSE:         Kernel Profiling

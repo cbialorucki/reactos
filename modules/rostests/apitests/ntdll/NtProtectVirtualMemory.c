@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test for the NtProtectVirtualMemory API
  * PROGRAMMERS:     Jérôme Gardou <jerome.gardou@reactos.org>
  *                  Thomas Faber <thomas.faber@reactos.org>

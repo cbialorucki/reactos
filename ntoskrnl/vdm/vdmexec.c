@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/vdm/vdmexec.c
  * PURPOSE:         Support for executing VDM code and context swapping.
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

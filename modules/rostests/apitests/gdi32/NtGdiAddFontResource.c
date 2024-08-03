@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Test for NtGdiAddFontResourceW
  * PROGRAMMERS:     Víctor Martínez Calvo ( victor.martinez@reactos.org )
  */

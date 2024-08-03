@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/kd64/kdbreak.c
  * PURPOSE:         KD64 Breakpoint Support
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

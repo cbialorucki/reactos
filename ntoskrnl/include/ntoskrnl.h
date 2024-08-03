@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * FILE:            ntoskrnl/include/ntoskrnl.h
  * PURPOSE:         Main Kernel Header

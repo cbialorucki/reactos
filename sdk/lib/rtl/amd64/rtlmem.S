@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Run-Time Library
  * PURPOSE:           Memory functions for amd64
  * FILE:              lib/rtl/amd64/rtlmem.S

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Service Control Manager
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/system/services/services.c
  * PURPOSE:     Main SCM controller
  * COPYRIGHT:   Copyright 2001-2005 Eric Kohl

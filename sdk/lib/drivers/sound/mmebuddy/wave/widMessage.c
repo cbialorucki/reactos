@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System "MME Buddy" Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/sound/mmebuddy/wave/widMessage.c
  *
  * PURPOSE:     Provides the widMessage exported function, as required by

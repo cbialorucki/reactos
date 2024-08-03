@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/i386/irqobj.c
  * PURPOSE:         Manages the Kernel's IRQ support for external drivers,
  *                  for the purposes of connecting, disconnecting and setting

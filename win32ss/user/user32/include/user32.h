@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS System Libraries
  * FILE:            win32ss/user/user32/include/user32.h
  * PURPOSE:         Win32 User Library

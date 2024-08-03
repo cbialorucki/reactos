@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/config/cmcontrl.c
  * PURPOSE:         Configuration Manager - Control Set Management
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

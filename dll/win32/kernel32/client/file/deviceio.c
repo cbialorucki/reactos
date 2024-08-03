@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            dll/win32/kernel32/client/file/deviceio.c
  * PURPOSE:         Device I/O Base Client Functionality
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

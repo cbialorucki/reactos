@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test for _tcstoul
  * PROGRAMMER:      Thomas Faber <thfabba@gmx.de>
  */

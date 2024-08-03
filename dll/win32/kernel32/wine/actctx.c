@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS system libraries
  * FILE:            dll/win32/kernel32/wine/actctx.c
  * PURPOSE:         Activation contexts
@@ -7,7 +7,7 @@
  *                  Eric Pouech
  *                  Jon Griffiths
  *                  Dmitry Chapyshev (dmitry@reactos.org)
- *                  Samuel Serapión
+ *                  Samuel Serapiï¿½n
  */
 
 /* Synched with Wine 1.7.55 */

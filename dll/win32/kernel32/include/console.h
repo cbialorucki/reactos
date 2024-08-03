@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS System Libraries
  * FILE:            dll/win32/kernel32/include/console.h
  * PURPOSE:         Console API Client Definitions

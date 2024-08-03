@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/arm/ke_i.h
  * PURPOSE:         Implements macro-generated system call portable wrappers
  * PROGRAMMERS:     ReactOS Portable Systems Group

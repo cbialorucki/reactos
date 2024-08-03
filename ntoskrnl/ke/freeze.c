@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/freeze.c
  * PURPOSE:         Routines for freezing and unfreezing processors for
  *                  kernel debugger synchronization.

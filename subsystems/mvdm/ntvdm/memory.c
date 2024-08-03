@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPLv2+ - See COPYING in the top level directory
+ * COPYRIGHT:       GPLv2+ - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Virtual DOS Machine
  * FILE:            subsystems/mvdm/ntvdm/memory.c
  * PURPOSE:         Memory Management

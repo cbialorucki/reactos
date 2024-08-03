@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS User32
  * PURPOSE:          Built-in control registration
  * FILE:             win32ss/user/user32/controls/regcontrol.c

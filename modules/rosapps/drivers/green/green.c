@@ -1,9 +1,9 @@
 /*
  * PROJECT:     ReactOS VT100 emulator
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        drivers/base/green/green.c
  * PURPOSE:     Driver entry point
- * PROGRAMMERS: Copyright 2005-2006 Hervé Poussineau (hpoussin@reactos.org)
+ * PROGRAMMERS: Copyright 2005-2006 Hervï¿½ Poussineau (hpoussin@reactos.org)
  */
 
 #include "green.h"

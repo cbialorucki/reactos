@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS DNS Resolver
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/services/dnsrslvr/rpcserver.c
  * PURPOSE:     RPC server interface
  * COPYRIGHT:   Copyright 2016 Christoph von Wittich

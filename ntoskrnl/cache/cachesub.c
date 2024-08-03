@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * FILE:            ntoskrnl/cache/cachesub.c
  * PURPOSE:         Logging and configuration routines

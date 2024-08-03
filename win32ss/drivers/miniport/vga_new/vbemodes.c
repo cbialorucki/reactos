@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS VGA Miniport Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            win32ss/drivers/miniport/vga_new/vbemodes.c
  * PURPOSE:         Mode Initialization and Mode Set for VBE-compatible cards
  * PROGRAMMERS:     ReactOS Portable Systems Group

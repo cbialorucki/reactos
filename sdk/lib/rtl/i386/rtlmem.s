@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         GNU GPL - See COPYING in the top level directory
+ * COPYRIGHT:         GNU GPL - See /docs/licenses/COPYING
  * PROJECT:           ReactOS Run-Time Library
  * PURPOSE:           Memory functions
  * FILE:              lib/rtl/i386/rtlmem.s

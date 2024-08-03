@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Virtual DOS Machine
  * FILE:            subsystems/mvdm/ntvdm/bios/kbdbios.c
  * PURPOSE:         VDM 32-bit PS/2 Keyboard BIOS Support Library

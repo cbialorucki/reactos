@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Boot Loader
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            boot/freeldr/freeldr/include/arch/arm/hardware.h
  * PURPOSE:         Header for ARC definitions (to be cleaned up)
  * PROGRAMMERS:     ReactOS Portable Systems Group

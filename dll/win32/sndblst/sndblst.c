@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/sndblst/sndblst.c
  *
  * PURPOSE:     Sound Blaster MME User-Mode Driver

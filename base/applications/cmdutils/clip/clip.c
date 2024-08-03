@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Clip Command
  * FILE:            base/applications/cmdutils/clip/clip.c
  * PURPOSE:         Provides clipboard management for command-line programs.

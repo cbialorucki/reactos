@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            ntdll/dispatch/amd64/dispatch.S
  * PURPOSE:         Usermode dispatcher stubs

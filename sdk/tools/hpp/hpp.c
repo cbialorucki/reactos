@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:             See COPYING in the top level directory
+ * COPYRIGHT:             See /docs/licenses/COPYING
  * PROJECT:               Header preprocessor
  * PURPOSE:               Generates header files from other header files
  * PROGRAMMER;            Timo Kreuzer

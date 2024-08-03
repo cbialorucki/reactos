@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS HID Stack
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        drivers/hid/mouhid/mouhid.c
  * PURPOSE:     Mouse HID Driver
  * PROGRAMMERS:

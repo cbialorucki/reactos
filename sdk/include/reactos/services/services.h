@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS kernel
  * FILE:        include/reactos/services/services.h
  * PURPOSE:     Private interface between SERVICES.EXE and ADVAPI32.DLL

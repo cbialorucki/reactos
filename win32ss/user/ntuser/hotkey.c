@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Win32k subsystem
  * PURPOSE:          HotKey support
  * FILE:             win32ss/user/ntuser/hotkey.c

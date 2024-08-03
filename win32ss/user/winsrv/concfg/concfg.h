@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Console Server DLL
  * FILE:            win32ss/user/winsrv/concfg/concfg.h
  * PURPOSE:         Console settings management - Public header

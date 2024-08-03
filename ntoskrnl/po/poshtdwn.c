@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/po/poshtdwn.c
  * PURPOSE:         Power Manager Shutdown Code
  * PROGRAMMERS:     ReactOS Portable Systems Group

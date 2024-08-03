@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS System Libraries
  * FILE:            win32ss/gdi/gdi32/include/precomp.h
  * PURPOSE:         User-Mode Win32 GDI Library Header

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Win32k subsystem
  * PURPOSE:          Driver entry and initialization of win32k
  * FILE:             win32ss/user/ntuser/main.c

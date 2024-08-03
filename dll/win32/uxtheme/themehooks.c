@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS uxtheme.dll
  * FILE:            dll/win32/uxtheme/themehooks.c
  * PURPOSE:         uxtheme user api hook functions

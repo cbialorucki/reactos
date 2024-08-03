@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Novell Eagle 2000 driver
  * FILE:        include/8390.h
  * PURPOSE:     National Semiconductor 8390 NIC definitions

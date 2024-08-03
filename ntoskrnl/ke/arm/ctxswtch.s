@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/arm/ctxswtch.s
  * PURPOSE:         Context Switch and Idle Thread on ARM
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Console Configuration DLL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            dll/cpl/console/colors.c
  * PURPOSE:         Colors dialog
  * PROGRAMMERS:     Johannes Anderwald (johannes.anderwald@reactos.org)

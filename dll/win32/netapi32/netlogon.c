@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         NetAPI DLL
  * FILE:            dll/win32/netapi32/netlogon.c
  * PURPOSE:         Netlogon service interface code

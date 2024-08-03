@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS FS utility tool
  * FILE:            base/applications/cmdutils/common.c
  * PURPOSE:         FSutil common functions

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/mm/ARM3/mmdbg.c
  * PURPOSE:         Memory Manager support routines for the Kernel Debugger
  * PROGRAMMERS:     Stefan Ginsberg (stefan.ginsberg@reactos.org)

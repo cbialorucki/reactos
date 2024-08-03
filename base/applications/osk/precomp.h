@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS On-Screen Keyboard
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Pre-compiled header
  * COPYRIGHT:       Denis ROBERT
  *                  Copyright 2019 George Bișoc (george.bisoc@reactos.org)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * FILE:             drivers/net/afd/afd/read.c
  * PURPOSE:          Ancillary functions driver

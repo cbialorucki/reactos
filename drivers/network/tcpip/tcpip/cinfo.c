@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS TCP/IP protocol driver
  * FILE:        tcpip/cinfo.c
  * PURPOSE:     Per-socket connection information.

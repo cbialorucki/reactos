@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:           See COPYING in the top level directory
+ * COPYRIGHT:           See /docs/licenses/COPYING
  * PROJECT:             ReactOS Sound System
  * FILE:                drivers/multimedia/audio/sndblst/sndblst.c
  * PURPOSE:             Sound Blaster / Pro / 16 driver

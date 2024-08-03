@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Win32k subsystem
  * PURPOSE:          Window classes
  * FILE:             win32ss/user/ntuser/metric.c

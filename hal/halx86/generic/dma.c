@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            hal/halx86/generic/dma.c
  * PURPOSE:         DMA functions

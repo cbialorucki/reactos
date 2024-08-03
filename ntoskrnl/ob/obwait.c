@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ob/obwait.c
  * PURPOSE:         Handles Waiting on Objects
  * PROGRAMMERS:     Alex Ionescu (alex@relsoft.net)

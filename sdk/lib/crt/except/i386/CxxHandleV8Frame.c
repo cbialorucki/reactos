@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS C++ runtime library
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         __CxxFrameHandler3 to __CxxFrameHandler wrapper
  * PROGRAMMER:      Thomas Faber (thomas.faber@reactos.org)
  */

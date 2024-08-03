@@ -1,9 +1,9 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Winlogon
  * FILE:            base/system/winlogon/screensaver.c
  * PURPOSE:         Screen saver management
- * PROGRAMMERS:     Hervé Poussineau (hpoussin@reactos.org)
+ * PROGRAMMERS:     Hervï¿½ Poussineau (hpoussin@reactos.org)
  */
 
 /* INCLUDES *****************************************************************/

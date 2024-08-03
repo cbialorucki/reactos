@@ -17,7 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS seh conversion tool
  * FILE:            tools/ms2ps/ms2ps.cpp
  * PURPOSE:         Conversion tool from msvc to pseh style seh

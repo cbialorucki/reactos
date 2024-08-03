@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Tests for ICMP functions
  * PROGRAMMERS:     Tim Crawford
  */

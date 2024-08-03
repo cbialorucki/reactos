@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS PCI Bus Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            include/reactos/drivers/acpi/acpi.h
  * PURPOSE:         ACPI Tables and NT Registry Data
  * PROGRAMMERS:     ReactOS Portable Systems Group

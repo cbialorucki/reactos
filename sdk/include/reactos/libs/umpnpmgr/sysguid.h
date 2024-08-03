@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS UserMode PnP
  * FILE:            include/reactos/libs/umpnpmgr/sysguid.h
  * PURPOSE:         GUIDs shared between umpnpmgr and the Kernel PnP Manager

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Runtime Library (RTL)
  * FILE:            lib/rtl/i386/except_asm.s
  * PURPOSE:         User-mode exception support for IA-32

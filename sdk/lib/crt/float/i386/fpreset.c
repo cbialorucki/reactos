@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING.LIB in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING.LIB
  * PROJECT:     ReactOS system libraries
  * PURPOSE:     Resets FPU state to the default
  * PROGRAMER:   Thomas Faber <thomas.faber@reactos.org>

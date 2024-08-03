@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS System Control Panel Applet
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/cpl/sysdm/advanced.c
  * PURPOSE:     Memory, start-up and profiles settings
  * COPYRIGHT:   Copyright Thomas Weidenmueller <w3seek@reactos.org>

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Routines for IRQL support
  * PROGRAMMERS:     Timo Kreuzer
  */

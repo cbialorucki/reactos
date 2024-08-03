@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel Streaming
  * FILE:            drivers/ksfilter/ks/api.c
  * PURPOSE:         KS API functions

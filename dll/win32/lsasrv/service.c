@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Local Security Authority Server DLL
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/lsasrv/service.c
  * PURPOSE:     Security service
  * COPYRIGHT:   Copyright 2016, 2019 Eric Kohl <eric.kohl@reactos.org>

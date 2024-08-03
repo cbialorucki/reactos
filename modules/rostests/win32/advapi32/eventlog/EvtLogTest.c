@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            rostests/win32/advapi32/eventlog/EvtLogTest.c
  * PURPOSE:         Interactively test some EventLog service APIs and its behaviour.
  * PROGRAMMER:      Hermes Belusca-Maito

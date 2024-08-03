@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System "MME Buddy" Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/sound/mmebuddy/mixer/mxdMessage.c
  *
  * PURPOSE:     Provides the mxdMessage exported function, as required by

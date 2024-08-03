@@ -1,8 +1,8 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:         Tests extensions exposed by the software implementation
- * PROGRAMMERS:     Jérôme Gardou
+ * PROGRAMMERS:     Jï¿½rï¿½me Gardou
  */
 
 #include <windows.h>

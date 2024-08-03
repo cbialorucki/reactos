@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS system libraries
  * FILE:              lib/rtl/priv.c
  * PURPOSE:           Security related functions and Security Objects

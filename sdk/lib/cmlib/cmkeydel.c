@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            lib/cmlib/cmkeydel.c
  * PURPOSE:         Configuration Manager Library - Key Body Deletion
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

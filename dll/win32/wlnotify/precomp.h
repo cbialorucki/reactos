@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/wlnotify/precomp.h
  * PURPOSE:     Winlogon notifications common header file
  * PROGRAMMER:  Eric Kohl <eric.kohl@reactos.org>

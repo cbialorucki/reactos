@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Network Provider for MPEG2 based networks
  * FILE:            dll/directx/msdvbnp/enum_mediatypes.cpp
  * PURPOSE:         IEnumMediaTypes interface

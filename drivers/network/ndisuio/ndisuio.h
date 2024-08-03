@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NDIS User I/O driver
  * FILE:        ndisuio.h
  * PURPOSE:     NDISUIO definitions

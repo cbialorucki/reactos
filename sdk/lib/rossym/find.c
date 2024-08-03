@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            lib/rossym/find.c
  * PURPOSE:         Find symbol info for an address

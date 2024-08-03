@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock Helper DLL for TCP/IP
  * FILE:        iflist.c
  * PURPOSE:     WSHIoctl - SIO_GET_INTERFACE_LIST

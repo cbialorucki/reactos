@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Access Control List Editor
  * FILE:            lib/acledit/stubs.c
  * PURPOSE:         acledit.dll stubs

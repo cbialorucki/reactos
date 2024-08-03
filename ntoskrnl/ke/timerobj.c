@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/timerobj.c
  * PURPOSE:         Handle Kernel Timers (Kernel-part of Executive Timers)
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

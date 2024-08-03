@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Configuration of network devices
  * FILE:            dll/directx/dsound_new/property.c
  * PURPOSE:         Secondary IDirectSoundBuffer8 implementation

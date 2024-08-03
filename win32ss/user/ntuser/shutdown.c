@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Win32k subsystem
  * PURPOSE:          Shutdown routines
  * FILE:             win32ss/user/ntuser/shutdown.c

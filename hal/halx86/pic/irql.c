@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Hardware Abstraction Layer
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:         IRQL mapping
  * PROGRAMMERS:     ReactOS Portable Systems Group
  */

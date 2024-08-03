@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * FILE:            ntoskrnl/ex/rundown.c
  * PURPOSE:         Rundown and Cache-Aware Rundown Protection

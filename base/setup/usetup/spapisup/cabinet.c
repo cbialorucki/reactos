@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS text-mode setup
  * FILE:        base/setup/usetup/cabinet.c
  * PURPOSE:     Cabinet routines

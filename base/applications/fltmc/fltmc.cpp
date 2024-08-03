@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS fltmc utility
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        base/applications/fltmc/fltmc.c
 * PURPOSE:     Control utility for file system filter drivers
 * PROGRAMMERS: Copyright 2016 Ged Murphy (gedmurphy@gmail.com)

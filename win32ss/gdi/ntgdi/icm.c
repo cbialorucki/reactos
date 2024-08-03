@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Win32k Subsystem
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            win32ss/gdi/ntgdi/icm.c
  * PURPOSE:         Icm functions
  * PROGRAMMERS:     ...

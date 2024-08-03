@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS system libraries
  * FILE:              lib/rtl/ppb.c
  * PURPOSE:           Process parameters functions

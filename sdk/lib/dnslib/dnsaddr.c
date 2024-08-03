@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNS Shared Library
  * FILE:        lib/dnslib/dnsaddr.c
  * PURPOSE:     Functions dealing with DNS_ADDRESS and DNS_ARRAY addresses.

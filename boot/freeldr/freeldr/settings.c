@@ -1,6 +1,6 @@
 /*
  * PROJECT:     FreeLoader
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  *              or MIT (https://spdx.org/licenses/MIT)
  * PURPOSE:     Command-line parsing and global settings management
  * COPYRIGHT:   Copyright 2008-2010 ReactOS Portable Systems Group <ros.arm@reactos.org>

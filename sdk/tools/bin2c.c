@@ -1,9 +1,9 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS bin2c
  * FILE:            tools/bin2c.c
  * PURPOSE:         Converts a binary file into a byte array
- * PROGRAMMER:      Hermès Bélusca - Maïto
+ * PROGRAMMER:      Hermï¿½s Bï¿½lusca - Maï¿½to
  */
 
 #include <stdio.h>

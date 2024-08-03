@@ -1,6 +1,6 @@
 /*
  * PROJECT:     PCI IDE bus driver extension
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * PURPOSE:     IRP_MJ_PNP operations for PDOs
  * COPYRIGHT:   Copyright 2005 Hervé Poussineau <hpoussin@reactos.org>
  *              Copyright 2023 Dmitry Borisov <di.sean@protonmail.com>

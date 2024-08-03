@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS test application
  * FILE:        apps/net/netreg/netreg.cpp
  * PURPOSE:     HTTP Registry Server

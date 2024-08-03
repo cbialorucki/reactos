@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Service Host
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:     Global Header for Service Host
  * PROGRAMMERS: ReactOS Portable Systems Group
  *

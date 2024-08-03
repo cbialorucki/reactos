@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:          See COPYING in the top level directory
+ * COPYRIGHT:          See /docs/licenses/COPYING
  * PROJECT:            ReactOS Kernel
  * FILE:               ntoskrnl/ex/work.c
  * PURPOSE:            Manage system work queues and worker threads

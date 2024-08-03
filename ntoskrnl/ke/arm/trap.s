@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/arm/trap.s
  * PURPOSE:         Support for exceptions and interrupts on ARM machines
  * PROGRAMMERS:     ReactOS Portable Systems Group

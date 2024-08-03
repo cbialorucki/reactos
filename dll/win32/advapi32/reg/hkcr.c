@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS system libraries
  * FILE:            lib/advapi32/reg/hkcr.c
  * PURPOSE:         Registry functions - HKEY_CLASSES_ROOT abstraction

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Base API Server DLL
  * FILE:            include/reactos/subsys/win/vdm.h
  * PURPOSE:         Public definitions for the Virtual Dos Machine

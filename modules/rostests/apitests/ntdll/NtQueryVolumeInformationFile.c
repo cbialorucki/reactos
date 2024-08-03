@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         NtQueryVolumeInformationFile tests
  * PROGRAMMER:      Víctor Martínez Calvo <vicmarcal@gmail.com>
  */

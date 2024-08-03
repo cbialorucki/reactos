@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS DMI/SMBIOS Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dmilib.c
  * PURPOSE:     SMBIOS table parsing functions
  * PROGRAMMERS: Timo Kreuzer (timo.kreuzer@reactos.org)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NDIS User I/O driver
  * FILE:        createclose.c
  * PURPOSE:     IRP_MJ_CREATE and IRP_MJ_CLOSE handling

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/i386/traphdlr.c
  * PURPOSE:         Kernel Trap Handlers
  * PROGRAMMERS:     ReactOS Portable Systems Group

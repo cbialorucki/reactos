@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 /*
- * COPYRIGHT : See COPYING in the top level directory
+ * COPYRIGHT : See /docs/licenses/COPYING
  * PROJECT   : Event Logging Utility
  * FILE      : logevent.c
  * PROGRAMMER: Marc Piulachs (marc.piulachs at codexchange [dot] net)

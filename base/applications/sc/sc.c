@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/sc/sc.c
  * PURPOSE:     parse command line
  * COPYRIGHT:   Copyright 2005 - 2006 Ged Murphy <gedmurphy@gmail.com>

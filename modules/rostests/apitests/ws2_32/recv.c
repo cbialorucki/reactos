@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS API Tests
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * PURPOSE:     Test for recv
  * COPYRIGHT:   Copyright 2008 Colin Finck (colin@reactos.org)
  *              Copyright 2010 Timo Kreuzer (timo.kreuzer@reactos.org)

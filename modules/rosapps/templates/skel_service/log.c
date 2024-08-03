@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:
  * PURPOSE:     skeleton service
  * COPYRIGHT:   Copyright 2008 Ged Murphy <gedmurphy@reactos.org>

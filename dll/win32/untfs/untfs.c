@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         NTFS File System Management
  * FILE:            dll/win32/untfs/untfs.c
  * PURPOSE:         untfs DLL initialisation

@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS kernel
  * FILE:                 lib/mmdrv/mmdef.h
  * PURPOSE:              Multimedia Definitions (for mmdrv.dll)

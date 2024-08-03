@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Graphics Subsystem
  * FILE:            win32ss/win32kp.h
  * PURPOSE:         Internal Win32K Header

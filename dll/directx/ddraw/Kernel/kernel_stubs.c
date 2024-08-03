@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS DirectX
  * FILE:                 dll/directx/ddraw/Kernel/kernel_stubs.c
  * PURPOSE:              IDirectDrawKernel and IDirectDrawSurfaceKernel Implementation

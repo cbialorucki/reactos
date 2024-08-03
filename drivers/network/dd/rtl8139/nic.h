@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Realtek 8139 driver
  * FILE:        rtl8139.h
  * PURPOSE:     RTL8139 driver definitions

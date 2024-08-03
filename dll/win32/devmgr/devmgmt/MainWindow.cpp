@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Device Manager
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/devmgr/devmgmt/MainWindow.cpp
  * PURPOSE:     Implements the main container window for the device view
  * COPYRIGHT:   Copyright 2014 - 2015 Ged Murphy <gedmurphy@reactos.org>

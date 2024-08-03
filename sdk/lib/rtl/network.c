@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Runtime Library
  * PURPOSE:           Network Address Translation implementation
  * PROGRAMMER:        Alex Ionescu (alexi@tinykrnl.org)

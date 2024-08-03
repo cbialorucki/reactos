@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/sc/name.c
  * PURPOSE:
  * COPYRIGHT:   Copyright 2016 Eric Kohl

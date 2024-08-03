@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Winlogon
  * FILE:            base/system/winlogon/notify.c
  * PURPOSE:         Logon notifications

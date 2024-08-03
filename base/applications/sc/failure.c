@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/sc/failure.c
  * PURPOSE:     Query/Set the service failure actions
  * COPYRIGHT:   Copyright 2016 Eric Kohl

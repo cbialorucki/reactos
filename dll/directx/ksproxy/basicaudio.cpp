@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS WDM Streaming ActiveMovie Proxy
  * FILE:            dll/directx/ksproxy/basicaudio.cpp
  * PURPOSE:         IBasicAudio interface

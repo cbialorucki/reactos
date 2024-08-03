@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/gate.c
  * PURPOSE:         Implements the Gate Dispatcher Object
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

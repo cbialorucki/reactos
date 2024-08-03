@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS partitions tests/dump
- * LICENSE:         LGPLv2+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Open disk & partition trying to get information about volumes & MBR
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Recycle bin management
- * LICENSE:     GPL v2 - See COPYING in the top level directory
+ * LICENSE:     GPL v2 - See /docs/licenses/COPYING
  * FILE:        lib/recyclebin/recyclebin.c
  * PURPOSE:     Public interface
  * PROGRAMMERS: Copyright 2006-2007 Hervé Poussineau (hpoussin@reactos.org)

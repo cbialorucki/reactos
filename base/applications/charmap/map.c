@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Character Map
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/charmap/map.c
  * PURPOSE:     class implementation for painting glyph region
  * COPYRIGHT:   Copyright 2007 Ged Murphy <gedmurphy@reactos.org>

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:         Generic HAL PIC Management Code shared between APIC and PIC HAL
  * PROGRAMMERS:     ReactOS Portable Systems Group
  */

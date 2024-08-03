@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           FreeType implementation for ReactOS
  * PURPOSE:           Glue functions between FreeType
  * FILE:              win32ss/drivers/font/ftfd/rosglue.c

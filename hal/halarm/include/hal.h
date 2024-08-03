@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halarm/include/hal.h
  * PURPOSE:         Hardware Abstraction Layer Header
  * PROGRAMMERS:     ReactOS Portable Systems Group

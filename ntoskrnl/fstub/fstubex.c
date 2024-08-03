@@ -1,6 +1,6 @@
 /*
 * PROJECT:         ReactOS Kernel
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            ntoskrnl/fstub/fstubex.c
 * PURPOSE:         Extended FSTUB Routines (not linked to HAL)
 * PROGRAMMERS:     Pierre Schweitzer (pierre.schweitzer@reactos.org)

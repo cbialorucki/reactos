@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNSAPI Header
  * FILE:        include/libs/dns/windnsp.h
  * PURPOSE:     DNSLIB Precompiled Header

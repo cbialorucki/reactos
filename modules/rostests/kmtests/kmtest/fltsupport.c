@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         File system mini-filter support routines
  * PROGRAMMER:      Ged Murphy <gedmurphy@reactos.org>
  */

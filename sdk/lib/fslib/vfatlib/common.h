@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS VFAT filesystem library
  * FILE:        lib\fslib\vfatlib\common.h
  * PURPOSE:     Common code for Fat support

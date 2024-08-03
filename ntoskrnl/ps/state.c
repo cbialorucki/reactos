@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ps/state.c
  * PURPOSE:         Process Manager: Process/Thread State Control
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

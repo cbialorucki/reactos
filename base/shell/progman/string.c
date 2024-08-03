@@ -21,7 +21,7 @@
 
 /*
  * PROJECT:         ReactOS Program Manager
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            base/shell/progman/string.c
  * PURPOSE:         String utility functions
  * PROGRAMMERS:     Ulrich Schmid

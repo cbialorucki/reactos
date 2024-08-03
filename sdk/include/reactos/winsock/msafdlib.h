@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock 2 NSP
  * FILE:        include/reactos/winsock/msafdlib.h
  * PURPOSE:     Winsock 2 SPI Utility Header

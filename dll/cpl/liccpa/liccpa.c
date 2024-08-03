@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS License Manager
  * FILE:            dll/cpl/liccpa/liccpa.c
  * PURPOSE:         License Manager GUI

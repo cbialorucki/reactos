@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS Multimedia
  * FILE:                 dll/win32/mmdrv/mmdrv.h
  * PURPOSE:              Multimedia User Mode Driver (header)

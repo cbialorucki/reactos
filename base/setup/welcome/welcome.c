@@ -17,7 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS "Welcome"/AutoRun application
  * FILE:        base/setup/welcome/welcome.c
  * PROGRAMMERS: Eric Kohl

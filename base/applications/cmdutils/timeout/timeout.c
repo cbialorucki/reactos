@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Timeout utility
  * FILE:            base/applications/cmdutils/timeout/timeout.c
  * PURPOSE:         An enhanced alternative to the Pause command.

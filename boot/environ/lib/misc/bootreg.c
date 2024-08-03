@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING.ARM in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS UEFI Boot Library
  * FILE:            boot/environ/lib/misc/bootreg.c
  * PURPOSE:         Boot Library Boot Registry Wrapper for CMLIB

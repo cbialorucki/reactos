@@ -18,7 +18,7 @@
  */
 
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS arp utility
  * FILE:        base/applications/network/arp/arp.c
  * PURPOSE:     view and manipulate the ARP cache

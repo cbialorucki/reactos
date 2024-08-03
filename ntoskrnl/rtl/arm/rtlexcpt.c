@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/rtl/arm/rtlexcpt.c
  * PURPOSE:         ARM Exception Helper Routines for Stack Walking
  * PROGRAMMERS:     ReactOS Portable Systems Group

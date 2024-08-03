@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS user32.dll
  * FILE:            win32ss/user/user32/misc/stubs.c
  * PURPOSE:         User32.dll stubs

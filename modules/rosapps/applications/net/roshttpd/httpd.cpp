@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS HTTP Daemon
  * FILE:        httpd.cpp
  * PURPOSE:     HTTP daemon

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS user32.dll
  * FILE:            win32ss/user/user32/windows/wndproc_fixup.S
  * PURPOSE:         Messages

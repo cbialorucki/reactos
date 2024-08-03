@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/config/i386/cmhardwr.c
  * PURPOSE:         Configuration Manager - Hardware-Specific Code
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

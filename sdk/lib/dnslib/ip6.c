@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNS Shared Library
  * FILE:        lib/dnslib/ip6.c
  * PURPOSE:     Functions for dealing with IPv6 Specific issues.

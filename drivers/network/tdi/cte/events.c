@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS TDI driver
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            drivers/network/tdi/cte/events.c
  * PURPOSE:         CTE events support
  * PROGRAMMERS:     Oleg Baikalow (obaikalow@gmail.com)

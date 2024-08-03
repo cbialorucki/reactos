@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS CRT
  * FILE:             lib/sdk/crt/math/cos.c
  * PURPOSE:          Generic C Implementation of cos

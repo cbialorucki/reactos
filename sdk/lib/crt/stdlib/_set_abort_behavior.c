@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS C runtime library
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            lib/sdk/crt/stdlib/_set_abort_behavior.c
  * PURPOSE:         _set_abort_behavior implementation
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)

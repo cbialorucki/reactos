@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test for the RegEnumKey API
  * PROGRAMMER:      Thomas Faber & Doug Lyons
  */

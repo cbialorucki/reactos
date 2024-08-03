@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS CRT
  * FILE:             lib/sdk/crt/math/amd64/asin.c
  * PURPOSE:          Generic C implementation of arc sine

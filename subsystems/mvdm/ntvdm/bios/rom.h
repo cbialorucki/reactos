@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Virtual DOS Machine
  * FILE:            subsystems/mvdm/ntvdm/bios/rom.h
  * PURPOSE:         ROM Support Functions

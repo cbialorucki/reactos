@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         User mode part of the TcpIp.sys test suite
  * PROGRAMMER:      Jérôme Gardou <jerome.gardou@reactos.org>
  */

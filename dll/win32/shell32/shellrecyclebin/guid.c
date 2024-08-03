@@ -1,9 +1,9 @@
 /*
  * PROJECT:     Recycle bin management
- * LICENSE:     GPL v2 - See COPYING in the top level directory
+ * LICENSE:     GPL v2 - See /docs/licenses/COPYING
  * FILE:        lib/recyclebin/guid.c
  * PURPOSE:     Define GUID values
- * PROGRAMMERS: Copyright 2007 Hervé Poussineau (hpoussin@reactos.org)
+ * PROGRAMMERS: Copyright 2007 Hervï¿½ Poussineau (hpoussin@reactos.org)
  */
 
 #define INITGUID

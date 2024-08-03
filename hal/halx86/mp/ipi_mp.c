@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:             See COPYING in the top level directory
+ * COPYRIGHT:             See /docs/licenses/COPYING
  * PROJECT:               ReactOS kernel
  * FILE:                  hal/halx86/mp/ipi_mp.c
  * PURPOSE:               IPI functions for MP

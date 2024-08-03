@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS HID Parser Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/drivers/hidparser/context.c
  * PURPOSE:     HID Parser
  * PROGRAMMERS:

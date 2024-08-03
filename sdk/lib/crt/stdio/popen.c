@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS C runtime library
  * FILE:            lib/sdk/crt/stdio/popen.c
  * PURPOSE:         Pipe Functions

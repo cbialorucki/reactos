@@ -2,7 +2,7 @@
     KS Media
     (c) Andrew Greenwood, 2007.
 
-    Please see COPYING in the top level directory for license information.
+    Please see /docs/licenses/COPYING for license information.
 */
 
 #ifndef _KS_

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Winsock 2 SPI
  * FILE:        lib/mswsock/lib/init.c
  * PURPOSE:     DLL Initialization

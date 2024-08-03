@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         GNU GPL - See COPYING in the top level directory
+ * LICENSE:         GNU GPL - See /docs/licenses/COPYING
  * FILE:            hal/halx86/apic/rtctimer.c
  * PURPOSE:         HAL APIC Management and Control Code
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)

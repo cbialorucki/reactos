@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/fsrtl/tunnel.c
  * PURPOSE:         Provides the Tunnel Cache implementation for file system drivers.
  * PROGRAMMERS:     Johannes Anderwald (johannes.anderwald@reactos.org)

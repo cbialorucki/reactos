@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Win32k subsystem
  * FILE:            win32ss/pch.h
  * PURPOSE:         Main Win32K Header

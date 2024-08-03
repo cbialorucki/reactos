@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS EventLog Service
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            base/services/eventlog/eventsource.c
  * PURPOSE:         Event log sources support
  * COPYRIGHT:       Copyright 2011 Eric Kohl

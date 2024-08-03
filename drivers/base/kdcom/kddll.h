@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL, see COPYING in the top level directory
+ * COPYRIGHT:       GPL, see /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            drivers/base/kddll/kddll.h
  * PURPOSE:         Base definitions for the kernel debugger.

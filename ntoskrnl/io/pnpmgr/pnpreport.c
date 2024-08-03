@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/io/pnpmgr/pnpreport.c
  * PURPOSE:         Device Changes Reporting Functions
  * PROGRAMMERS:     Cameron Gutman (cameron.gutman@reactos.org)

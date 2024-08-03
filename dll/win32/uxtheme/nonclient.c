@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS uxtheme.dll
  * FILE:            dll/win32/uxtheme/nonclient.c
  * PURPOSE:         uxtheme non client area management

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING.ARM in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS UEFI Boot Manager
  * FILE:            boot/environ/app/bootmgr/bootmgr.h
  * PURPOSE:         Main Boot Manager Header

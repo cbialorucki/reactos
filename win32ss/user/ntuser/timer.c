@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          Window timers messages
  * FILE:             win32ss/user/ntuser/timer.c

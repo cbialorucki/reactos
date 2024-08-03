@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NT Library
  * FILE:            dll/ntdll/dispatch/dispatch.c
  * PURPOSE:         User-Mode NT Dispatchers

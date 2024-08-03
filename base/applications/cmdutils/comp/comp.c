@@ -18,7 +18,7 @@
  */
 /*
  * PROJECT:     ReactOS Comp utility
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * FILE:        base/applications/cmdutils/comp/comp.c
  * PURPOSE:     Compares the contents of two files
  * PROGRAMMERS: Ged Murphy (gedmurphy@gmail.com)

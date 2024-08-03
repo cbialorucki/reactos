@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/mscutils/servman/propsheet_logon.c
  * PURPOSE:     Logon property page
  * COPYRIGHT:   Eric Kohl

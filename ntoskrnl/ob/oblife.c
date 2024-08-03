@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ob/oblife.c
  * PURPOSE:         Manages the lifetime of an Object, including its creation,
  *                  and deletion, as well as setting or querying any of its

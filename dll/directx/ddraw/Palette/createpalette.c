@@ -1,9 +1,9 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS DirectX
  * FILE:                 dll/directx/ddraw/Palette/createpalette.c
  * PURPOSE:              IDirectDrawPalette Creation
- * PROGRAMMER:           Jérôme Gardou
+ * PROGRAMMER:           Jï¿½rï¿½me Gardou
  *
  */
 #include "rosdraw.h"

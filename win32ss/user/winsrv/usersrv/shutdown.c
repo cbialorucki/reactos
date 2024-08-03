@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS User API Server DLL
  * FILE:            win32ss/user/winsrv/usersrv/shutdown.c
  * PURPOSE:         Logout/shutdown

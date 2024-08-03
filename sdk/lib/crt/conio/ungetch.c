@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * 		Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details
  * PROJECT:     ReactOS system libraries
  * FILE:        lib/sdk/crt/conio/ungetch.c

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         CONTEXT related functions
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)
  */

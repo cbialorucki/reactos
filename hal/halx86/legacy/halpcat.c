@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:         HAL Legacy Support Code
  * PROGRAMMERS:     ReactOS Portable Systems Group
  */

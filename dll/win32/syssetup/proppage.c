@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/syssetup/proppage.c
  * PURPOSE:     Property page providers
  * PROGRAMMERS: Copyright 2018 Eric Kohl <eric.kohl@reactos.org>

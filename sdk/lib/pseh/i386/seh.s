@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS CRT
  * FILE:            lib/crt/misc/i386/seh.S
  * PURPOSE:         SEH Support for the CRT

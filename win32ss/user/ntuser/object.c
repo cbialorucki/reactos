@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          User handle manager
  * FILE:             win32ss/user/ntuser/object.c

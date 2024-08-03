@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Test for WSHIoctl:
  *                  - SIO_GET_INTERFACE_LIST
  * PROGRAMMERS:     Andreas Maier

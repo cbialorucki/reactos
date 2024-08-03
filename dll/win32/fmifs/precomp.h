@@ -1,11 +1,11 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         File Management IFS Utility functions
  * FILE:            reactos/dll/win32/fmifs/precomp.h
  * PURPOSE:         Win32 FMIFS API Library Header
  *
  * PROGRAMMERS:     Alex Ionescu (alex@relsoft.net)
- *                  Hervé Poussineau (hpoussin@reactos.org)
+ *                  Hervï¿½ Poussineau (hpoussin@reactos.org)
  */
 
 #ifndef _FMIFS_PCH_

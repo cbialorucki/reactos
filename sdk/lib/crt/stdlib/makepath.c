@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS CRT library
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * FILE:        lib/sdk/crt/stdlib/makepath.c
  * PURPOSE:     Creates a path
  * PROGRAMMERS: Wine team

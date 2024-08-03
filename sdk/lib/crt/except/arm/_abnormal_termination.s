@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         BSD - See COPYING.ARM in the top level directory
+ * COPYRIGHT:         BSD - See /docs/licenses/COPYING.ARM
  * PROJECT:           ReactOS CRT librariy
  * PURPOSE:           Implementation of _abnormal_termination
  * PROGRAMMER:        Timo Kreuzer (timo.kreuzer@reactos.org)

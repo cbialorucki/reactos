@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Character Map
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        base/applications/charmap/cell.cpp
 * PURPOSE:     Class for each individual cell
 * COPYRIGHT:   Copyright 2015 Ged Murphy <gedmurphy@reactos.org>

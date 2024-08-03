@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         Security Account Manager (LSA) Server
  * FILE:            reactos/dll/win32/samsrv/samsrv.h
  * PURPOSE:         Common header file

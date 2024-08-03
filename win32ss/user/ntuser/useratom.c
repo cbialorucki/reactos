@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          User Atom helper routines
  * FILE:             win32ss/user/ntuser/useratom.c

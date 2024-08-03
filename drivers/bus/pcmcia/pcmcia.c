@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Kernel
  * FILE:        drivers/bus/pcmcia/pcmcia.c
  * PURPOSE:     PCMCIA Bus Driver

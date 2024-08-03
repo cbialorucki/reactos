@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Tests for IOCTL_TCP_QUERY_INFORMATION_EX
  * PROGRAMMER:      Jérôme Gardou <jerome.gardou@reactos.org>
  */

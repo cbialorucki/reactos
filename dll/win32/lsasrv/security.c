@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Local Security Authority Server DLL
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/lsasrv/security.c
  * PURPOSE:     LSA object security functions
  * COPYRIGHT:   Copyright 2012 Eric Kohl

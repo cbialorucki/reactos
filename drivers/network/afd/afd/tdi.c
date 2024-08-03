@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Ancillary Function Driver
  * FILE:        afd/tdi.c
  * PURPOSE:     Transport Driver Interface functions

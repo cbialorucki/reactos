@@ -1,6 +1,6 @@
 /*
  * FILE:            ntoskrnl/ke/i386/trap.s
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PURPOSE:         System Traps, Entrypoints and Exitpoints
  * PROGRAMMER:      Alex Ionescu (alex@relsoft.net)
  *                  Timo Kreuzer (timo.kreuzer@reactos.org)

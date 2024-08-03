@@ -1,6 +1,6 @@
 /*
  * PROJECT:     PCI IDE bus driver extension
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * PURPOSE:     Power support functions
  * COPYRIGHT:   Copyright 2023 Dmitry Borisov <di.sean@protonmail.com>
  */

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Desktop Control Panel
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/cpl/desk/preview.c
  * PURPOSE:     Draws the preview control
  * COPYRIGHT:   Copyright 2006, 2007 Eric Kohl

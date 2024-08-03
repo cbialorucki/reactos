@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS user32.dll
  * FILE:        win32ss/user/user32/include/resource.h
  * PURPOSE:     Definition of resource ids

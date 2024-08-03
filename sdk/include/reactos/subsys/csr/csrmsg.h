@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Client/Server Runtime SubSystem
  * FILE:            include/reactos/subsys/csr/csrmsg.h
  * PURPOSE:         Public definitions for communication

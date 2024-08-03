@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ex/resource.c
  * PURPOSE:         Executive Resource Implementation
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)
@@ -1445,7 +1445,7 @@ ExConvertExclusiveToSharedLite(IN PERESOURCE Resource)
  * @implemented NT4
  *
  *     The ExConvertExclusiveToSharedLite routine deletes a given resource
- *     from the system’s resource list.
+ *     from the systemï¿½s resource list.
  *
  * @param Resource
  *        Pointer to the resource to delete.

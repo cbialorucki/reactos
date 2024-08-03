@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Win32k subsystem
  * PURPOSE:           Functions for saving and restoring dc states
  * FILE:              win32ss/gdi/ntgdi/dcstate.c

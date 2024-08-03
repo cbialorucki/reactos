@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Ports installer library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll\win32\msports\comdb.c
  * PURPOSE:     COM port database
  * COPYRIGHT:   Copyright 2011 Eric Kohl

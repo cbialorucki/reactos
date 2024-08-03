@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Test for PrivateExtractIcons
  * PROGRAMMER:      Hermes Belusca-Maito
  *                  Doug Lyons <douglyons@douglyons.com>

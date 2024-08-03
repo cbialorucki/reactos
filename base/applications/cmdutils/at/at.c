@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS AT utility
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * FILE:        base/applications/cmdutils/at/at.c
  * PURPOSE:     ReactOS AT utility
  * PROGRAMMERS: Eric Kohl <eric.kohl@reactos.org>

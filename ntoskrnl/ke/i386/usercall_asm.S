@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * FILE:            ntoskrnl/ke/i386/usercall_asm.S
  * PURPOSE:         User-Mode callbacks and return.

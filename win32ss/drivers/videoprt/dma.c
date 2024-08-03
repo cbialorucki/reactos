@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Videoport
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            win32ss/drivers/videoprt/dma.c
  * PURPOSE:         Videoport Direct Memory Access Support
  * PROGRAMMERS:     ...

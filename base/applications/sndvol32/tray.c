@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Sound Volume Control
  * FILE:        base/applications/sndvol32/tray.c
  * PROGRAMMERS: Eric Kohl <eric.kohl@reactos.org>

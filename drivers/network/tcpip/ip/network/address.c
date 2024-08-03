@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS TCP/IP protocol driver
  * FILE:        tcpip/address.c
  * PURPOSE:     Routines for handling addresses

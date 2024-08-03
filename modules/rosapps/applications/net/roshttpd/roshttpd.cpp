@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS HTTP Daemon
  * FILE:        roshttpd.cpp
  * PURPOSE:     Main program

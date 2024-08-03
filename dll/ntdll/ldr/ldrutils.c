@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NT User-Mode Library
  * FILE:            dll/ntdll/ldr/ldrutils.c
  * PURPOSE:         Internal Loader Utility Functions

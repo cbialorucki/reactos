@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:             See COPYING in the top level directory
+ * COPYRIGHT:             See /docs/licenses/COPYING
  * PROGRAMMER:            Rex Jolliff (rex@lvcablemodem.com)
  * PURPOSE:               Platform independent delete command
  */

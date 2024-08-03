@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NTFS Information tool
  * FILE:            cmdutils/ntfsinfo/ntfsinfo.c
  * PURPOSE:         Query information from NTFS volume using FSCTL

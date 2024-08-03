@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock 2 DLL
  * FILE:        dll/win32/ws2help/dllmain.c
  * PURPOSE:     WinSock 2 DLL header

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        GNU GPL, See COPYING in the top level directory
+ * COPYRIGHT:        GNU GPL, See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          Bitmap functions
  * FILE:             win32ss/gdi/ntgdi/bitmaps.c

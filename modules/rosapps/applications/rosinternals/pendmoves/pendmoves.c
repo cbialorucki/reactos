@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS pending moves operations Information tool
  * FILE:            cmdutils/pendmoves/pendmoves.c
  * PURPOSE:         Query information from registry about pending moves

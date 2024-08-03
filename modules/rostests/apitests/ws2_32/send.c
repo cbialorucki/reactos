@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Test for send/sendto
  * PROGRAMMER:      Thomas Faber <thomas.faber@reactos.org>
  */

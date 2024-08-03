@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            ntoskrnl/ex/i386/ioport.S
  * PURPOSE:         FASTCALL Interlocked Functions

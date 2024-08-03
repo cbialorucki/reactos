@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:     See COPYING in the top level directory
+ * COPYRIGHT:     See /docs/licenses/COPYING
  * PROJECT:       ReactOS kernel
  * FILE:          hal/halx86/mp/halinit_mp.c
  * PURPOSE:       Initialize the x86 mp hal

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS PCI Bus Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            drivers/bus/pci/enum.c
  * PURPOSE:         PCI Bus/Device Enumeration
  * PROGRAMMERS:     ReactOS Portable Systems Group

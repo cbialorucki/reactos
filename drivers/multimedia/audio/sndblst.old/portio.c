@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS kernel
  * FILE:                 drivers/dd/sndblst/portio.c (see also sndblst.h)
  * PURPOSE:              Sound Blaster port I/O helper

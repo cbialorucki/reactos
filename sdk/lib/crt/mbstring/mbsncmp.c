@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS system libraries
  * FILE:        lib/sdk/crt/mbstring/mbsncmp.c
  * PURPOSE:     Compares two strings to a maximum of n bytes or characters

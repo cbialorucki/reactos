@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NDIS User I/O driver
  * FILE:        readwrite.c
  * PURPOSE:     Handles IRP_MJ_READ and IRP_MJ_WRITE

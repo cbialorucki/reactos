@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Local Security Authority Server DLL
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/lsasrv/authport.c
  * PURPOSE:     LsaAuthenticationPort server routines
  * COPYRIGHT:   Copyright 2009 Eric Kohl

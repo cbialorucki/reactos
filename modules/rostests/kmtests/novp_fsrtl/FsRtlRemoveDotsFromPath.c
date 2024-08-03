@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         LGPLv2+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Tests for FsRtlRemoveDotsFromPath
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

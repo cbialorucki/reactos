@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         BtrFS FSD for ReactOS
  * FILE:            drivers/filesystems/btrfs/guid.c
  * PURPOSE:         GUID glue

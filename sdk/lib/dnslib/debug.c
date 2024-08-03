@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNS Shared Library
  * FILE:        lib/dnslib/debug.c
  * PURPOSE:     Contains helpful debugging functions for DNSLIB structures.

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Service Host
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * FILE:        base/services/svchost/rpcsrv.c
  * PURPOSE:     RPC Service Support
  * PROGRAMMERS: ReactOS Portable Systems Group

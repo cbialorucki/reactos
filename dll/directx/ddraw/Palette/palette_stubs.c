@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS DirectX
  * FILE:                 dll/directx/ddraw/Palette/palette_stubs.c
  * PURPOSE:              IDirectDrawPalette Implementation

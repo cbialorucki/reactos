@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            include/psdk/common.ver
  * PURPOSE:         Common Version File.
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

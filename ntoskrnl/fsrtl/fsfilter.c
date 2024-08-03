@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/fsrtl/fsfilter.c
  * PURPOSE:         Provides support for the Filter Manager
  * PROGRAMMERS:     None.

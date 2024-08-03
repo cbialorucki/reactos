@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel Streaming Mixer
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            drivers/wdm/audio/filters/kmixer/kmixer.c
  * PURPOSE:         Pin functions
  * PROGRAMMERS:     Johannes Anderwald (johannes.anderwald@reactos.org)

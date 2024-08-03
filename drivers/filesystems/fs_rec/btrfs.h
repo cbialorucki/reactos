@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS File System Recognizer
  * FILE:             drivers/filesystems/fs_rec/btrfs.h
  * PURPOSE:          BTRFS Header File

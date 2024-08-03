@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        GPL, see COPYING in the top level directory
+ * COPYRIGHT:        GPL, see /docs/licenses/COPYING
  * PROJECT:          ReactOS win32 kernel mode subsystem server
  * PURPOSE:          Registry loading and storing
  * FILE:             win32ss/user/ntuser/misc/registry.c

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Networking
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/iphlpapi/iphlpapi_reactos.c
  * PURPOSE:     DHCP helper functions for ReactOS
  * PROGRAMMERS: Pierre Schweitzer <pierre@reactos.org>

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS logoff utility
  * FILE:        base/applications/logoff/logoff.c
  * PURPOSE:     Logoff current session, or another session, potentially on another machine

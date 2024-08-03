@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS TDI test driver
  * FILE:        include/tditest.h
  * PURPOSE:     Testing TDI drivers

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         Parallel Port Function Driver
  * PURPOSE:         Parport driver loading/unloading
  */

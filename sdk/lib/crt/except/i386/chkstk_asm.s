@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS kernel
  * PURPOSE:           Stack checker
  * FILE:              lib/sdk/crt/except/i386/chkstk_asm.s

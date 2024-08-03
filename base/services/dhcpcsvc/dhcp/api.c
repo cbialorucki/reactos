@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * FILE:             subsys/system/dhcp/api.c
  * PURPOSE:          DHCP client api handlers

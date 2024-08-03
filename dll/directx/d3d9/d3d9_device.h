@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS ReactX
  * FILE:            dll/directx/d3d9/d3d9_device.h
  * PURPOSE:         d3d9.dll internal device structures

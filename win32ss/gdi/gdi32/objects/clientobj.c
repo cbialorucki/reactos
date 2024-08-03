@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS WIN32 subsystem
  * PURPOSE:         Support functions for GDI client objects
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)

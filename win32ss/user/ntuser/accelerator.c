@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          Window accelerator
  * FILE:             win32ss/user/ntuser/accelerator.c

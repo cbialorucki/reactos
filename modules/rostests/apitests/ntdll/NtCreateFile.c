@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         See COPYING in the top level directory
+ * LICENSE:         See /docs/licenses/COPYING
  * PURPOSE:         Test for NtCreateFile
  * PROGRAMMER:      Aleksandar Andrejevic <theflash AT sdf DOT lonestar DOT org>
  */

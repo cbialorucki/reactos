@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dlls\win32\msports\classinst.c
  * PURPOSE:     Ports class installer
  * PROGRAMMERS: Copyright 2011 Eric Kohl

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            lib/ntdll/ldr/ldrpe.c
  * PURPOSE:         Loader Functions dealing low-level PE Format structures

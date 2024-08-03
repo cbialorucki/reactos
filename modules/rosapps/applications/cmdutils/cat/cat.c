@@ -1,11 +1,11 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS conCATenation tool
  * FILE:            cmdutils/cat/cat.c
  * PURPOSE:         Concatenates STDIN or an arbitrary number of files to STDOUT
  * PROGRAMMERS:     David Welch
  *                  Semyon Novikov (tappak)
- *                  Hermès Bélusca - Maïto
+ *                  Hermï¿½s Bï¿½lusca - Maï¿½to
  */
 
 #include <stdio.h>

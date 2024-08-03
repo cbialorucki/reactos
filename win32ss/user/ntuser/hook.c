@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          Window hooks
  * PROGRAMER:        Casper S. Hornstrup <chorns@users.sourceforge.net>

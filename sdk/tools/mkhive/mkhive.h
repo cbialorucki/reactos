@@ -17,12 +17,12 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS hive maker
  * FILE:            tools/mkhive/mkhive.h
  * PURPOSE:         Hive maker
  * PROGRAMMERS:     Eric Kohl
- *                  Hervé Poussineau
+ *                  Hervï¿½ Poussineau
  */
 
 #pragma once

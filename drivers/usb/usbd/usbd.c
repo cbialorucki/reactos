@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Universal Serial Bus Driver/Helper Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        drivers/usb/usbd/usbd.c
  * PURPOSE:     Helper Library for USB
  * PROGRAMMERS:

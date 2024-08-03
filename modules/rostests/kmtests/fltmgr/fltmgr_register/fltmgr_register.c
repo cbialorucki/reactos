@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests - Filter Manager
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Tests for checking filter registration
  * PROGRAMMER:      Ged Murphy <gedmurphy@reactos.org>
  */

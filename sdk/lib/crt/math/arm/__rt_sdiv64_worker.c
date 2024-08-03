@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       BSD - See COPYING.ARM in the top level directory
+ * COPYRIGHT:       BSD - See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS CRT library
  * FILE:            lib/sdk/crt/math/arm/__rt_sdiv64_worker.c
  * PURPOSE:         Implementation of __rt_sdiv_worker

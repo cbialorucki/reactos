@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock 2 NSP
  * FILE:        include/reactos/winsock/rnr20lib.h
  * PURPOSE:     WinSock 2 NSP Header

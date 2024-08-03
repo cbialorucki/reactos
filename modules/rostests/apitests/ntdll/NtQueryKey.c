@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Tests for the NtQueryKey API
  * PROGRAMMER:      Jérôme Gardou <jerome.gardou@reactos.org>
  *                  Thomas Faber <thomas.faber@reactos.org>

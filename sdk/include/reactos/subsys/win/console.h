@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Console Server DLL
  * FILE:            include/reactos/subsys/win/console.h
  * PURPOSE:         Public definitions for Console API Clients

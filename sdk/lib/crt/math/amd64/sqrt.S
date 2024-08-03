@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS system libraries
  * PURPOSE:           Implementation of sqrt
  * FILE:              lib/sdk/crt/math/amd64/sqrt.S

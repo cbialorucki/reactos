@@ -1,5 +1,5 @@
 /*
-* COPYRIGHT:       See COPYING.ARM in the top level directory
+* COPYRIGHT:       See /docs/licenses/COPYING.ARM
 * PROJECT:         ReactOS UEFI Boot Manager
 * FILE:            boot/environ/lib/misc/rtlcompat.c
 * PURPOSE:         RTL Library Compatibility Routines

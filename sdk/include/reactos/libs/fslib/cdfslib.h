@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS CDFS filesystem library
  * FILE:        include/reactos/libs/fslib/cdfslib.h
  * PURPOSE:     Public definitions for CDFS filesystem library

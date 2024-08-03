@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS c++ runtime library
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Exception-handling vector ctor/dtor iterator implementation
  * PROGRAMMER:      Thomas Faber (thomas.faber@reactos.org)
  */

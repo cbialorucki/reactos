@@ -1,4 +1,4 @@
-/* COPYRIGHT:       See COPYING in the top level directory
+/* COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Shell Link maker
  * FILE:            tools/mkshelllink/mkshelllink.c
  * PURPOSE:         Shell Link maker

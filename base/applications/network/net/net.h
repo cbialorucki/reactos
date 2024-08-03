@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS net command
  * PROGRAMMERS:     Magnus Olsen (greatlord@reactos.org)
  */

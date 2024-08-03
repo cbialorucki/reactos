@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System "MME Buddy" NT4 Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/drivers/sound/mment4/registry.c
  *
  * PURPOSE:     Registry operation helper for audio device drivers.

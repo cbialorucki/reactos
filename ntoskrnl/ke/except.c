@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/except.c
  * PURPOSE:         Platform independent exception handling
  * PROGRAMMERS:     ReactOS Portable Systems Group

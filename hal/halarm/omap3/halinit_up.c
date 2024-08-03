@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halarm/omap3/halinit_up.c
  * PURPOSE:         OMAP3 Board-Specific HAL Initialization
  * PROGRAMMERS:     ReactOS Portable Systems Group

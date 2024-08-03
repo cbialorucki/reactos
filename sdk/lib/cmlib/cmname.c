@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Registry Library
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            lib/cmlib/cmname.c
  * PURPOSE:         Configuration Manager - Name Management
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         IoCreateFile test declarations
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

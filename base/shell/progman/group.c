@@ -20,7 +20,7 @@
 
 /*
  * PROJECT:         ReactOS Program Manager
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            base/shell/progman/group.c
  * PURPOSE:         Program group files helper functions
  * PROGRAMMERS:     Ulrich Schmid

@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Character Map
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        base/applications/charmap/MainWindow.cpp
 * PURPOSE:     Implements the main dialog window
 * COPYRIGHT:   Copyright 2015 Ged Murphy <gedmurphy@reactos.org>

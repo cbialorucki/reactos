@@ -1,6 +1,6 @@
 /*
  * PROJECT:    .inf file parser
- * LICENSE:    GPL - See COPYING in the top level directory
+ * LICENSE:    GPL - See /docs/licenses/COPYING
  * PROGRAMMER: Royce Mitchell III
  *             Eric Kohl
  *             Ge van Geldorp <gvg@reactos.org>

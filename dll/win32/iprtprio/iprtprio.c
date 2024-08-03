@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS IP Route Priority API DLL
  * FILE:        iprtprio.c
  * PURPOSE:     DLL entry

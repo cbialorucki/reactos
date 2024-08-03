@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/io/pnpmgr/pnpinit.c
  * PURPOSE:         PnP Initialization Code
  * PROGRAMMERS:     ReactOS Portable Systems Group

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Hardware Abstraction Layer
  * FILE:            hal/halx86/include/hal.h
  * PURPOSE:         HAL Header

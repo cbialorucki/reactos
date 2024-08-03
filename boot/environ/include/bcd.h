@@ -1,5 +1,5 @@
 /*
-* COPYRIGHT:       See COPYING.ARM in the top level directory
+* COPYRIGHT:       See /docs/licenses/COPYING.ARM
 * PROJECT:         ReactOS Boot Configuration Data
 * FILE:            boot/environ/include/bcd.h
 * PURPOSE:         BCD Main Header

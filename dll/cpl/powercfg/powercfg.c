@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Power Configuration Applet
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            dll/cpl/powercfg/powercfg.c
  * PURPOSE:         initialization of applet
  * PROGRAMMERS:     Alexander Wurzinger (Lohnegrim at gmx dot net)

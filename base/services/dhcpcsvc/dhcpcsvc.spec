@@ -1,6 +1,6 @@
 #
 # PROJECT:     ReactOS Networking
-# LICENSE:     GPL - See COPYING in the top level directory
+# LICENSE:     GPL - See /docs/licenses/COPYING
 # FILE:        lib/dhcpcsvc/dhcpcsvc.spec
 # PURPOSE:     dhcpcsvc exports
 # COPYRIGHT:   Copyright 2006 Ge van Geldorp <gvg@reactos.org>

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS kernel
  * PURPOSE:           GDI Driver Surace Functions
  * FILE:              win32ss/gdi/eng/surface.c

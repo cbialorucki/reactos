@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS Win32 Base API
  * FILE:                 dll/win32/kernel32/client/perfcnt.c
  * PURPOSE:              Performance Counter

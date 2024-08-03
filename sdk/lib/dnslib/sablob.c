@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNS Shared Library
  * FILE:        lib/dnslib/sablob.c
  * PURPOSE:     Functions for the Saved Answer Blob Implementation

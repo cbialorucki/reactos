@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Drivers
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * FILE:        drivers/sac/driver/channel.c
  * PURPOSE:     Driver for the Server Administration Console (SAC) for EMS
  * PROGRAMMERS: ReactOS Portable Systems Group

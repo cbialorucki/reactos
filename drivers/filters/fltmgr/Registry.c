@@ -1,6 +1,6 @@
 /*
  * PROJECT:         Filesystem Filter Manager
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            drivers/filters/fltmgr/Misc.c
  * PURPOSE:         Uncataloged functions
  * PROGRAMMERS:     Ged Murphy (gedmurphy@reactos.org)

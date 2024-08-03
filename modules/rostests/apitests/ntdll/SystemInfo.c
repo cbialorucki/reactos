@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Test for NtQuery/SetSystemInformation
  * PROGRAMMERS:     Timo Kreuzer
  *                  Thomas Faber <thomas.faber@reactos.org>

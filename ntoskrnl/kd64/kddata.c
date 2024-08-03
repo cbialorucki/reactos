@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/kd64/kddata.c
  * PURPOSE:         Contains all global variables and settings for KD64
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

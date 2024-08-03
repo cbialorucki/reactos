@@ -1,6 +1,6 @@
 /*
  * FILE:            hal/halx86/generic/v86.S
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PURPOSE:         System Traps, Entrypoints and Exitpoints
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)
  * NOTE:            See asmmacro.S for the shared entry/exit code.

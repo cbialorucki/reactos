@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS DNS Shared Library
  * FILE:        lib/dnslib/hostent.c
  * PURPOSE:     Functions for dealing with Host Entry structures

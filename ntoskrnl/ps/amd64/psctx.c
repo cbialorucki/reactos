@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ps/amd64/psctx.c
  * PURPOSE:         Process Manager: Set/Get Context for i386
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

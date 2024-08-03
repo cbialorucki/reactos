@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            rostests/win32/user32/paintdesktop/PaintDesktop.c
  *
  * PURPOSE:         Demonstrates how the user32!PaintDesktop() API visually works.

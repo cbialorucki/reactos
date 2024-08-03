@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Universal Serial Bus Human Interface Device Driver
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        drivers/hid/hidclass/hidclass.c
  * PURPOSE:     HID Class Driver
  * PROGRAMMERS:

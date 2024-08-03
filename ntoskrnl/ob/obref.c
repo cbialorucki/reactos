@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ob/obref.c
  * PURPOSE:         Manages the referencing and de-referencing of all Objects,
  *                  as well as the Object Fast Reference implementation.

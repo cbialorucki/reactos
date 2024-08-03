@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/amd64/cpu.c
  * PURPOSE:         Routines for CPU-level support
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

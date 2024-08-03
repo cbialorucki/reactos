@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS WLAN Service
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/services/wlansvc/rpcserver.c
  * PURPOSE:     RPC server interface
  * COPYRIGHT:   Copyright 2009 Christoph von Wittich

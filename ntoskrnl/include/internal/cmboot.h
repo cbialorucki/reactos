@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Kernel
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:     Configuration Manager - Boot Initialization Internal header
  * COPYRIGHT:   Copyright 2010 ReactOS Portable Systems Group
  *

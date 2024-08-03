@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            ntoskrnl/ke/amd64/thrdini.c
  * PURPOSE:         amd64 Thread Context Creation

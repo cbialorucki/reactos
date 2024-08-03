@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Setup Library
  * FILE:            base/setup/lib/fileqsup.h
  * PURPOSE:         Interfacing with Setup* API File Queue support functions

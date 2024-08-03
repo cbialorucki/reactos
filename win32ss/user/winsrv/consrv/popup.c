@@ -1,5 +1,5 @@
 /*
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Console Server DLL
  * FILE:            win32ss/user/winsrv/consrv/popup.c
  * PURPOSE:         Console popup windows
@@ -8,7 +8,7 @@
  * NOTE:            Strongly inspired by the DrawBox function
  *                  from base/setup/usetup/interface/usetup.c, written by:
  *                  Eric Kohl (revision 3753)
- *                  Hervé Poussineau (revision 24718)
+ *                  Hervï¿½ Poussineau (revision 24718)
  *                  and *UiDisplayMenu from FreeLdr.
  */
 

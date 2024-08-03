@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test for RtlAllocateHeap
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

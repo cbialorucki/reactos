@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS win32 subsystem
  * PURPOSE:          Mouse pointer functions
  * FILE:             win32ss/gdi/eng/mouse.c

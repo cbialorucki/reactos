@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Runtime Library
- * LICENSE:         See COPYING in the top level directory
+ * LICENSE:         See /docs/licenses/COPYING
  * FILE:            lib/rtl/bootdata.c
  * PURPOSE:         Boot Status Data Implementation
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Kernel
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:     Boot Video Driver support header
  * COPYRIGHT:   Copyright 2007 Alex Ionescu (alex.ionescu@reactos.org)
  *              Copyright 2019-2022 Hermès Bélusca-Maïto

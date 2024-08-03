@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS advapi32
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/advapi32/service/sctrl.c
  * PURPOSE:     Service control manager functions
  * COPYRIGHT:   Copyright 1999 Emanuele Aliberti

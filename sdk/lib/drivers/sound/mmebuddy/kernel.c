@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System "MME Buddy" Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/drivers/sound/mmebuddy/kernel.c
  *
  * PURPOSE:     Routines assisting with device I/O between user-mode and

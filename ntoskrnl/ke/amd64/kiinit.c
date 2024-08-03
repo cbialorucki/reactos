@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/amd64/kiinit.c
  * PURPOSE:         Kernel Initialization for x86 CPUs
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

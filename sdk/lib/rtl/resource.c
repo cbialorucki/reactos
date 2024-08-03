@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS system libraries
  * FILE:              lib/rtl/resource.c
  * PURPOSE:           Resource (multiple-reader-single-writer lock) functions

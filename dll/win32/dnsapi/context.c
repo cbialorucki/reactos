@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS system libraries
  * FILE:        lib/dnsapi/dnsapi/context.c
  * PURPOSE:     DNSAPI functions built on the ADNS library.

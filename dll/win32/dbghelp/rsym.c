@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS dbghelp extension
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Parse rsym information for use with dbghelp
  * PROGRAMMER:      Mark Jansen
  */

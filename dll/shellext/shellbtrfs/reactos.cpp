@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         BtrFS FSD for ReactOS
  * FILE:            dll/shellext/shellbtrfs/reactos.cpp
  * PURPOSE:         ReactOS glue for Win8.1

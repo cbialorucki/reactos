@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL, see COPYING in the top level directory
+ * COPYRIGHT:       GPL, see /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            drivers/base/kddll/gdb_input.c
  * PURPOSE:         Base functions for the kernel debugger.

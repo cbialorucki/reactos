@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Test driver for CcPinRead function
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

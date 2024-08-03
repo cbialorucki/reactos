@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halx86/legacy/halpnpdd.c
  * PURPOSE:         HAL Plug and Play Device Driver
  * PROGRAMMERS:     ReactOS Portable Systems Group

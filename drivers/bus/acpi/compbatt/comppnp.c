@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Composite Battery Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            boot/drivers/bus/acpi/compbatt/comppnp.c
  * PURPOSE:         Plug-and-Play IOCTL/IRP Handling
  * PROGRAMMERS:     ReactOS Portable Systems Group

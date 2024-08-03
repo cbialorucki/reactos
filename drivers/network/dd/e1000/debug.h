@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Intel PRO/1000 Driver
  * FILE:        include/debug.h
  * PURPOSE:     Debugging support macros

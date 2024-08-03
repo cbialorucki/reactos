@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         Tests for powrprof.dll
  * PROGRAMMER:      Alex Wurzinger
  *                  Johannes Anderwald

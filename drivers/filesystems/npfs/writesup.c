@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Named Pipe FileSystem
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * FILE:        drivers/filesystems/npfs/writesup.c
  * PURPOSE:     Pipes Writing Support
  * PROGRAMMERS: ReactOS Portable Systems Group

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS CRT regression tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            rostests/regtests/crt/iofuncs.c
  * PURPOSE:         Tests for input/output functions of the CRT
  * PROGRAMMERS:     Gregor Schneider

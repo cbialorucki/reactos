@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NDIS library
  * FILE:        ndis/50stubs.c
  * PURPOSE:     NDIS 5.0 Stubs

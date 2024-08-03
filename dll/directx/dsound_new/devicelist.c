@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Configuration of network devices
  * FILE:            dll/directx/dsound_new/devicelist.c
  * PURPOSE:         Enumeration of audio devices

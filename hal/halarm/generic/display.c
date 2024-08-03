@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halarm/generic/display.c
  * PURPOSE:         Screen Display Routines, now useless since NT 5.1+
  * PROGRAMMERS:     ReactOS Portable Systems Group

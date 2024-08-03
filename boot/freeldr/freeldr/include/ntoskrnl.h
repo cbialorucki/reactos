@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            boot/freeldr/freeldr/include/ntoskrnl.h
  * PURPOSE:         NTOS glue routines for the MINIHAL library
  * PROGRAMMERS:     Hervé Poussineau  <hpoussin@reactos.org>

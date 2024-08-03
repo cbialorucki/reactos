@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS ACPI-Compliant Control Method Battery
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            boot/drivers/bus/acpi/cmbatt/cmbatt.c
  * PURPOSE:         Main Initialization Code and IRP Handling
  * PROGRAMMERS:     ReactOS Portable Systems Group

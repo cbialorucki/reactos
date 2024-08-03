@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Hardware Abstraction Layer (HAL)
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:         BIOS Access Routines
  * PROGRAMMERS:     ReactOS Portable Systems Group
  *                  Alex Ionescu (alex.ionescu@reactos.org)

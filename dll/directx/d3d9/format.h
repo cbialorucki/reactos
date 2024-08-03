@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS ReactX
  * FILE:            dll/directx/d3d9/format.h
  * PURPOSE:         d3d9.dll D3DFORMAT helper functions

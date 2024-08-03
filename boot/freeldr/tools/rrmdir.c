@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:             See COPYING in the top level directory
+ * COPYRIGHT:             See /docs/licenses/COPYING
  * PROGRAMMER:            Rex Jolliff (rex@lvcablemodem.com)
  *                        Casper S. Hornstrup (chorns@users.sourceforge.net)
  * PURPOSE:               Platform independent remove directory command

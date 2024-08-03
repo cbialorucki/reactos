@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         GPL, see COPYING in the top level directory
+ * COPYRIGHT:         GPL, see /docs/licenses/COPYING
  * PROJECT:           ReactOS win32 kernel mode sunsystem
  * PURPOSE:           GDI DRIVEROBJ Functions
  * FILE:              win32ss/gdi/eng/driverobj.c

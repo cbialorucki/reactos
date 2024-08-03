@@ -1,6 +1,6 @@
 /*
  * PROJECT:     shell32
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/shell32/shv_item_new.c
  * PURPOSE:     provides default context menu implementation
  * PROGRAMMERS: Johannes Anderwald (johannes.anderwald@reactos.org)

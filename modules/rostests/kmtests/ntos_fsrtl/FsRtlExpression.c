@@ -1,9 +1,9 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         LGPLv2+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Test for FsRtlIsNameInExpression/FsRtlIsDbcsInExpression
  * PROGRAMMER:      Pierre Schweitzer <pierre.schweitzer@reactos.org>
- *                  Víctor Martínez Calvo <vmartinez@reactos.org>
+ *                  Vï¿½ctor Martï¿½nez Calvo <vmartinez@reactos.org>
  */
 
 #include <kmt_test.h>

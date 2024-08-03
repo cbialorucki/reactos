@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Services
  * FILE:             base/services/schedsvc/job.c
  * PURPOSE:          Scheduling service

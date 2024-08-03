@@ -2,7 +2,7 @@
  * ReactOS Win32 Applications
  * Copyright (C) 2005 ReactOS Team
  *
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS arp utility
  * FILE:        apps/utils/gettype/gettype.c
  * PURPOSE:

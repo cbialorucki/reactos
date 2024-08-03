@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS sysem libraries
  * PURPOSE:           Vectored Exception Handling
  * FILE:              lib/rtl/vectoreh.c

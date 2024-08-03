@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         Parallel Port Function Driver
  * FILE:            drivers/parallel/parport/parport.h
  * PURPOSE:         Parport driver header

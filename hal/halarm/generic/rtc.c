@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halarm/generic/rtc.c
  * PURPOSE:         Real Time Clock and Environment Variable Support
  * PROGRAMMERS:     ReactOS Portable Systems Group

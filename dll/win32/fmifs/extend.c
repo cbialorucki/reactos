@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         File Management IFS Utility functions
  * FILE:            reactos/dll/win32/fmifs/extend.c
  * PURPOSE:         Volume extension

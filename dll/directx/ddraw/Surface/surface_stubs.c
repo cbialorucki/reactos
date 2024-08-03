@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS DirectX
  * FILE:                 dll/directx/ddraw/Surface/surface_stubs.c
  * PURPOSE:              IDirectDrawSurface7 Implementation

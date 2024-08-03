@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS EventLog File Library
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            sdk/lib/evtlib/evtlib.h
  * PURPOSE:         Provides functionality for reading and writing
  *                  EventLog files in the NT <= 5.2 (.evt) format.

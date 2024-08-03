@@ -1,6 +1,6 @@
 /*
  * PROJECT:         Ramdisk Class Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            drivers/storage/class/ramdisk/ramdisk.c
  * PURPOSE:         Main Driver Routines
  * PROGRAMMERS:     ReactOS Portable Systems Group

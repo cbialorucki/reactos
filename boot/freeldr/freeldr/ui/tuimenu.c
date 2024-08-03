@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         FreeLoader
  * FILE:            boot/freeldr/freeldr/ui/tuimenu.c
  * PURPOSE:         Text UI Menu Functions

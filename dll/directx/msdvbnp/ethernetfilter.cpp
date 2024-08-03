@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS BDA Proxy
  * FILE:            dll/directx/msdvbnp/ethernetfilter.cpp
  * PURPOSE:         IBDA_EthernetFilter interface

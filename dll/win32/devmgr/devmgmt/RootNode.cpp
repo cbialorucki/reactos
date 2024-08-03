@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Device Manager
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        dll/win32/devmgr/devmgmt/RootNode.cpp
 * PURPOSE:     Root object for
 * COPYRIGHT:   Copyright 2015 Ged Murphy <gedmurphy@reactos.org>

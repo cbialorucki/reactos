@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Storage Stack
  * FILE:            drivers/storage/scsiport/stubs.c
  * PURPOSE:         SCSI port driver

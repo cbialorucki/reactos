@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS
  * FILE:            lib/nt/entry_point.c
  * PURPOSE:         Native NT Runtime Library

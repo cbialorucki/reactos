@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Ancillary Function Driver DLL
  * FILE:        include/reactos/winsock/mswinsock.h
  * PURPOSE:     Ancillary Function Driver DLL header

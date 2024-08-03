@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS system libraries
  * FILE:        lib/sdk/crt/sys_stat/systime.c
  * PURPOSE:     Unknown

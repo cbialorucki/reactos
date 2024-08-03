@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS msgina.dll
  * FILE:            lib/msgina/shutdown.c
  * PURPOSE:         Shutdown Dialog Box (GUI only)

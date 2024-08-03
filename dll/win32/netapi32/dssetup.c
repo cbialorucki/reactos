@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         NetAPI DLL
  * FILE:            reactos/dll/win32/netapi32/dssetup.c
  * PURPOSE:         Directory Service Setup interface code

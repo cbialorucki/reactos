@@ -1,5 +1,5 @@
 /*
-* COPYRIGHT:         See COPYING in the top level directory
+* COPYRIGHT:         See /docs/licenses/COPYING
 * PROJECT:           ReactOS win32 subsystem
 * PURPOSE:           Flood filling support
 * FILE:              win32ss/gdi/dib/floodfill.c

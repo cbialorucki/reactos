@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS PCI Bus Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            include/reactos/drivers/pci/pci.h
  * PURPOSE:         Internal, Shared, PCI Definitions
  * PROGRAMMERS:     ReactOS Portable Systems Group

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL, See COPYING in the top level directory
+ * COPYRIGHT:       GPL, See /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            ntoskrnl/mm/amd64/procsup.c
  * PURPOSE:         Low level memory management manipulation

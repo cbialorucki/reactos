@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         See COPYING in the top level directory
+ * LICENSE:         See /docs/licenses/COPYING
  * PURPOSE:         Test for CRT process handling.
  * PROGRAMMER:      Andreas Maier <andy1.m@gmx.de>
  */

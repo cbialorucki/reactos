@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS kernel
  * PURPOSE:           Run-Time Library
  * FILE:              lib/sdk/crt/math/i386/allmul_asm.s

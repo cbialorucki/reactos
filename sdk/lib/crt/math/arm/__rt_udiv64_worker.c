@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       BSD - See COPYING.ARM in the top level directory
+ * COPYRIGHT:       BSD - See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS CRT library
  * PURPOSE:         Implementation of __rt_udiv64_worker
  * PROGRAMMER:      Timo Kreuzer

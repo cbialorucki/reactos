@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL, see COPYING in the top level directory
+ * COPYRIGHT:       GPL, see /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            drivers/base/kdvm/kdvbox.c
  * PURPOSE:         VBOX data exchange function for kdvbox

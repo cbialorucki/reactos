@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Display Control Panel
  * FILE:            dll/cpl/desk/advmon.c
  * PURPOSE:         Advanced monitor/display settings

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/mscutils/servman/export.c
  * PURPOSE:     Save services to a file
  * COPYRIGHT:   Copyright 2006 Ged Murphy <gedmurphy@gmail.com>

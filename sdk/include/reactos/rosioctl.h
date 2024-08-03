@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS PSDK extensions
  * FILE:            include/reactos/rosioctl.h
  * PURPOSE:         Additional partition types

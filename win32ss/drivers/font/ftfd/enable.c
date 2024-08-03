@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS win32 subsystem
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * PURPOSE:         GDI font driver for bitmap fonts
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)
  */

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS FS utility tool
  * FILE:            modules/rosapps/applications/cmdutils/vcdcli/vcdcli.c
  * PURPOSE:         Virtual CD-ROM management application

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Video Port Driver
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            win32ss/drivers/videoprt/event.c
  * PURPOSE:         Event Support Routines
  * PROGRAMMERS:     ReactOS Portable Systems Group

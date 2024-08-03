@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         Ext2 File System Management
  * FILE:            dll/win32/uext2/uext2.c
  * PURPOSE:         uext2 DLL initialisation

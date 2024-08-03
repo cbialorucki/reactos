@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS ComPort Library
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            lib/reactos/cportlib/cport.c
  * PURPOSE:         Provides a serial port library for KDCOM, INIT, and FREELDR
  * PROGRAMMERS:     ReactOS Portable Systems Group

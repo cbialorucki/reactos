@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NT User-Mode DLL
  * FILE:            lib/ntdll/rtl/libsup.c
  * PURPOSE:         RTL Support Routines

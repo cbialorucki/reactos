@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS system libraries
  * FILE:            dll/win32/advapi32/misc/hwprofiles.c
  * PURPOSE:         advapi32.dll Hardware Functions

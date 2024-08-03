@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * PROJECT:         ReactOS Virtual DOS Machine
  * FILE:            subsystems/mvdm/ntvdm/emulator.h
  * PURPOSE:         Minimal x86 machine emulator for the VDM

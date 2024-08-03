@@ -1,6 +1,6 @@
 /*
 *
-* COPYRIGHT:       See COPYING in the top level directory
+* COPYRIGHT:       See /docs/licenses/COPYING
 * PROJECT:         ReactOS devmgr.dll
 * FILE:            dll/win32/devmgr/api.cpp
 * PURPOSE:         devmgr.dll interface

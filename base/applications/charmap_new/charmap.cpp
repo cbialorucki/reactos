@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Character Map
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        base/applications/charmap/charmap.cpp
 * COPYRIGHT:   Copyright 2006 Ged Murphy <gedmurphy@gmail.com>
 */

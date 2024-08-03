@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS File System Recognizer
  * FILE:             drivers/filesystems/fs_rec/fs_rec.c
  * PURPOSE:          Main Driver Entrypoint and FS Registration

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Service Control Manager
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/system/services/controlset.c
  * PURPOSE:     Control Set Management
  * COPYRIGHT:   Copyright 2012 Eric Kohl

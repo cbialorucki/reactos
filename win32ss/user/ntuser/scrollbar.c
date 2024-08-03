@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS kernel
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * PURPOSE:     Scrollbars
  * COPYRIGHT:   Thomas Weidenmueller (w3seek@users.sourceforge.net)
  *              Jason Filby (jasonfilby@yahoo.com)

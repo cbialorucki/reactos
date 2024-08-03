@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/wlnotify/senssvc.c
  * PURPOSE:     SENS service logon notifications
  * PROGRAMMER:  Eric Kohl <eric.kohl@reactos.org>

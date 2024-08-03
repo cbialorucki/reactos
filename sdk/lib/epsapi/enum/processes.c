@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * LICENSE:     See LGPL.txt in the top level directory
  * PROJECT:     ReactOS system libraries
  * FILE:        reactos/lib/epsapi/enum/processes.c

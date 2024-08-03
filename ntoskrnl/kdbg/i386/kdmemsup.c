@@ -7,7 +7,7 @@
 \*****************************************************************************/
 
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel
  * PURPOSE:         Kernel Debugger Safe Memory Support
  *

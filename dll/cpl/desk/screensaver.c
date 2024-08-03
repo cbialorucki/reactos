@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Display Control Panel
  * FILE:            dll/cpl/desk/screensaver.c
  * PURPOSE:         Screen saver property page

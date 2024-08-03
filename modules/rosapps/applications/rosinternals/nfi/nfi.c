@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NTFS Information tool
  * FILE:            rosinternals/nfi/nfi.c
  * PURPOSE:         Query information from NTFS volume using FSCTL

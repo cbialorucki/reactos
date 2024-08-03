@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Keyboard class driver
  * FILE:            drivers/kbdclass/kbdclass.c
  * PURPOSE:         Keyboard class driver

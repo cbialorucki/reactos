@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS GUI first stage setup application
  * FILE:            base/setup/lib/infsupp.c
  * PURPOSE:         Interfacing with Setup* API .INF Files support functions

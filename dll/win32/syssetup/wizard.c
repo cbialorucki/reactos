@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         System setup
  * FILE:            dll/win32/syssetup/wizard.c
  * PURPOSE:         GUI controls

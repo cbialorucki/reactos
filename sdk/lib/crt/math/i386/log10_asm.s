@@ -1,6 +1,6 @@
 
  /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS kernel
  * PURPOSE:
  * FILE:              lib/sdk/crt/math/i386/log10_asm.s

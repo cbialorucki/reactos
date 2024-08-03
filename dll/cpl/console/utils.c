@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Console Configuration DLL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            dll/cpl/console/utils.c
  * PURPOSE:         Utility functions
  * PROGRAMMERS:     Hermes Belusca-Maito (hermes.belusca@sfr.fr)

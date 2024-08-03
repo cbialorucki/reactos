@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/thrdschd.c
  * PURPOSE:         Kernel Thread Scheduler (Affinity, Priority, Scheduling)
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

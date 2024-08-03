@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS DirectX
  * FILE:                 dll/directx/ddraw/Videoport/videoport_stubs.c
  * PURPOSE:              IDirectDrawVideoPort, DDVideoPortContainer and IDirectDrawVideoPortNotify Implementation

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system properties, control panel applet
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/cpl/sysdm/virtmem.c
  * PURPOSE:     Virtual memory control dialog
  * COPYRIGHT:   Copyright 2006 Ged Murphy <gedmurphy@gmail.com>

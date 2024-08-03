@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING.ARM in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS UEFI Boot Library
  * FILE:            boot/environ/lib/arch/i386/arch.c
  * PURPOSE:         Boot Library Architectural Initialization for i386

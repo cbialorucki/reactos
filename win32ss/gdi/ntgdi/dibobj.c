@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS win32 kernel mode subsystem
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            win32ss/gdi/ntgdi/dibobj.c
  * PURPOSE:         Dib object functions
  * PROGRAMMER:

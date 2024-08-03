@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS Multimedia
  * FILE:                 lib/mmdrv/auxil.c
  * PURPOSE:              Multimedia User Mode Driver

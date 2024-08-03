@@ -1,5 +1,5 @@
 /* PROJECT:         ReactOS sndrec32
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            base/applications/sndrec32/audio_membuffer.cpp
  * PURPOSE:         Sound recording
  * PROGRAMMERS:     Marco Pagliaricci (irc: rendar)

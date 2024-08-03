@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Service Host
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * FILE:        base/services/svchost/globals.c
  * PURPOSE:     Functions to initialize global settings and support
  * PROGRAMMERS: ReactOS Portable Systems Group

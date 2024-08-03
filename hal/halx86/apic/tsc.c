@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            hal/halx86/apic/tsc.c
  * PURPOSE:         HAL Routines for TSC handling
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)

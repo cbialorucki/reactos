@@ -1,6 +1,6 @@
 /*
  * PROJECT:     PCI IDE bus driver extension
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * PURPOSE:     Main file
  * COPYRIGHT:   Copyright 2005 Hervé Poussineau <hpoussin@reactos.org>
  */

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS system libraries
  * PURPOSE:         Unwinding related functions
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)

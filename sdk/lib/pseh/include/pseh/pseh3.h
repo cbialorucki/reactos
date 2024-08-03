@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS system libraries
- * LICENSE:         GNU GPL - See COPYING in the top level directory
+ * LICENSE:         GNU GPL - See /docs/licenses/COPYING
  * PURPOSE:         Header for PSEH3
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)
  */

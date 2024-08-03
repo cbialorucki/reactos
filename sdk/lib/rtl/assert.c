@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Run-Time Library
  * PURPOSE:           Implements RtlAssert used by the ASSERT
  *                    and ASSERTMSG debugging macros

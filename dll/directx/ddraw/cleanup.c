@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS kernel
  * FILE:                 dll/directx/ddraw/cleanup.c
  * PURPOSE:              DirectDraw Library

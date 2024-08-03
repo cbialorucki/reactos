@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS RTL8139 Driver
  * FILE:        rtlhw.h
  * PURPOSE:     8139 NIC definitions

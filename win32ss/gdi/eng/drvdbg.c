@@ -1,6 +1,6 @@
 /*
  * PROJECT:         Win32 subsystem
- * LICENSE:         GNU GPL, see COPYING in the top level directory
+ * LICENSE:         GNU GPL, see /docs/licenses/COPYING
  * FILE:            win32ss/gdi/eng/drvdbg.c
  * PURPOSE:         Debug hooks for display driver callbacks
  * PROGRAMMERS:     Timo Kreuzer

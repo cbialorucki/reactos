@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS FAT Image Creator
  * FILE:            tools/fatten/fatten.c
  * PURPOSE:         FAT Image Creator (for EFI Boot)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS system libraries
  * PURPOSE:           Implementation of _chkstk and _alloca_probe
  * FILE:              lib/sdk/crt/except/amd64/chkstk_asm.s

@@ -1,8 +1,8 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS C run time library
  * PURPOSE:           Stack checker
- * PROGRAMMERS:       Jérôme Gardou
+ * PROGRAMMERS:       Jï¿½rï¿½me Gardou
  */
 
 #include <asm.inc>

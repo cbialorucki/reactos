@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * FILE:             mkernel/modules/sound/sound.c
  * PURPOSE:          SoundBlaster 16 Driver

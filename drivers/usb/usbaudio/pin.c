@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Universal Audio Class Driver
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        drivers/usb/usbaudio/pin.c
 * PURPOSE:     USB Audio device driver.
 * PROGRAMMERS:

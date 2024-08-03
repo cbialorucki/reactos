@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         LGPLv2.1+ - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPLv2.1+ - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Kernel-Mode Test Suite Object Handle test
  * PROGRAMMER:      Thomas Faber <thomas.faber@reactos.org>
  */

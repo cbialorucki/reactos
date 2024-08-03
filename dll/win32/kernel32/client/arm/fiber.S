@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS system libraries
  * FILE:        dll/win32/kernel32/client/arm/fiber.S
  * PURPOSE:     Fiber context switch code for the amd64 architecture

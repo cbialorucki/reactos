@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS user32.dll
  * PURPOSE:         Window management
  * PROGRAMMER:      2001 Casper S. Hornstrup <chorns@users.sourceforge.net>

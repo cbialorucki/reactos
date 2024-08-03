@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ke/i386/usercall.c
  * PURPOSE:         User-mode Callout Mechanisms (APC and Win32K Callbacks)
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

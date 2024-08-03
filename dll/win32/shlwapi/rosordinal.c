@@ -1,6 +1,6 @@
 /*
  * PROJECT:   ReactOS Shell
- * LICENSE:   GPL - See COPYING in the top level directory
+ * LICENSE:   GPL - See /docs/licenses/COPYING
  * PURPOSE:   Misc shell helper functions
  * COPYRIGHT: Copyright 2015 Giannis Adamopoulos
  */

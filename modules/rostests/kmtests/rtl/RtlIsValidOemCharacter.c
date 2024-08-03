@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Kernel-Mode Test Suite Runtime library for RtlIsValidOemCharacter
  * PROGRAMMER:      Dmitry Chapyshev <dmitry@reactos.org>
  */

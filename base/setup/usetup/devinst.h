@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS text-mode setup
  * PURPOSE:         Device installation
  * PROGRAMMER:      Hervé Poussineau (hpoussin@reactos.org)

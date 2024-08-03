@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GPL, see COPYING in the top level directory
+ * COPYRIGHT:       GPL, see /docs/licenses/COPYING
  * PROJECT:         ReactOS kernel
  * FILE:            drivers/base/kdgdb/kdcom.c
  * PURPOSE:         COM port functions for the kernel debugger.

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS CRT
  * PURPOSE:           Implementation of _mbsnlen
  * FILE:              lib/sdk/crt/string/_mbsnlen.c

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS GDI32
  * PURPOSE:          GDI DirectX interface
  * FILE:             win32ss/gdi/gdi32/misc/gdientry.c

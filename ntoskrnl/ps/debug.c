@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ps/debug.c
  * PURPOSE:         Process Manager: Debugging Support (Set/Get Context)
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

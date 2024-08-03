@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System "MME Buddy" Library
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        include/reactos/libs/sound/mmebuddy.h
  *
  * PURPOSE:     Header for the "MME Buddy" helper library (located in

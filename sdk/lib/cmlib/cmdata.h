@@ -1,6 +1,6 @@
 /*
  * PROJECT:   Registry manipulation library
- * LICENSE:   GPL - See COPYING in the top level directory
+ * LICENSE:   GPL - See /docs/licenses/COPYING
  * COPYRIGHT: Copyright 2005 Filip Navara <navaraf@reactos.org>
  *            Copyright 2001 - 2005 Eric Kohl
  */

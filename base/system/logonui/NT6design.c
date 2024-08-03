@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Logon User Interface Host
  * FILE:        base/system/logonui/NT6design.c
  * PROGRAMMERS: Ged Murphy (gedmurphy@reactos.org)

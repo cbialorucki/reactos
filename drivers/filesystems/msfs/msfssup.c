@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:  See COPYING in the top level directory
+ * COPYRIGHT:  See /docs/licenses/COPYING
  * PROJECT:    ReactOS kernel
  * FILE:       drivers/filesystems/msfs/msfssup.c
  * PURPOSE:    Mailslot filesystem

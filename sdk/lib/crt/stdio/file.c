@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS CRT library
- * LICENSE:         LGPL - See COPYING in the top level directory
+ * LICENSE:         LGPL - See /docs/licenses/COPYING
  * FILE:            lib/sdk/crt/stdio/file.c
  * PURPOSE:         File CRT functions
  * PROGRAMMERS:     Wine team

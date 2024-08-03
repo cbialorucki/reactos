@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            hal/halx86/generic/portio.c
  * PURPOSE:         I/O Functions for access to ports
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

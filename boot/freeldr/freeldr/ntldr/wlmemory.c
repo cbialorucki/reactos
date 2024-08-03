@@ -1,6 +1,6 @@
 /*
  * PROJECT:         EFI Windows Loader
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            boot/freeldr/freeldr/windows/wlmemory.c
  * PURPOSE:         Memory related routines
  * PROGRAMMERS:     Aleksey Bragin (aleksey@reactos.org)

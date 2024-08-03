@@ -1,6 +1,6 @@
 
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * PURPOSE:          Native driver for dxg implementation
  * FILE:             win32ss/reactx/dxg/historic.c

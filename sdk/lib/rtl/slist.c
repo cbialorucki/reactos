@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Runtime Library
  * PURPOSE:         Slist Routines
  * FILE:            lib/rtl/slist.c

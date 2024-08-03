@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS kernel
  * PURPOSE:     kernel memory management functions
  * PROGRAMMERS: David Welch <welch@cwcom.net>

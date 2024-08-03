@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         See COPYING in the top level directory
+ * LICENSE:         See /docs/licenses/COPYING
  * PURPOSE:         Test for RtlRemovePrivileges
  * PROGRAMMER:      Ratin Gao <ratin@knsoft.org>
  */

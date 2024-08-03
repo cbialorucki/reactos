@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS runonce.exe
  * FILE:            base/system/runonce/runonce.c
  * PROGRAMMER:      Dmitry Chapyshev (dmitry@reactos.org)

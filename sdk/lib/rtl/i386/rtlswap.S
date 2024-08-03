@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Run-Time Library
  * PURPOSE:           Byte swap functions
  * FILE:              lib/rtl/i386/rtlswap.S

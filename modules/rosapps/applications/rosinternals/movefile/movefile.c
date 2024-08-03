@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS pending moves operations interactions tool
  * FILE:            cmdutils/movefile/movefile.c
  * PURPOSE:         Queue move operations for next reboot

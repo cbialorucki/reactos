@@ -1,6 +1,6 @@
 /*
 * PROJECT:     ReactOS Character Map
-* LICENSE:     GPL - See COPYING in the top level directory
+* LICENSE:     GPL - See /docs/licenses/COPYING
 * FILE:        base/applications/charmap/GridView.cpp
 * PURPOSE:     Class for for the window which contains the font matrix
 * COPYRIGHT:   Copyright 2015 Ged Murphy <gedmurphy@reactos.org>

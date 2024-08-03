@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         FreeLoader
  * FILE:            boot/freeldr/freeldr/include/ui/minitui.h
  * PURPOSE:         Mini Text UI interface header

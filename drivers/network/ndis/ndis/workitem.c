@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NDIS library
  * FILE:        workitem.c
  * PURPOSE:     Implements the NDIS 6.0 work item interface

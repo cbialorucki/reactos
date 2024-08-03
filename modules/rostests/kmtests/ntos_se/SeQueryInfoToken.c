@@ -1,6 +1,6 @@
 /*
 * PROJECT:         ReactOS kernel-mode tests
-* LICENSE:         GPLv2+ - See COPYING in the top level directory
+* LICENSE:         GPLv2+ - See /docs/licenses/COPYING
 * PURPOSE:         Kernel-Mode Test Suite Process Notification Routines test
 * PROGRAMMER:      Constantine Belev (Moscow State Technical University)
 *                  Denis Grishin (Moscow State Technical University)

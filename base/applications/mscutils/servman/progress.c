@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/mscutils/servman/progress.c
  * PURPOSE:     Progress dialog box message handler
  * COPYRIGHT:   Copyright 2006-2015 Ged Murphy <gedmurphy@reactos.org>

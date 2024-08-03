@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Console Driver DLL
  * FILE:            win32ss/user/winsrv/consrv/condrv/conoutput.c
  * PURPOSE:         General Console Output Functions

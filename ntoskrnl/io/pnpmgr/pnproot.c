@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/io/pnpmgr/pnproot.c
  * PURPOSE:         PnP manager root device
  * PROGRAMMERS:     Casper S. Hornstrup (chorns@users.sourceforge.net)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         BSD - See COPYING.ARM in the top level directory
+ * COPYRIGHT:         BSD - See /docs/licenses/COPYING.ARM
  * PROJECT:           ReactOS CRT library
  * PURPOSE:           Implementation of tan
  * PROGRAMMER:        Timo Kreuzer (timo.kreuzer@reactos.org)

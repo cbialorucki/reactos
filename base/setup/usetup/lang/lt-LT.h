@@ -3,10 +3,10 @@
 // To revert conversion, please execute "code7bit -r <file>".
 /*
  * PROJECT:     ReactOS Setup
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/setup/usetup/lang/lt-LT.h
  * PURPOSE:     Lithuanian Language File
- * TRANSLATOR:  Vytis "CMan" GirdØijauskas (cman@cman.us)
+ * TRANSLATOR:  Vytis "CMan" Girdï¿½ijauskas (cman@cman.us)
  * DATE:        2008-01-06
  */
 

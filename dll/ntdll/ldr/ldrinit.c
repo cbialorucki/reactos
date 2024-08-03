@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS NT User-Mode Library
  * FILE:            dll/ntdll/ldr/ldrinit.c
  * PURPOSE:         User-Mode Process/Thread Startup

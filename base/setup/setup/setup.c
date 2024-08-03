@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS GUI/console setup
  * FILE:            base/setup/setup/setup.c
  * PURPOSE:         Second stage setup

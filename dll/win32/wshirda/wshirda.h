@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Winsock 2 IRDA Helper DLL
  * FILE:        include/ws2help.h
  * PURPOSE:     WinSock 2 IRDA Helper DLL

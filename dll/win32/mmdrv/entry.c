@@ -1,6 +1,6 @@
 /*
  *
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS Multimedia
  * FILE:                 dll/win32/mmdrv/entry.c
  * PURPOSE:              Multimedia User Mode Driver (DriverProc)

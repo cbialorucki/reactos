@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Timedate Control Panel
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/cpl/timedate/clock.c
  * PURPOSE:     Draws the analog clock
  * COPYRIGHT:   Copyright 2006 Ged Murphy <gedmurphy@gmail.com>

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         shell32.dll
  * FILE:            dll/win32/shell32/stubs.c
  * PURPOSE:         shell32.dll stubs

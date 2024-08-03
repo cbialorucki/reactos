@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test driver for MmMapLockedPagesSpecifyCache function
  * PROGRAMMER:      Pierre Schweitzer <pierre@reactos.org>
  */

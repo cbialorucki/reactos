@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Test for NtLoadKey and NtUnloadKey
  * PROGRAMMERS:     Hermes Belusca-Maito (hermes.belusca@sfr.fr)
  */

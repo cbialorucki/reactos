@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS shutdown/logoff utility
  * FILE:            base/applications/shutdown/shutdown.c
  * PURPOSE:         Initiate logoff, shutdown or reboot of the system

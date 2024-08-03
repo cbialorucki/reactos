@@ -1,11 +1,11 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         File Management IFS Utility functions
  * FILE:            reactos/dll/win32/fmifs/init.c
  * PURPOSE:         Initialisation
  *
  * PROGRAMMERS:     Emanuele Aliberti
- *                  Hervé Poussineau (hpoussin@reactos.org)
+ *                  Hervï¿½ Poussineau (hpoussin@reactos.org)
  */
 
 #include "precomp.h"

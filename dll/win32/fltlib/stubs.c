@@ -1,6 +1,6 @@
 /*
 * PROJECT:         Filesystem Filter Manager library
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            dll/win32/fltlib/stubs.c
 * PURPOSE:
 * PROGRAMMERS:     Ged Murphy (ged.murphy@reactos.org)

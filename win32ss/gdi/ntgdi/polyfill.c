@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Win32k subsystem
  * PURPOSE:           Various Polygon Filling routines for Polygon()
  * FILE:              win32ss/gdi/ntgdi/polyfill.c

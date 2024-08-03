@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            hal/halx86/generic/halinit.c
  * PURPOSE:         HAL Entrypoint and Initialization
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

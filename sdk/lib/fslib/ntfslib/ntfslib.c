@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS NTFS FS library
  * FILE:        lib/fslib/ntfslib/ntfslib.c
  * PURPOSE:     NTFS lib

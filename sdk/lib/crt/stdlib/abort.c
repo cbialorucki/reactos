@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS C runtime library
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            lib/sdk/crt/stdlib/abort.c
  * PURPOSE:         abort implementation
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)

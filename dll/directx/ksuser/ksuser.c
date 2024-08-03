@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel Streaming
  * FILE:            dll/directx/ksuser/ksuser.c
  * PURPOSE:         KS USER functions

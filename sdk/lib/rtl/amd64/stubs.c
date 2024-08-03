@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS Run-Time Library
  * PURPOSE:           AMD64 stubs
  * FILE:              lib/rtl/amd64/stubs.c

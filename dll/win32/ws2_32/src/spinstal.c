@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock 2 API
  * FILE:        dll/win32/ws2_32/src/spinstal.c
  * PURPOSE:     Transport Service Provider Installation

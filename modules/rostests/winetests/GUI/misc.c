@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS API Test GUI
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        
  * PURPOSE:     miscallanous functions
  * COPYRIGHT:   Copyright 2005 Thomas Weidenmueller <w3seek@reactos.org>

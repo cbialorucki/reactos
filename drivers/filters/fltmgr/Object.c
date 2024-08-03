@@ -1,6 +1,6 @@
 /*
 * PROJECT:         Filesystem Filter Manager
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            drivers/filters/fltmgr/Object.c
 * PURPOSE:         Miscellaneous library functions
 * PROGRAMMERS:     Ged Murphy (gedmurphy@reactos.org)

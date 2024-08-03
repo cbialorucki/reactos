@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS WinSock 2 DLL
  * FILE:        dll/win32/ws2help/wshdrv.h
  * PURPOSE:     WinSock 2 Helper Driver header

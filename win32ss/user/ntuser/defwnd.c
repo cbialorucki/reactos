@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Win32k subsystem
- * LICENSE:     See COPYING in the top level directory
+ * LICENSE:     See /docs/licenses/COPYING
  * PURPOSE:     Miscellaneous User functions
  * COPYRIGHT:   2008-2020 James Tabor <james.tabor@reactos.org>
  */

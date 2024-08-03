@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Win32 Base API
- * LICENSE:         See COPYING in the top level directory
+ * LICENSE:         See /docs/licenses/COPYING
  * FILE:            dll/win32/kernel32/client/timerqueue.c
  * PURPOSE:         Timer Queue Functions
  * PROGRAMMERS:     Thomas Weidenmueller <w3seek@reactos.com>

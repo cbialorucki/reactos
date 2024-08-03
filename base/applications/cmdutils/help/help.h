@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS help utility
  * FILE:            base/applications/cmdutils/help/help.h
  * PURPOSE:         Provide help for command-line utilities

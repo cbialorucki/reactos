@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS EventCreate Command
  * FILE:            base/applications/cmdutils/eventcreate/eventcreate.c
  * PURPOSE:         Allows reporting custom user events in event logs,

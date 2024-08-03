@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Novell Eagle 2000 driver
  * FILE:        ne2000/8390.c
  * PURPOSE:     DP8390 NIC specific routines

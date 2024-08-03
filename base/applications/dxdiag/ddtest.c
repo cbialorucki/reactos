@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactX Diagnosis Application
- * LICENSE:     LGPL - See COPYING in the top level directory
+ * LICENSE:     LGPL - See /docs/licenses/COPYING
  * PURPOSE:     ReactX DirectDraw tests
  * COPYRIGHT:   Copyright 2008 Kamil Horníček
  *

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/wmi/wmidrv.c
  * PURPOSE:         I/O Windows Management Instrumentation (WMI) Support
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Mouse class driver
  * FILE:            drivers/mouclass/mouclass.c
  * PURPOSE:         Mouse class driver

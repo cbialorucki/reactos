@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Boot Loader
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            boot/armllb/hw/versatile/hwclcd.c
  * PURPOSE:         LLB CLCD Routines for Versatile
  * PROGRAMMERS:     ReactOS Portable Systems Group

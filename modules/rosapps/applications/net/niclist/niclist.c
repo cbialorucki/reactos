@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS packet driver interface list utility
  * FILE:        apps/net/niclist/niclist.c
  * PURPOSE:     Network information utility

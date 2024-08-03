@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Runtime Library
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            lib/rtl/heapdbg.c
  * PURPOSE:         Heap manager debug heap
  * PROGRAMMERS:     Copyright 2010 Aleksey Bragin

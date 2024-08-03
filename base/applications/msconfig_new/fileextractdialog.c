@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Applications
- * LICENSE:     LGPL - See COPYING in the top level directory
+ * LICENSE:     LGPL - See /docs/licenses/COPYING
  * FILE:        base/applications/msconfig_new/fileextractdialog.c
  * PURPOSE:     File Extract Dialog
  * COPYRIGHT:   Copyright 2011-2012 Hermes BELUSCA - MAITO <hermes.belusca@sfr.fr>
@@ -125,7 +125,7 @@ FileExtractDialogWndProc(HWND hDlg,
                     SecureZeroMemory(&ofn, sizeof(ofn));
                     ofn.lStructSize = sizeof(ofn);
                     ofn.hwndOwner   = hDlg;
-                    ofn.lpstrTitle  = L"Files to be restored"; // L"Fichiers à restaurer"; // FIXME: Localize!
+                    ofn.lpstrTitle  = L"Files to be restored"; // L"Fichiers ï¿½ restaurer"; // FIXME: Localize!
                     ofn.Flags       = OFN_ALLOWMULTISELECT | OFN_EXPLORER | OFN_ENABLESIZING | OFN_HIDEREADONLY | OFN_LONGNAMES;
                     // ofn.FlagsEx     = OFN_EX_NOPLACESBAR;
                     ofn.lpstrFilter = L"All files (*.*)\0*.*\0";
@@ -225,7 +225,7 @@ FileExtractDialogWndProc(HWND hDlg,
                     bi.hwndOwner = hDlg;
                     bi.pidlRoot  = NULL;
                     bi.lpszTitle = L"Select the directory where the restored files should be stored:";
-                                // L"Choisissez le répertoire dans lequel doivent être enregistrés les fichiers restaurés :"; // FIXME: Localize!
+                                // L"Choisissez le rï¿½pertoire dans lequel doivent ï¿½tre enregistrï¿½s les fichiers restaurï¿½s :"; // FIXME: Localize!
                     bi.ulFlags   = BIF_USENEWUI | BIF_RETURNONLYFSDIRS | BIF_SHAREABLE | BIF_VALIDATE /* | BIF_BROWSEFILEJUNCTIONS <--- only in Windows 7+ */;
 
                     if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)))

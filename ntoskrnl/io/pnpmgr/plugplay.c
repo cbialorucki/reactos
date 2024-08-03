@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/io/pnpmgr/plugplay.c
  * PURPOSE:         Plug-and-play interface routines
  * PROGRAMMERS:     Eric Kohl <eric.kohl@reactos.org>

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            hal/halx86/legacy/bus/bushndlr.c
  * PURPOSE:         Generic HAL Bus Handler Support
  * PROGRAMMERS:     Stefan Ginsberg (stefan.ginsberg@reactos.org)

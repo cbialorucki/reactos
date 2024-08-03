@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS WMI driver
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            drivers/wmi/wmilib.c
  * PURPOSE:         Windows Management Instrumentation
  * PROGRAMMERS:     Aleksey Bragin (aleksey@reactos.org)

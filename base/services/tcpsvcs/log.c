@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS simple TCP/IP services
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/services/tcpsvcs/log.c
  * PURPOSE:     Logging functionality for the service
  * COPYRIGHT:   Copyright 2008 Ged Murphy <gedmurphy@reactos.org>

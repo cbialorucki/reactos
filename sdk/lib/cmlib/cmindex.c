@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Registry Library
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            lib/cmlib/cmindex.c
  * PURPOSE:         Configuration Manager - Cell Indexes
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

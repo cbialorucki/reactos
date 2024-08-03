@@ -1,6 +1,6 @@
 /*
 * PROJECT:         ReactOS Kernel
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            ntoskrnl/include/internal/vdm.h
 * PURPOSE:         Internal header for V86 and VDM Support
 * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

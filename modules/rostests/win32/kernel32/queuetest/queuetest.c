@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Tests
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            queuetest.c
  * PURPOSE:         Usermode QueueUserWorkItem() testing
  * PROGRAMMERS:     Thomas Weidenmueller (w3seek@reactos.org)

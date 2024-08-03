@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Bootsector
  * FILE:            boot/freeldr/bootsect/faty.S
  * PURPOSE:         Combined FAT12, FAT16 and FAT32 boot sector

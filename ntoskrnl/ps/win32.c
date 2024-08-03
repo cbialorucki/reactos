@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ps/win32.c
  * PURPOSE:         Process Manager: Win32K Initialization and Support
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

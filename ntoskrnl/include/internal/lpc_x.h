@@ -1,6 +1,6 @@
 /*
 * PROJECT:         ReactOS Kernel
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            ntoskrnl/include/internal/lpc_x.h
 * PURPOSE:         Internal Inlined Functions for Local Procedure Call
 * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

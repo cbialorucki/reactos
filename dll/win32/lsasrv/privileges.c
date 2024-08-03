@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         Local Security Authority (LSA) Server
  * FILE:            reactos/dll/win32/lsasrv/privileges.c
  * PURPOSE:         Privilege lookup functions

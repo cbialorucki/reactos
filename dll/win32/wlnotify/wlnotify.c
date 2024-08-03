@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/wlnotify/wlnotify.c
  * PURPOSE:     Winlogon notifications
  * PROGRAMMER:  Eric Kohl

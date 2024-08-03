@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * FILE:             subsys/system/dhcp/pipe.c
  * PURPOSE:          DHCP client pipe

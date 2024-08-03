@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Sound System
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/wdmaud.drv/mmixer.c
  *
  * PURPOSE:     WDM Audio Mixer API (User-mode part)

@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS system libraries
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/shellext/stobject/stobject.cpp
  * PURPOSE:     COM registration services for STobject.dll
  * PROGRAMMERS: Robert Naumann

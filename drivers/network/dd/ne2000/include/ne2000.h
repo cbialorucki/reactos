@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Novell Eagle 2000 driver
  * FILE:        include/ne2000.h
  * PURPOSE:     NE2000 driver definitions

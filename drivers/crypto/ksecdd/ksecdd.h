@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Drivers
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PURPOSE:         Kernel Security Support Provider Interface Driver
  *
  * PROGRAMMERS:     Timo Kreuzer (timo.kreuzer@reactos.org)

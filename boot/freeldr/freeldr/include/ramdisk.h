@@ -1,6 +1,6 @@
 /*
  * PROJECT:     FreeLoader
- * LICENSE:     BSD - See COPYING.ARM in the top level directory
+ * LICENSE:     BSD - See /docs/licenses/COPYING.ARM
  * PURPOSE:     Header file for ramdisk support.
  * COPYRIGHT:   Copyright 2008 ReactOS Portable Systems Group
  *              Copyright 2009 Hervé Poussineau

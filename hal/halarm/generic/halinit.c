@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halarm/generic/halinit.c
  * PURPOSE:         HAL Entrypoint and Initialization
  * PROGRAMMERS:     ReactOS Portable Systems Group

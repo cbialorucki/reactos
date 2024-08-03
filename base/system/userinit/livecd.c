@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS Userinit Logon Application
  * FILE:        base/system/userinit/livecd.c
  * PROGRAMMERS: Eric Kohl

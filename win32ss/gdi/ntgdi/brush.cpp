@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS win32 subsystem
  * PURPOSE:           BRUSH class implementation
  * PROGRAMER:         Timo Kreuzer (timo.kreuzer@reactos.org)

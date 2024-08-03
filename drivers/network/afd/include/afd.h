@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS kernel
  * FILE:             drivers/net/afd/include/afd.h
  * PURPOSE:          Ancillary functions driver -- constants and structures

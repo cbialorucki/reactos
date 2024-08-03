@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS CRT library
  * FILE:        lib/sdk/crt/stdlib/fullpath.c
  * PURPOSE:     Gets the fullpathname

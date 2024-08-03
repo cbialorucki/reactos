@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT: See COPYING in the top level directory
+ * COPYRIGHT: See /docs/licenses/COPYING
  * PROJECT  : ReactOS system libraries
  * MODULE   : kernel32.dll
  * FILE     : reactos/dll/win32/kernel32/misc/ldr.c

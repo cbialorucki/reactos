@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Universal Serial Bus Bulk Enhanced Host Controller Interface
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        lib/drivers/hidparser/hidparser.c
  * PURPOSE:     HID Parser
  * PROGRAMMERS:

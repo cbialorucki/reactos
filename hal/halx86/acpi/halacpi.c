@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS HAL
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            hal/halx86/acpi/halacpi.c
  * PURPOSE:         HAL ACPI Code
  * PROGRAMMERS:     ReactOS Portable Systems Group

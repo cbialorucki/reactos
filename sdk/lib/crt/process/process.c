@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS CRT library
- * LICENSE:         GPL (?) - See COPYING in the top level directory
+ * LICENSE:         GPL (?) - See /docs/licenses/COPYING
  * FILE:            lib/sdk/crt/process/process.c
  * PURPOSE:         Process management functions
  * PROGRAMMERS:     ???

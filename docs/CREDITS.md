@@ -1,3 +1,5 @@
+# Credits
+
 ReactOS is available thanks to the work of:
 
 Aleksandar Andrejevic <aandrejevic@reactos.org>
@@ -79,7 +81,7 @@ Richard Campbell <betam4x@gmail.com>
 Robert Bergkvist <fragdance@hotmail.com>
 Robert Dickenson <robd@reactos.org>
 Royce Mitchell III <royce3@ev1.net>
-Samuel Serapión <samdwise51@gmail.com>
+Samuel Serapiï¿½n <samdwise51@gmail.com>
 Saveliy Tretiakov <saveliyt@mail.ru>
 Stanislav Motylkov <x86corez@gmail.com>
 Stefan Ginsberg <stefan.ginsberg@reactos.org>

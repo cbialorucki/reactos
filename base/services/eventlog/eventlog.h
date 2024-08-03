@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS EventLog Service
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            base/services/eventlog/eventlog.h
  * PURPOSE:         Precompiled Header for the Event logging service
  * COPYRIGHT:       Copyright 2005 Saveliy Tretiakov

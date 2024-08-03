@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS system libraries
  * PURPOSE:         Vista functions
  * PROGRAMMERS:     Thomas Weidenmueller (w3seek@reactos.com)

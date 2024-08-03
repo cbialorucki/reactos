@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/ke/i386/context.c
  * PURPOSE:         Context Switching Related Code
  * PROGRAMMERS:     ReactOS Portable Systems Group

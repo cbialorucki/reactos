@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Kernel Streaming
  * FILE:            drivers/wdm/audio/backpln/portcls/pin_dmus.cpp
  * PURPOSE:         DMus IRP Audio Pin

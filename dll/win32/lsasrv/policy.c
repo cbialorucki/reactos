@@ -1,6 +1,6 @@
 /*
  * PROJECT:     Local Security Authority Server DLL
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/win32/lsasrv/policy.c
  * PURPOSE:     Policy object routines
  * COPYRIGHT:   Copyright 2011 Eric Kohl

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS TCP/IP protocol driver
  * FILE:        tcpip/buffer.c
  * PURPOSE:     Miscellaneous operations on NDIS_BUFFERs and packets.

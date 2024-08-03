@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING.ARM in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING.ARM
  * PROJECT:         ReactOS UEFI OS Loader
  * FILE:            boot/environ/app/rosload/rosload.h
  * PURPOSE:         Main OS Loader Header

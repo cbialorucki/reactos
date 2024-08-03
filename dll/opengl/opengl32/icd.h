@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:            See COPYING in the top level directory
+ * COPYRIGHT:            See /docs/licenses/COPYING
  * PROJECT:              ReactOS kernel
  * FILE:                 lib/opengl32/icd.h
  * PURPOSE:              OpenGL32 lib, ICD specific definitions

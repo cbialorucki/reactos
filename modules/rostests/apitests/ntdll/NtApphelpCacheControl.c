@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS API Tests
- * LICENSE:         LGPL - See COPYING.LIB in the top level directory
+ * LICENSE:         LGPL - See /docs/licenses/COPYING.LIB
  * PURPOSE:         Tests for SHIM engine caching.
  * PROGRAMMER:      Mark Jansen
  */

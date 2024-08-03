@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * COPYRIGHT:       GPL - See COPYING in the top level directory
+ * COPYRIGHT:       GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/io/pnpmgr/pnpmgr.c
  * PURPOSE:         Initializes the PnP manager
  * PROGRAMMERS:     Casper S. Hornstrup (chorns@users.sourceforge.net)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS Runtime Library (RTL)
  * FILE:            lib/rtl/amd64/except_asm.S
  * PURPOSE:         Exception support for AMD64

@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            base/applications/osk/lang/es-ES.rc
  * PURPOSE:         On screen keyboard (Spanish resources)
  * PROGRAMMERS:     Denis ROBERT

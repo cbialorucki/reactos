@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS System Control Panel Applet
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        dll/cpl/sysdm/environment.c
  * PURPOSE:     Environment variable settings
  * COPYRIGHT:   Copyright Eric Kohl

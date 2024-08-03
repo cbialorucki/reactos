@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS kernel-mode tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Kernel-Mode Test Suite for Device Queues
  * PROGRAMMERS:     Pavel Batusov, Moscow State Technical University
  *                  Denis Volhonsky, Moscow State Technical University

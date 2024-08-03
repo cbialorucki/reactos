@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS msgina.dll
  * FILE:            lib/msgina/stubs.c
  * PURPOSE:         msgina.dll stubs

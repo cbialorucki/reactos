@@ -1,6 +1,6 @@
 /*
  * FILE:            ntoskrnl/ke/amd64/boot.S
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PURPOSE:         FreeLDR Wrapper Bootstrap Code and Bootstrap Trampoline
  * PROGRAMMER:      Timo Kreuzer (timo.kreuzer@reactos.org)
  */

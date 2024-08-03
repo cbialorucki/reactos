@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:   See COPYING in the top level directory
+ * COPYRIGHT:   See /docs/licenses/COPYING
  * PROJECT:     ReactOS VFATX filesystem library
  * FILE:        fatx.c
  * PURPOSE:     Fatx support

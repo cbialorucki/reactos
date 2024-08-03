@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/mm/ARM3/sysldr.c
  * PURPOSE:         Contains the Kernel Loader (SYSLDR) for loading PE files.
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:        See COPYING in the top level directory
+ * COPYRIGHT:        See /docs/licenses/COPYING
  * PROJECT:          ReactOS Shell
  * FILE:             base/services/shsvcs/shsvcs.c
  * PURPOSE:          ReactOS Shell Services

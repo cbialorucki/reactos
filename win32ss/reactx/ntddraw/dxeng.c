@@ -1,6 +1,6 @@
 /*
  * PROJECT:          ReactOS Win32 Subsystem
- * LICENSE:          GPL - See COPYING in the top level directory
+ * LICENSE:          GPL - See /docs/licenses/COPYING
  * FILE:             win32ss/reactx/ntddraw/dxeng.c
  * PURPOSE:          Implementation of DxEng functions
  * PROGRAMMERS:      Magnus Olsen (magnus@greatlord.com)

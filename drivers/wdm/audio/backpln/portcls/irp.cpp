@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       See COPYING in the top level directory
+ * COPYRIGHT:       See /docs/licenses/COPYING
  * PROJECT:         ReactOS
  * FILE:            drivers/wdm/audio/backpln/portcls/irp.cpp
  * PURPOSE:         Port Class driver / IRP Handling

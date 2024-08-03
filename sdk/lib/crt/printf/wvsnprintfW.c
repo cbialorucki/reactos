@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:       GNU GPL, see COPYING in the top level directory
+ * COPYRIGHT:       GNU GPL, see /docs/licenses/COPYING
  * PROJECT:         ReactOS crt library
  * FILE:            lib/sdk/crt/printf/wvsnprintfW.c
  * PURPOSE:         Implementation of wvsnprintfW

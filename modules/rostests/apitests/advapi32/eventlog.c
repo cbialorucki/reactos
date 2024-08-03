@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS api tests
- * LICENSE:         GPLv2+ - See COPYING in the top level directory
+ * LICENSE:         GPLv2+ - See /docs/licenses/COPYING
  * PURPOSE:         Supplemental tests for Winetests' Event Logging functions
  * PROGRAMMER:      Hermes Belusca-Maito
  */

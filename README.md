@@ -13,7 +13,7 @@
     <img alt="Download ReactOS" src="https://img.shields.io/badge/download-latest-0688CB.svg"></a>
   <a href="https://sourceforge.net/projects/reactos/">
     <img alt="SourceForge Download" src="https://img.shields.io/sourceforge/dm/reactos.svg?colorB=0688CB"></a>
-  <a href="https://github.com/reactos/reactos/blob/master/COPYING">
+  <a href="https://github.com/reactos/reactos/blob/master/docs/licenses/COPYING">
     <img alt="License" src="https://img.shields.io/badge/license-GNU_GPL_2.0-0688CB.svg"></a>
   <a href="https://reactos.org/donate/">
     <img alt="Donate" src="https://img.shields.io/badge/%24-donate-E44E4A.svg"></a>
@@ -86,7 +86,7 @@ __NOTE:__ The bug tracker is _not_ for discussions. Please use our [official cha
 
 ## Contributing  [![prwelcome.badge]](https://reactos.org/wiki/Commiting_Changes)
 
-We are always looking for developers! Check [how to contribute](CONTRIBUTING.md) if you are willing to participate.
+We are always looking for developers! Check [how to contribute](docs/CONTRIBUTING.md) if you are willing to participate.
 
 __Legal notice__: If you have seen proprietary Microsoft Windows source code (including but not limited to the leaked Windows NT 3.5, NT 4, 2000 source code and the Windows Research Kernel), your contribution won't be accepted because of potential copyright violation.
 
@@ -107,12 +107,12 @@ ReactOS is also not "yet another OS". It does not attempt to be a third player l
 
 More information is available at: [reactos.org](https://reactos.org/).
 
-Also see the [media/doc](/media/doc/) subdirectory for some sparse notes.
+Also see the [docs/notes](/docs/notes/) subdirectory for some sparse notes.
 
 ## Who is responsible
 
 Active devs are listed as members of [GitHub organization](https://github.com/orgs/reactos/people).
-See also the [CREDITS](CREDITS) file for others.
+See also the [CREDITS](/docs/CREDITS.md) file for others.
 
 ## Code mirrors
 

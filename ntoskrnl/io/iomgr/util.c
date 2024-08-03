@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/io/iomgr/util.c
  * PURPOSE:         I/O Utility Functions
  * PROGRAMMERS:     Alex Ionescu (alex.ionescu@reactos.org)

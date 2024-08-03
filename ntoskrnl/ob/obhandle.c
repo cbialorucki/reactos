@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         GPL - See COPYING in the top level directory
+ * LICENSE:         GPL - See /docs/licenses/COPYING
  * FILE:            ntoskrnl/ob/obhandle.c
  * PURPOSE:         Manages all functions related to the Object Manager handle
  *                  implementation, including creating and destroying handles

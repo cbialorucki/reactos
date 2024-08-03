@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/mm/ARM3/miarm.h
  * PURPOSE:         ARM Memory Manager Header
  * PROGRAMMERS:     ReactOS Portable Systems Group

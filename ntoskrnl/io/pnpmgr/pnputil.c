@@ -1,6 +1,6 @@
 /*
  * PROJECT:         ReactOS Kernel
- * LICENSE:         BSD - See COPYING.ARM in the top level directory
+ * LICENSE:         BSD - See /docs/licenses/COPYING.ARM
  * FILE:            ntoskrnl/io/pnpmgr/pnputil.c
  * PURPOSE:         PnP Utility Code
  * PROGRAMMERS:     ReactOS Portable Systems Group

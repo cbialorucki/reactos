@@ -1,6 +1,6 @@
 /*
  * PROJECT:     ReactOS Character Map
- * LICENSE:     GPL - See COPYING in the top level directory
+ * LICENSE:     GPL - See /docs/licenses/COPYING
  * FILE:        base/applications/charmap/settings.c
  * PURPOSE:     save/load settings
  * COPYRIGHT:   Copyright 2012 Edijs Kolesnikovics <terminedijs@yahoo.com>

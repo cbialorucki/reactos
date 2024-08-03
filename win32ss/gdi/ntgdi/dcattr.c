@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT:         See COPYING in the top level directory
+ * COPYRIGHT:         See /docs/licenses/COPYING
  * PROJECT:           ReactOS kernel
  * PURPOSE:           Functions for creation and destruction of DCs
  * FILE:              win32ss/gdi/ntgdi/dcattr.c

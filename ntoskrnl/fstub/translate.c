@@ -1,6 +1,6 @@
 /*
 * PROJECT:         ReactOS Kernel
-* LICENSE:         GPL - See COPYING in the top level directory
+* LICENSE:         GPL - See /docs/licenses/COPYING
 * FILE:            ntoskrnl/fstub/translate.c
 * PURPOSE:         Interrupt Translator Routines
 * PROGRAMMERS:     Pierre Schweitzer (pierre.schweitzer@reactos.org)
