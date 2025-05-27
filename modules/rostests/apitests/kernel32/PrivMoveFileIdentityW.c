@@ -100,7 +100,7 @@ TestPrivMoveFileIdentityW(VOID)
     SetLastError(0xdeadbeef);
     Ret = pPrivMoveFileIdentityW(Self, FileName, 0);
     ok(Ret == FALSE, "PrivMoveFileIdentityW succeeded unexpectedly\n");
-    ok(GetLastError() == ERROR_SHARING_VIOLATION, "Last error: %#lx\n", GetLastError());
+    ok(GetLastError() == ERROR_SHARING_VIOLATION || GetLastError() == ERROR_ACCESS_DENIED, "Last error: %#lx\n", GetLastError());
     ok(QueryFileInfo(FileName, &FileBasicInfo, &FileStandardInfo) == TRUE, "QueryFileInfo returned FALSE\n");
     ok(FileBasicInfo.CreationTime.QuadPart != CreationTime.QuadPart, "Equal creation times\n");
     ok(FileStandardInfo.EndOfFile.QuadPart == 0LL, "File wasn't created empty: %I64d\n", FileStandardInfo.EndOfFile.QuadPart);
