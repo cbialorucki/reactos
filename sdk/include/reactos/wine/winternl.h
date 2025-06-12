@@ -41,6 +41,10 @@ typedef enum _EVENT_TYPE {
 } EVENT_TYPE, *PEVENT_TYPE;
 #define FSCTL_PIPE_LISTEN CTL_CODE(FILE_DEVICE_NAMED_PIPE, 2, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
+#define DUPLICATE_SAME_ATTRIBUTES 0x00000004
+
+#define THREAD_SET_LIMITED_INFORMATION 0x0400
+
 #ifndef _NTDEF_
 typedef struct _RTL_BALANCED_NODE
 {
@@ -108,6 +112,7 @@ typedef struct _RTL_RB_TREE
     RTL_BALANCED_NODE *root;
     RTL_BALANCED_NODE *min;
 } RTL_RB_TREE, *PRTL_RB_TREE;
+
 #endif /* __REACTOS__ */
 
 /**********************************************************************
