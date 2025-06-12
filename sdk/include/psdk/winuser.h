@@ -2070,10 +2070,10 @@ typedef enum tagHANDEDNESS
 #define LB_GETITEMDATA 409
 #define LB_GETITEMHEIGHT 417
 #define LB_GETITEMRECT 408
-#if(_WIN32_WINNT >= 0x501)
+#if (_WIN32_WINNT >= 0x501)
 #define LB_GETLISTBOXINFO 434
 #define LB_MSGMAX 435
-#elif(WINVER >= 0x400)
+#elif (WINVER >= 0x400)
 #define LB_MSGMAX 432
 #else
 #define LB_MSGMAX 424
@@ -2643,7 +2643,7 @@ typedef enum tagHANDEDNESS
 #define EC_RIGHTMARGIN 2
 #define EC_USEFONTINFO 0xffff
 
-#if(WINVER >= 0x500)
+#if (WINVER >= 0x500)
 #define EMSIS_COMPOSITIONSTRING        1
 #define EIMES_GETCOMPSTRATONCE         1
 #define EIMES_CANCELCOMPSTRINFOCUS     2
@@ -2700,7 +2700,7 @@ typedef enum tagHANDEDNESS
 #define FLASHW_TIMERNOFG 12
 #endif /* (WINVER >= 0x0500) */
 #define CURSOR_SHOWING 0x00000001
-#if(WINVER >= 0x602)
+#if (WINVER >= 0x602)
 #define CURSOR_SUPPRESSED 0x00000002
 #endif /* (WINVER >= 0x602) */
 #define WS_ACTIVECAPTION 0x00000001
