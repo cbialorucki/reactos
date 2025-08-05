@@ -2,11 +2,15 @@
 add_definitions(-DUSE_WINE_TODOS)
 
 list(APPEND SOURCE
-    device.c
+    device8.c
     dinput.c
-    joystick.c
-    keyboard.c
-    mouse.c)
+    driver_bus.c
+    driver_hid_poll.c
+    driver_hid.c
+    force_feedback.c
+    hid.c
+    hotplug.c
+    joystick8.c)
 
 list(APPEND PCH_SKIP_SOURCE
     testlist.c)
