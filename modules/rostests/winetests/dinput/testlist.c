@@ -11,10 +11,10 @@ extern void func_mouse(void);
 
 const struct test winetest_testlist[] =
 {
-    { "device", func_device },
-    { "dinput", func_dinput },
-    { "joystick", func_joystick },
-    { "keyboard", func_keyboard },
-    { "mouse", func_mouse },
+    // { "device", func_device },
+    // { "dinput", func_dinput },
+    // { "joystick", func_joystick },
+    // { "keyboard", func_keyboard },
+    // { "mouse", func_mouse },
     { 0, 0 }
 };

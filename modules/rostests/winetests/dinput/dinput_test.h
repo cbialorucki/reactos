@@ -75,6 +75,9 @@ void fill_context_( const char *file, int line, char *buffer, SIZE_T size );
 #define check_member( val, exp, fmt, member )                                                      \
     check_member_( __FILE__, __LINE__, val, exp, fmt, member )
 
+#ifdef __REACTOS__
+static __inline const char *debugstr_guid( const struct _GUID *id ) { return wine_dbgstr_guid(id); }
+#endif
 #define check_member_guid_( file, line, val, exp, member )                                         \
     ok_(file, line)( IsEqualGUID( &(val).member, &(exp).member ), "got " #member " %s\n",         \
                      debugstr_guid( &(val).member ) )

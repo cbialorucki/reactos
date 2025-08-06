@@ -40,6 +40,10 @@
 
 DEFINE_GUID(GUID_keyboard_action_mapping,0x00000001,0x0002,0x0003,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b);
 
+#ifdef __REACTOS__
+#define flaky_wine_if(...) if(FALSE)
+#endif
+
 struct enum_data
 {
     DWORD version;
@@ -2065,8 +2069,13 @@ static void test_hid_touch_screen(void)
 
     rawinput = (RAWINPUT *)rawbuffer;
     ok( rawinput->header.dwType == RIM_TYPEHID, "got dwType %lu\n", rawinput->header.dwType );
+#ifdef __REACTOS__
+    ok(rawinput->header.dwSize == offsetof(RAWINPUT, data.hid.bRawData) + desc.caps.InputReportByteLength * rawinput->data.hid.dwCount,
+    "got header.dwSize %lu\n", rawinput->header.dwSize );
+#else
     ok( rawinput->header.dwSize == offsetof(RAWINPUT, data.hid.bRawData[desc.caps.InputReportByteLength * rawinput->data.hid.dwCount]),
         "got header.dwSize %lu\n", rawinput->header.dwSize );
+#endif
     ok( rawinput->header.hDevice != 0, "got hDevice %p\n", rawinput->header.hDevice );
     ok( rawinput->header.wParam == 0, "got wParam %#Ix\n", rawinput->header.wParam );
     ok( rawinput->data.hid.dwSizeHid == desc.caps.InputReportByteLength, "got dwSizeHid %lu\n", rawinput->data.hid.dwSizeHid );
